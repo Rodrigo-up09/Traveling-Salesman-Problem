@@ -16,6 +16,6 @@ void DataManager::readMid() {
 
 }
 
-void DataManager::readReak() {
+void DataManager::readReal() {
 
 }

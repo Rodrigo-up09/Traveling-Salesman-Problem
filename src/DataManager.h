@@ -10,7 +10,7 @@ class DataManager {
     DataManager();
     void readSmall();
     void readMid();
-    void readReak();
+    void readReal();
 
 
 
