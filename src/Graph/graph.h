@@ -15,8 +15,8 @@ class Edge;
 class Vertex {
 public:
    
-    Vertex(const string& code,  double longitude,  double latitude);
-    Vertex(const string &code, double longitude, double latitude, const string& label);
+    Vertex(const string& code);
+    Vertex(const string &code, const string& label);
     std::vector<Edge*> getAdj(); 
     std::vector<Edge*> getIncoming(); 
     bool isVisited() const; 

@@ -42,24 +42,24 @@ void Vertex::setPath(Edge* path) {
     this->path = path;
 }
 
-Vertex:: Vertex(const string& code,  double longitude,  double latitude) {
+Vertex:: Vertex(const string& code) {
     this->info = code;
     this->path = nullptr;
     this->dist = 0;
     this->processing = false;
     this->visited = false;
-    this->latitude=latitude;
-    this->longitude=longitude;
+    this->latitude=0;
+    this->longitude=0;
     this->label=label="";
 }
-Vertex::Vertex(const string &code, double longitude, double latitude, const string& label) {
+Vertex::Vertex(const string &code, const string& label) {
     this->info = code;
     this->path = nullptr;
     this->dist = 0;
     this->processing = false;
     this->visited = false;
-    this->latitude=latitude;
-    this->longitude=longitude;
+    this->latitude=0;
+    this->longitude=0;
     this->label=label;
 }
 

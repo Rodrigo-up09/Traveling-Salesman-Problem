@@ -13,6 +13,7 @@ class DataManager {
 
 public:
     DataManager();
+    void start(int dataSet,int type);
     void readSmall(int type);
     void readMid();
     void readReal();

@@ -13,6 +13,22 @@ DataManager::DataManager() {
 
 }
 
+void DataManager::start(int dataSet, int type) {
+    switch ( dataSet) {
+        case 0:
+            readSmall(type);
+            break;
+        case 1:
+            readMid();
+            break;
+        case 2:
+            readReal();
+            break;
+    }
+}
+
+
+
 void DataManager::readSmall(int type) {
     ifstream file;
     bool tourism = false;
@@ -38,7 +54,9 @@ void DataManager::readSmall(int type) {
     if (tourism) { size = 5; }
     else { size = 3; }
     while (getline(file, line)) {
-        Vertex *vertex;
+        bool destInGraph = true;
+        Vertex *vertexOrigem;
+        Vertex *vertexDest;
         vector<string> values;
         istringstream info(line);
         for (int i = 0; i < size; i++) {
@@ -46,15 +64,36 @@ void DataManager::readSmall(int type) {
             values.push_back(value);
         }
         string code = values[0];
-        double longitude = stod(values[1]);
-        double latitude = stod(values[2]);
+        string destCode = values[1];
+        int destancia = stoi(values[2]);
+
         if (tourism) {
             string labelOrigem = values[3];
-            vertex = new Vertex(code, longitude, latitude, labelOrigem);
+            string labelDest = values[4];
+            vertexOrigem = new Vertex(code, labelOrigem);
+            vertexDest = new Vertex(destCode, labelDest);
         } else {
-            vertex = new Vertex(code, longitude, latitude);
+            vertexOrigem = new Vertex(code);
         }
-        g.addVertex(vertex);
+        Vertex *vertexFoundDest = g.findVertex(vertexDest->getInfo());
+        Vertex *vertexFoundOrig = g.findVertex(vertexOrigem->getInfo());
+        if (vertexFoundDest == nullptr) {
+            g.addVertex(vertexDest);
+            destInGraph = false;
+        }
+        if (vertexFoundOrig == nullptr) {
+            vertexOrigem->addEdge(vertexDest, destancia);
+            g.addVertex(vertexOrigem);
+        } else {
+            if (destInGraph) {
+                vertexFoundOrig->addEdge(vertexFoundDest, destancia);
+            } else {
+                vertexFoundOrig->addEdge(vertexDest, destancia);
+            }
+
+        }
+
+
     }
 }
 
