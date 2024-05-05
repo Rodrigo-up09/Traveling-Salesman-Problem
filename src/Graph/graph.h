@@ -88,7 +88,7 @@ public:
     Vertex *findVertex(const string &code) const;
 
     void addVertex(Vertex *vertex);
-    
+
 
     bool removeVertex(const string &code);
 
