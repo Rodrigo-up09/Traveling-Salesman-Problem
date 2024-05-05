@@ -10,4 +10,5 @@ add_executable(projetDA2 src/main.cpp
         src/Graph/graph.h
         src/Menu/menu.h
         src/Menu/menu.cpp
+        src/DataManager.h
 )

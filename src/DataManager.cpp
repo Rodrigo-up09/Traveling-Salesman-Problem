@@ -8,14 +8,13 @@ DataManager::DataManager() {
 
 }
 
-void DataManager::readSmall() {
+
+
+
+void DataManager::readSmall(int type) {
+
+
+
 
 }
 
-void DataManager::readMid() {
-
-}
-
-void DataManager::readReal() {
-
-}
