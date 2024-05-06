@@ -1,4 +1,4 @@
-#include "Graph.h"
+#include "graph.h"
 
 std::string Vertex::getInfo() const {
     return info;
@@ -42,17 +42,31 @@ void Vertex::setPath(Edge* path) {
     this->path = path;
 }
 
-Vertex::Vertex(const std::string& code) {
+Vertex:: Vertex(const string& code) {
     this->info = code;
     this->path = nullptr;
     this->dist = 0;
     this->processing = false;
     this->visited = false;
+    this->latitude=0;
+    this->longitude=0;
+    this->label=label="";
+}
+Vertex::Vertex(const string &code, const string& label) {
+    this->info = code;
+    this->path = nullptr;
+    this->dist = 0;
+    this->processing = false;
+    this->visited = false;
+    this->latitude=0;
+    this->longitude=0;
+    this->label=label;
 }
 
-Edge* Vertex::addEdge(Vertex* dest, int capacity, bool direction) {
-    Edge* edge = new Edge(this, dest, capacity, direction);
-    Edge* edgeReverse = new Edge(dest, this, capacity, direction);
+
+Edge* Vertex::addEdge(Vertex* dest, int distance) {
+    Edge* edge = new Edge(this, dest, distance);
+    Edge* edgeReverse = new Edge(dest, this, distance);
     edge->setReverse(edgeReverse);
     adj.push_back(edge);
     dest->incoming.push_back(edge);
@@ -76,10 +90,34 @@ std::vector<Edge*> Vertex::getIncoming() {
     return incoming;
 }
 
+double Vertex::getLatitude() const {
+    return latitude;
+}
+
+void Vertex::setLatitude(double latitude) {
+    Vertex::latitude = latitude;
+}
+
+double Vertex::getLongitude() const {
+    return longitude;
+}
+
+void Vertex::setLongitude(double longitude) {
+    Vertex::longitude = longitude;
+}
+
+const string &Vertex::getLabel() const {
+    return label;
+}
+
+void Vertex::setLabel(const string &label) {
+    Vertex::label = label;
+}
 
 
-Edge::Edge(Vertex* orig, Vertex* dest, int c, bool direction)
-        : orig(orig), dest(dest), selected(false),isReverse(false) {
+
+Edge::Edge(Vertex* orig, Vertex* dest, int distance)
+        : orig(orig), dest(dest),distance(distance), selected(false),isReverse(false) {
 }
 
 
@@ -89,8 +127,8 @@ Edge::~Edge() {
 
 
 
-int Edge::getCapacity() const {
-    return disntance;
+int Edge::getdistance()const {
+    return distance;
 }
 
 bool Edge::isSelected() const {
@@ -120,8 +158,8 @@ void Edge::setReverse(Edge* reverse) {
 
 
 
-void Edge::setCapacity(int capacity) {
-    this->disntance= capacity;
+void Edge::setDistance(int distance) {
+    this-> distance=  distance;
 }
 
 Vertex* Edge::getDest() {
@@ -129,58 +167,60 @@ Vertex* Edge::getDest() {
 }
 
 
-Vertex* Graph::findVertex(const std::string& code) const {
-    auto it = vertexset.find(code);
-    if (it != vertexset.end()) {
-        return it->second;
+Vertex * Graph::findVertex(const string &code)const {
+    for (Vertex *vertex: vertexset ) {
+        if (vertex->getInfo()== code) {
+            return vertex;
+        }
     }
     return nullptr;
 }
 
 
-void Graph::addVertex(const std::string& code) {
-    Vertex* vertex = new Vertex(code);
-    vertexset.insert(std::make_pair(code, vertex));
+void Graph::addVertex(Vertex *vertex) {
+    vertexset.push_back(vertex);
 }
 
 
 bool Graph::removeVertex(const string &code) {
-    auto it = vertexset.find(code);
-    if (it != vertexset.end()) {
-        Vertex *vertexToRemove = it->second;
-        for (Edge *edge : vertexToRemove->getAdj()) {
-            removeEdge(vertexToRemove->getInfo(), edge->getDest()->getInfo());
-        }
-        for(auto i:vertexset){
-            for(auto a:i.second->getIncoming()){
-                if(a->getOrig()->getInfo()==code){
-                    removeEdge(a->getOrig()->getInfo(),a->getDest()->getInfo());
+    for (auto it = vertexset.begin(); it != vertexset.end(); ++it) {
+        if ((*it)->getInfo() == code) {
+
+            for (Edge *edge : (*it)->getAdj()) {
+                removeEdge((*it)->getInfo(), edge->getDest()->getInfo());
+            }
+
+
+            for (auto i : vertexset) {
+                for (auto a : i->getIncoming()) {
+                    if (a->getOrig()->getInfo() == code) {
+                        removeEdge(a->getOrig()->getInfo(), a->getDest()->getInfo());
+                    }
                 }
             }
+
+            delete *it;
+            vertexset.erase(it);
+            return true;
         }
-
-        vertexset.erase(it);
-
-        return true;
     }
     return false;
 }
 
 
-bool Graph::addEdge(const std::string& source, const std::string& dest, int capacity, bool direction) {
+bool Graph::addEdge(const std::string& source, const std::string& dest, int distance, bool direction) {
     Vertex* sourceV = findVertex(source);
     Vertex* destV = findVertex(dest);
     if (sourceV == nullptr || destV == nullptr)
         return false;
-    sourceV->addEdge(destV, capacity, direction);
+    sourceV->addEdge(destV, distance);
     if (!direction) {
-        destV->addEdge(sourceV, capacity, direction);
+        destV->addEdge(sourceV, distance);
     }
     return true;
 }
 
-
-std::unordered_map<std::string, Vertex*> Graph::getVertexSet() const {
+vector<Vertex *>  Graph::getVertexSet() const {
     return vertexset;
 }
 
@@ -206,11 +246,8 @@ Graph::Graph() {
 
 void Graph::clear() {
     for (auto v : vertexset) {
-        v.second->getAdj().clear();
+        v->getAdj().clear();
     }
     vertexset.clear();
 }
 
-void Graph::addVertexWithEdges(Vertex* vertex) {
-    vertexset.insert(std::make_pair(vertex->getInfo(), vertex));
-}
