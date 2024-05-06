@@ -1,0 +1,8 @@
+
+
+#ifndef PROJETDA2_BACKTRACKINGALGORITHM_H
+#define PROJETDA2_BACKTRACKINGALGORITHM_H
+
+using namespace std;
+
+#endif

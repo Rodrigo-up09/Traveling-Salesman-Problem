@@ -1,0 +1,7 @@
+
+#ifndef PROJETDA2_TRIANGULARAPPROXIMATION_H
+#define PROJETDA2_TRIANGULARAPPROXIMATION_H
+
+using namespace std;
+
+#endif

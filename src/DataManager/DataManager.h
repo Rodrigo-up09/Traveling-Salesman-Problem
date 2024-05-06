@@ -17,6 +17,7 @@ public:
     void readSmall(int type);
     void readMid();
     void readReal();
+    void readEdges(string filePath);
 
 
 private:
