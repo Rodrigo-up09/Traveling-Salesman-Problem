@@ -131,7 +131,7 @@ void DataManager::readMid() {
     readEdges("../data/Extra_Fully_Connected_Graphs/edges_600.csv");
     readEdges("../data/Extra_Fully_Connected_Graphs/edges_700.csv");
     readEdges("../data/Extra_Fully_Connected_Graphs/edges_800.csv");
-    readEdges("../data/Extra_Fully_Connected_Graphs/edges_900.csv"); 
+    readEdges("../data/Extra_Fully_Connected_Graphs/edges_900.csv");
 }
 
 void DataManager::readEdges(string filePath) {
