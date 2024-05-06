@@ -14,7 +14,7 @@ DataManager::DataManager() {
 }
 
 void DataManager::start(int dataSet, int type) {
-    switch ( dataSet) {
+    switch (dataSet) {
         case 0:
             readSmall(type);
             break;
@@ -22,7 +22,8 @@ void DataManager::start(int dataSet, int type) {
             readMid();
             break;
         case 2:
-            readReal();
+            if(type==1 || type==2)
+                readReal(type);
             break;
     }
 }
@@ -132,6 +133,46 @@ void DataManager::readMid() {
     readEdges("../data/Extra_Fully_Connected_Graphs/edges_700.csv");
     readEdges("../data/Extra_Fully_Connected_Graphs/edges_800.csv");
     readEdges("../data/Extra_Fully_Connected_Graphs/edges_900.csv");
+}
+
+void DataManager::readReal(int type) {
+    ifstream file;
+    switch (type) {
+        case 1:
+            file.open("../data/Real-world Graphs/graph1/nodes.csv");
+            break;
+        case 2:
+            file.open("../data/Real-world Graphs/graph2/nodes.csv");
+            break;
+    }
+    if(!file.is_open()) {
+        cout << "Erro ao abrir o ficheiro" << endl;
+        return;
+    }
+    string value, line;
+    getline(file,line);
+    while(getline(file,line)) {
+        Vertex *v;
+        vector<string> values;
+        istringstream info(line);
+        for(int i=0; i < 3; i++) {
+            getline(info, value, ',');
+            values.push_back(value);
+        }
+        string code = values[0];
+        string lon = values[1];
+        string lat = values[2];
+        v = new Vertex(code);
+        g.addVertex(v);
+    }
+    switch (type) {
+        case 1:
+            readEdges("../data/Real-world Graphs/graph1/edges.csv");
+            break;
+        case 2:
+            readEdges("../data/Real-world Graphs/graph2/edges.csv");
+            break;
+    }
 }
 
 void DataManager::readEdges(string filePath) {

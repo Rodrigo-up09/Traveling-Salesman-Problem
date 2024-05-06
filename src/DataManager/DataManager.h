@@ -16,7 +16,7 @@ public:
     void start(int dataSet,int type);
     void readSmall(int type);
     void readMid();
-    void readReal();
+    void readReal(int type);
     void readEdges(string filePath);
 
 
