@@ -2,7 +2,10 @@
 	"artifacts" : 
 	[
 		{
-			"path" : "projetDA2"
+			"path" : "projetDA2.exe"
+		},
+		{
+			"path" : "projetDA2.pdb"
 		}
 	],
 	"backtrace" : 1,
@@ -49,7 +52,7 @@
 			[
 				{
 					"backtrace" : 2,
-					"path" : "/home/afonso/Desktop/DA/src"
+					"path" : "C:/Users/Rodrigo/Desktop/program/da/DaProj2/DAProj2/src"
 				}
 			],
 			"language" : "CXX",
@@ -82,12 +85,16 @@
 			{
 				"fragment" : "",
 				"role" : "flags"
+			},
+			{
+				"fragment" : "-lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32",
+				"role" : "libraries"
 			}
 		],
 		"language" : "CXX"
 	},
 	"name" : "projetDA2",
-	"nameOnDisk" : "projetDA2",
+	"nameOnDisk" : "projetDA2.exe",
 	"paths" : 
 	{
 		"build" : ".",

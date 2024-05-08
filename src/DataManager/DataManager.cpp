@@ -66,7 +66,7 @@ void DataManager::readSmall(int type) {
         }
         string code = values[0];
         string destCode = values[1];
-        int destancia = stoi(values[2]);
+        double destancia = stod(values[2]);
 
         if (tourism) {
             string labelOrigem = values[3];
@@ -75,6 +75,7 @@ void DataManager::readSmall(int type) {
             vertexDest = new Vertex(destCode, labelDest);
         } else {
             vertexOrigem = new Vertex(code);
+            vertexDest= new Vertex(destCode);
         }
         Vertex *vertexFoundDest = g.findVertex(vertexDest->getInfo());
         Vertex *vertexFoundOrig = g.findVertex(vertexOrigem->getInfo());
@@ -195,7 +196,7 @@ void DataManager::readEdges(string filePath) {
         }
         string origCode = values[0];
         string destCode = values[1];
-        int dist = stoi(values[2]);
+        double dist = stod(values[2]);
         g.addEdge(origCode, destCode, dist, true);
     }
 }

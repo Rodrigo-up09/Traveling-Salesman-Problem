@@ -64,7 +64,7 @@ Vertex::Vertex(const string &code, const string& label) {
 }
 
 
-Edge* Vertex::addEdge(Vertex* dest, int distance) {
+Edge* Vertex::addEdge(Vertex* dest, double distance) {
     Edge* edge = new Edge(this, dest, distance);
     Edge* edgeReverse = new Edge(dest, this, distance);
     edge->setReverse(edgeReverse);
@@ -116,7 +116,7 @@ void Vertex::setLabel(const string &label) {
 
 
 
-Edge::Edge(Vertex* orig, Vertex* dest, int distance)
+Edge::Edge(Vertex* orig, Vertex* dest, double distance)
         : orig(orig), dest(dest),distance(distance), selected(false),isReverse(false) {
 }
 
@@ -127,7 +127,7 @@ Edge::~Edge() {
 
 
 
-int Edge::getdistance()const {
+double Edge::getdistance()const {
     return distance;
 }
 
@@ -158,7 +158,7 @@ void Edge::setReverse(Edge* reverse) {
 
 
 
-void Edge::setDistance(int distance) {
+void Edge::setDistance(double distance) {
     this-> distance=  distance;
 }
 
@@ -208,7 +208,7 @@ bool Graph::removeVertex(const string &code) {
 }
 
 
-bool Graph::addEdge(const std::string& source, const std::string& dest, int distance, bool direction) {
+bool Graph::addEdge(const std::string& source, const std::string& dest, double distance, bool direction) {
     Vertex* sourceV = findVertex(source);
     Vertex* destV = findVertex(dest);
     if (sourceV == nullptr || destV == nullptr)
@@ -240,8 +240,7 @@ bool Graph::removeEdge(const std::string& source, const std::string& dest) {
 }
 
 
-Graph::Graph() {
-}
+Graph::Graph() = default;
 
 
 void Graph::clear() {
