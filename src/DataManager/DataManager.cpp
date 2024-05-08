@@ -4,6 +4,7 @@
 
 #include <iostream>
 #include <vector>
+#include <algorithm>
 #include "DataManager.h"
 
 using namespace std;
@@ -83,6 +84,7 @@ void DataManager::readSmall(int type) {
             g.addVertex(vertexDest);
             destInGraph = false;
         }
+
         if (vertexFoundOrig == nullptr) {
             vertexOrigem->addEdge(vertexDest, destancia);
             g.addVertex(vertexOrigem);
@@ -94,6 +96,12 @@ void DataManager::readSmall(int type) {
             }
         }
     }
+    vector<Vertex*> copy=g.getVertexSet();
+    std::sort(copy.begin(), copy.end(), [](const Vertex* v1, const Vertex* v2) {
+        return v1->getInfo() < v2->getInfo();
+    });
+    g.setVertexSet(copy);
+
 }
 
 void DataManager::readMid() {
@@ -199,6 +207,10 @@ void DataManager::readEdges(string filePath) {
         double dist = stod(values[2]);
         g.addEdge(origCode, destCode, dist, true);
     }
+}
+
+Graph DataManager::getG() {
+    return g;
 }
 
 

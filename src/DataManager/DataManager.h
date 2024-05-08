@@ -18,7 +18,7 @@ public:
     void readMid();
     void readReal(int type);
     void readEdges(string filePath);
-
+    Graph getG();
 
 private:
 Graph g;

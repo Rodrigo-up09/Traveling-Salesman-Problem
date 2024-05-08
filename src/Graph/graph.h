@@ -84,7 +84,7 @@ protected:
 class Graph {
 public:
     Graph();
-
+    void setAllNonVisited();
     Vertex *findVertex(const string &code) const;
 
     void addVertex(Vertex *vertex);
@@ -95,10 +95,11 @@ public:
     bool addEdge(const string &source, const string &dest, double distance, bool direction);
 
     bool removeEdge(const string &source, const string &dest);
-
+    Edge* getTheEdge(Vertex* sorce,string orig);
     void clear();
-
+    bool checkTheVertexInPath(Vertex* vertex,string infoToFound);
     vector<Vertex *> getVertexSet() const;
+    void setVertexSet(const std::vector<Vertex*>& newVertexSet);
 
 protected:
     vector<Vertex *> vertexset;

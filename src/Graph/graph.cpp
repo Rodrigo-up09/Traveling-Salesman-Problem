@@ -250,3 +250,34 @@ void Graph::clear() {
     vertexset.clear();
 }
 
+void Graph::setAllNonVisited() {
+    for(auto & i : vertexset){
+        i->setVisited(false);
+        i->setProcessing(false);
+        i->setPath(nullptr);
+    }
+
+}
+
+bool Graph::checkTheVertexInPath(Vertex* vertex, string infoToFound) {
+    Edge* edgePath = vertex->getPath();
+    if(edgePath->getDest()== nullptr)return false;
+    if (edgePath->getDest()->getInfo() == infoToFound) {
+        return true;
+    }
+    return checkTheVertexInPath(edgePath->getDest(), infoToFound);
+}
+
+void Graph::setVertexSet(const std::vector<Vertex*>& newVertexSet) {
+    vertexset = newVertexSet;
+}
+
+Edge *Graph::getTheEdge(Vertex *sorce, string orig) {
+    for(auto edge:sorce->getAdj()){
+        if(edge->getDest()->getInfo()==orig){
+            return  edge;
+        }
+    }
+    return nullptr;
+
+}
