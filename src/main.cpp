@@ -3,8 +3,9 @@
 
 int main() {
     DataManager dataManager=DataManager();
-    dataManager.readSmall(0);
-    //cout << tspBackTrack(dataManager);
+    dataManager.readSmall(1);
+    cout<<tspBackTrack(dataManager);
+
 
     return 0;
 }

@@ -8,9 +8,7 @@
 using namespace std;
 
 
-
-
-void tspBackTrackR(Graph graph,double actualDist, double &minDist,int n,int currI,vector<int>path,vector<int>currPath);
+void tspBackTrackR(const vector<vector<double>>& distMatrix, double actualDist, double &minDist, int n, int pos, unsigned int  path[], unsigned int currPath[]);
 
 double tspBackTrack(DataManager dataManager);
 #endif

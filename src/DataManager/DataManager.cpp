@@ -11,6 +11,7 @@ using namespace std;
 
 DataManager::DataManager() {
     this->g=Graph();
+    distMatrix = std::vector<std::vector<double>>(1000, std::vector<double>(1000, 0.0));
 
 }
 
@@ -28,7 +29,6 @@ void DataManager::start(int dataSet, int type) {
             break;
     }
 }
-
 
 
 void DataManager::readSmall(int type) {
@@ -55,6 +55,7 @@ void DataManager::readSmall(int type) {
     int size;
     if (tourism) { size = 5; }
     else { size = 3; }
+
     while (getline(file, line)) {
         bool destInGraph = true;
         Vertex *vertexOrigem;
@@ -78,6 +79,9 @@ void DataManager::readSmall(int type) {
             vertexOrigem = new Vertex(code);
             vertexDest= new Vertex(destCode);
         }
+        distMatrix[stoi(code)][stoi(destCode)]=destancia;
+        distMatrix[stoi(destCode)][stoi(code)]=destancia;
+
         Vertex *vertexFoundDest = g.findVertex(vertexDest->getInfo());
         Vertex *vertexFoundOrig = g.findVertex(vertexOrigem->getInfo());
         if (vertexFoundDest == nullptr) {
@@ -87,12 +91,15 @@ void DataManager::readSmall(int type) {
 
         if (vertexFoundOrig == nullptr) {
             vertexOrigem->addEdge(vertexDest, destancia);
+            vertexDest->addEdge(vertexOrigem,destancia);
             g.addVertex(vertexOrigem);
         } else {
             if (destInGraph) {
                 vertexFoundOrig->addEdge(vertexFoundDest, destancia);
+                vertexFoundDest->addEdge(vertexOrigem,destancia);
             } else {
                 vertexFoundOrig->addEdge(vertexDest, destancia);
+                vertexDest->addEdge(vertexOrigem,destancia);
             }
         }
     }
@@ -101,7 +108,6 @@ void DataManager::readSmall(int type) {
         return v1->getInfo() < v2->getInfo();
     });
     g.setVertexSet(copy);
-
 }
 
 void DataManager::readMid() {
@@ -212,6 +218,16 @@ void DataManager::readEdges(string filePath) {
 Graph DataManager::getG() {
     return g;
 }
+
+ vector<vector<double>> &DataManager::getDistMatrix()  {
+    return this->distMatrix;
+}
+
+void DataManager::setDistMatrix(const vector<vector<double>> &distMatrix) {
+    this->distMatrix=distMatrix;
+
+}
+
 
 
 

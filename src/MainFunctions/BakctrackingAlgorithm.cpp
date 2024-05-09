@@ -1,64 +1,50 @@
 #include <cfloat>
 #include "BacktrackingAlgorithm.h"
 
-void tspBackTrackR(Graph graph,double actualDist, double &minDist,int n,int currI,vector<int>path,vector<int>currPath) {
-    Vertex *first=graph.getVertexSet()[0];
-    Edge*  dist=graph.getTheEdge(graph.getVertexSet()[currI-1],first->getInfo());
-
+void tspBackTrackR(const vector<vector<double>>& distMatrix, double actualDist, double &minDist, int n, int currI, unsigned int  path[], unsigned int currPath[]) {
+    //break case
     if(currI==n){
-        if(dist== nullptr){cout<<"no conection last and first";}
-        actualDist+= dist->getdistance();
+        actualDist+=distMatrix[currPath[n-1]][0];
         if(actualDist<minDist){
             minDist=actualDist;
             for(int i=0;i<n;i++){
                 path[i]=currPath[i];
             }
-
         }
         return;
     }
-    for(int i=1;i<n;i++){
-        int value=currPath[currI-1];
-        Edge *next=graph.getTheEdge(graph.getVertexSet()[value], to_string(i));
-        if(next!=nullptr) {
-            if (actualDist + next->getdistance() < minDist) {
-                bool isnewNode = true;
-                for(int j=1;j<currI;j++){//verifica se o no ja esta dentro do path
-                    if(currPath[j]==i){
-                        isnewNode= false;
-                        break;
-                    }
-                }
-                if (isnewNode) {
-                    currPath.push_back(i);
-                    double nextValue=graph.getTheEdge(graph.getVertexSet()[value],to_string(currI))->getdistance();
-                    tspBackTrackR(graph, actualDist += nextValue, minDist, n, currI + 1,path,currPath);
-                }
-
-
-
+for(int i=1;i<n;i++){
+    if((actualDist+distMatrix[currPath[currI-1]][i]<minDist) && distMatrix[currPath[currI-1]][i]>0){//If this dont happen is a non minDist  path,so backTrack
+        bool isNew= true;
+        for(int j=1;j<currI;j++){//check if the value was already process
+            if(currPath[j]==i){
+                isNew= false;
+                break;
             }
+
         }
+        if(isNew){//add the new vertex,and recursive call the next index
+            currPath[currI]=i;
+            tspBackTrackR(distMatrix,actualDist+distMatrix[currPath[currI-1]][currPath[currI]],minDist,n,currI+1,path,currPath);
+        }
+
     }
-
-
+}
 
 }
 
-double tspBackTrack(DataManager dataManager){
-    Graph graph=dataManager.getG();
-    vector<int>currPath;
-    vector<int>path;
+double tspBackTrack(DataManager dataManager) {
+    int n = dataManager.getG().getVertexSet().size();
+    if(n>1000){
+        cout<< "to big for me";
+        return  0.0;}
+     unsigned int path[1000];
+    unsigned int currPath[1000];
+    currPath[0] = 0;
+    double minDist = DBL_MAX;
+    tspBackTrackR(dataManager.getDistMatrix(), 0, minDist, n/2, 1, path, currPath);
 
-    double  minDist= DBL_MAX;
-    graph.setAllNonVisited();
-    Vertex *vertex1=graph.getVertexSet()[1];
-    currPath.push_back(0);
-    int n=graph.getVertexSet().size();
-    tspBackTrackR(graph,0.0,minDist,n,1,path,currPath);
     return minDist;
-
-
 }
 
 

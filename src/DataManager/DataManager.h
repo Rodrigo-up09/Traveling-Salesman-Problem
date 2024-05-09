@@ -19,9 +19,12 @@ public:
     void readReal(int type);
     void readEdges(string filePath);
     Graph getG();
+    vector<vector<double>> &getDistMatrix() ;
+    void setDistMatrix(const vector<vector<double>> &distMatrix);
 
 private:
 Graph g;
+vector<vector<double>> distMatrix;
 };
 
 
