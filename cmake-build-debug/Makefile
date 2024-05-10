@@ -177,6 +177,102 @@ src/Graph/graph.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/projetDA2.dir/build.make CMakeFiles/projetDA2.dir/src/Graph/graph.cpp.s
 .PHONY : src/Graph/graph.cpp.s
 
+src/MainFunctions/BakctrackingAlgorithm.o: src/MainFunctions/BakctrackingAlgorithm.cpp.o
+.PHONY : src/MainFunctions/BakctrackingAlgorithm.o
+
+# target to build an object file
+src/MainFunctions/BakctrackingAlgorithm.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/projetDA2.dir/build.make CMakeFiles/projetDA2.dir/src/MainFunctions/BakctrackingAlgorithm.cpp.o
+.PHONY : src/MainFunctions/BakctrackingAlgorithm.cpp.o
+
+src/MainFunctions/BakctrackingAlgorithm.i: src/MainFunctions/BakctrackingAlgorithm.cpp.i
+.PHONY : src/MainFunctions/BakctrackingAlgorithm.i
+
+# target to preprocess a source file
+src/MainFunctions/BakctrackingAlgorithm.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/projetDA2.dir/build.make CMakeFiles/projetDA2.dir/src/MainFunctions/BakctrackingAlgorithm.cpp.i
+.PHONY : src/MainFunctions/BakctrackingAlgorithm.cpp.i
+
+src/MainFunctions/BakctrackingAlgorithm.s: src/MainFunctions/BakctrackingAlgorithm.cpp.s
+.PHONY : src/MainFunctions/BakctrackingAlgorithm.s
+
+# target to generate assembly for a file
+src/MainFunctions/BakctrackingAlgorithm.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/projetDA2.dir/build.make CMakeFiles/projetDA2.dir/src/MainFunctions/BakctrackingAlgorithm.cpp.s
+.PHONY : src/MainFunctions/BakctrackingAlgorithm.cpp.s
+
+src/MainFunctions/OtherHeuristics.o: src/MainFunctions/OtherHeuristics.cpp.o
+.PHONY : src/MainFunctions/OtherHeuristics.o
+
+# target to build an object file
+src/MainFunctions/OtherHeuristics.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/projetDA2.dir/build.make CMakeFiles/projetDA2.dir/src/MainFunctions/OtherHeuristics.cpp.o
+.PHONY : src/MainFunctions/OtherHeuristics.cpp.o
+
+src/MainFunctions/OtherHeuristics.i: src/MainFunctions/OtherHeuristics.cpp.i
+.PHONY : src/MainFunctions/OtherHeuristics.i
+
+# target to preprocess a source file
+src/MainFunctions/OtherHeuristics.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/projetDA2.dir/build.make CMakeFiles/projetDA2.dir/src/MainFunctions/OtherHeuristics.cpp.i
+.PHONY : src/MainFunctions/OtherHeuristics.cpp.i
+
+src/MainFunctions/OtherHeuristics.s: src/MainFunctions/OtherHeuristics.cpp.s
+.PHONY : src/MainFunctions/OtherHeuristics.s
+
+# target to generate assembly for a file
+src/MainFunctions/OtherHeuristics.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/projetDA2.dir/build.make CMakeFiles/projetDA2.dir/src/MainFunctions/OtherHeuristics.cpp.s
+.PHONY : src/MainFunctions/OtherHeuristics.cpp.s
+
+src/MainFunctions/TSPInTheRealWorld.o: src/MainFunctions/TSPInTheRealWorld.cpp.o
+.PHONY : src/MainFunctions/TSPInTheRealWorld.o
+
+# target to build an object file
+src/MainFunctions/TSPInTheRealWorld.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/projetDA2.dir/build.make CMakeFiles/projetDA2.dir/src/MainFunctions/TSPInTheRealWorld.cpp.o
+.PHONY : src/MainFunctions/TSPInTheRealWorld.cpp.o
+
+src/MainFunctions/TSPInTheRealWorld.i: src/MainFunctions/TSPInTheRealWorld.cpp.i
+.PHONY : src/MainFunctions/TSPInTheRealWorld.i
+
+# target to preprocess a source file
+src/MainFunctions/TSPInTheRealWorld.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/projetDA2.dir/build.make CMakeFiles/projetDA2.dir/src/MainFunctions/TSPInTheRealWorld.cpp.i
+.PHONY : src/MainFunctions/TSPInTheRealWorld.cpp.i
+
+src/MainFunctions/TSPInTheRealWorld.s: src/MainFunctions/TSPInTheRealWorld.cpp.s
+.PHONY : src/MainFunctions/TSPInTheRealWorld.s
+
+# target to generate assembly for a file
+src/MainFunctions/TSPInTheRealWorld.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/projetDA2.dir/build.make CMakeFiles/projetDA2.dir/src/MainFunctions/TSPInTheRealWorld.cpp.s
+.PHONY : src/MainFunctions/TSPInTheRealWorld.cpp.s
+
+src/MainFunctions/TriangularApproximation.o: src/MainFunctions/TriangularApproximation.cpp.o
+.PHONY : src/MainFunctions/TriangularApproximation.o
+
+# target to build an object file
+src/MainFunctions/TriangularApproximation.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/projetDA2.dir/build.make CMakeFiles/projetDA2.dir/src/MainFunctions/TriangularApproximation.cpp.o
+.PHONY : src/MainFunctions/TriangularApproximation.cpp.o
+
+src/MainFunctions/TriangularApproximation.i: src/MainFunctions/TriangularApproximation.cpp.i
+.PHONY : src/MainFunctions/TriangularApproximation.i
+
+# target to preprocess a source file
+src/MainFunctions/TriangularApproximation.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/projetDA2.dir/build.make CMakeFiles/projetDA2.dir/src/MainFunctions/TriangularApproximation.cpp.i
+.PHONY : src/MainFunctions/TriangularApproximation.cpp.i
+
+src/MainFunctions/TriangularApproximation.s: src/MainFunctions/TriangularApproximation.cpp.s
+.PHONY : src/MainFunctions/TriangularApproximation.s
+
+# target to generate assembly for a file
+src/MainFunctions/TriangularApproximation.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/projetDA2.dir/build.make CMakeFiles/projetDA2.dir/src/MainFunctions/TriangularApproximation.cpp.s
+.PHONY : src/MainFunctions/TriangularApproximation.cpp.s
+
 src/Menu/menu.o: src/Menu/menu.cpp.o
 .PHONY : src/Menu/menu.o
 
@@ -240,6 +336,18 @@ help:
 	@echo "... src/Graph/graph.o"
 	@echo "... src/Graph/graph.i"
 	@echo "... src/Graph/graph.s"
+	@echo "... src/MainFunctions/BakctrackingAlgorithm.o"
+	@echo "... src/MainFunctions/BakctrackingAlgorithm.i"
+	@echo "... src/MainFunctions/BakctrackingAlgorithm.s"
+	@echo "... src/MainFunctions/OtherHeuristics.o"
+	@echo "... src/MainFunctions/OtherHeuristics.i"
+	@echo "... src/MainFunctions/OtherHeuristics.s"
+	@echo "... src/MainFunctions/TSPInTheRealWorld.o"
+	@echo "... src/MainFunctions/TSPInTheRealWorld.i"
+	@echo "... src/MainFunctions/TSPInTheRealWorld.s"
+	@echo "... src/MainFunctions/TriangularApproximation.o"
+	@echo "... src/MainFunctions/TriangularApproximation.i"
+	@echo "... src/MainFunctions/TriangularApproximation.s"
 	@echo "... src/Menu/menu.o"
 	@echo "... src/Menu/menu.i"
 	@echo "... src/Menu/menu.s"

@@ -14,4 +14,7 @@ add_executable(projetDA2 src/main.cpp
         src/DataManager/DataManager.cpp
         src/MainFunctions/BacktrackingAlgorithm.h
         src/MainFunctions/BakctrackingAlgorithm.cpp
+        src/MainFunctions/OtherHeuristics.cpp
+        src/MainFunctions/TriangularApproximation.cpp
+        src/MainFunctions/TSPInTheRealWorld.cpp
 )

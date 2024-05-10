@@ -1,11 +1,12 @@
 #include "DataManager/DataManager.h"
 #include "MainFunctions/BacktrackingAlgorithm.h"
+#include "MainFunctions/TriangularApproximation.h"
 
 int main() {
     DataManager dataManager=DataManager();
-    dataManager.readSmall(1);
-    cout<<tspBackTrack(dataManager);
-
+    dataManager.readSmall(2);
+    cout<<tspBackTrack(dataManager) << endl;
+    cout<<tspTriangular(dataManager,true) <<endl;
 
     return 0;
 }

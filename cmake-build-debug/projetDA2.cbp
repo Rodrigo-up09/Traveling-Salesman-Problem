@@ -96,6 +96,30 @@
 		<Unit filename="/home/afonso/Desktop/DA/src/Graph/graph.h">
 			<Option target="projetDA2"/>
 		</Unit>
+		<Unit filename="/home/afonso/Desktop/DA/src/MainFunctions/BacktrackingAlgorithm.h">
+			<Option target="projetDA2"/>
+		</Unit>
+		<Unit filename="/home/afonso/Desktop/DA/src/MainFunctions/BakctrackingAlgorithm.cpp">
+			<Option target="projetDA2"/>
+		</Unit>
+		<Unit filename="/home/afonso/Desktop/DA/src/MainFunctions/OtherHeuristics.cpp">
+			<Option target="projetDA2"/>
+		</Unit>
+		<Unit filename="/home/afonso/Desktop/DA/src/MainFunctions/OtherHeuristics.h">
+			<Option target="projetDA2"/>
+		</Unit>
+		<Unit filename="/home/afonso/Desktop/DA/src/MainFunctions/TSPInTheRealWorld.cpp">
+			<Option target="projetDA2"/>
+		</Unit>
+		<Unit filename="/home/afonso/Desktop/DA/src/MainFunctions/TSPInTheRealWorld.h">
+			<Option target="projetDA2"/>
+		</Unit>
+		<Unit filename="/home/afonso/Desktop/DA/src/MainFunctions/TriangularApproximation.cpp">
+			<Option target="projetDA2"/>
+		</Unit>
+		<Unit filename="/home/afonso/Desktop/DA/src/MainFunctions/TriangularApproximation.h">
+			<Option target="projetDA2"/>
+		</Unit>
 		<Unit filename="/home/afonso/Desktop/DA/src/Menu/menu.cpp">
 			<Option target="projetDA2"/>
 		</Unit>
