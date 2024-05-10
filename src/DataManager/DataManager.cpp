@@ -192,10 +192,8 @@ void DataManager::readReal(int type) {
 }
 
 void DataManager::readEdges(string filePath) {
-    cout << "Starting readEdges with file: " << filePath << endl;
     ifstream file;
     file.open(filePath);
-
     if (!file.is_open()) {
         cout << "Error opening file: " << filePath << endl;
         return;
@@ -203,7 +201,6 @@ void DataManager::readEdges(string filePath) {
     string value, line;
     getline(file, line);
     while (getline(file, line)) {
-        cout << "Reading line: " << line << endl;
         vector<string> values;
         int size = 3;
         istringstream info(line);
@@ -214,11 +211,8 @@ void DataManager::readEdges(string filePath) {
         string origCode = values[0];
         string destCode = values[1];
         double dist = stod(values[2]);
-        cout << "Adding edge from " << origCode << " to " << destCode << " with distance " << dist << endl;
         g.addEdge(origCode, destCode, dist, true);
-        cout << "Edge added successfully" << endl;
     }
-    cout << "Finished readEdges with file: " << filePath << endl;
 }
 
 Graph DataManager::getG() {

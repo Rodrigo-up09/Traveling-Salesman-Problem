@@ -4,7 +4,7 @@
 
 int main() {
     DataManager dataManager=DataManager();
-    dataManager.readSmall(2);
+    dataManager.readSmall(0);
     cout<<tspBackTrack(dataManager) << endl;
     cout<<tspTriangular(dataManager,true) <<endl;
 
