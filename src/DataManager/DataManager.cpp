@@ -211,7 +211,7 @@ void DataManager::readEdges(string filePath) {
         string origCode = values[0];
         string destCode = values[1];
         double dist = stod(values[2]);
-        g.addEdge(origCode, destCode, dist, true);
+        g.addEdge(origCode, destCode, dist, false);
     }
 }
 
