@@ -234,7 +234,6 @@ void DataManager::readEdges(string filePath) {
         return;
     }
     string value, line;
-    getline(file, line);
     while (getline(file, line)) {
         vector<string> values;
         int size = 3;
