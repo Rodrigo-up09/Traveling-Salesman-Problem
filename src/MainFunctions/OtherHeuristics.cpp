@@ -6,6 +6,7 @@
 #include <math.h>
 #include "DataManager/DataManager.h"
 #include "OtherHeuristics.h"
+#include <corecrt_math_defines.h>
 
 using namespace std;
 
@@ -88,4 +89,32 @@ double OtherHeuristics::haversine(double lat1, double lon1, double lat2, double 
     double c = 2 * atan2(sqrt(aux), sqrt(1 - aux));
 
     return c * 6371000;
+}
+
+int OtherHeuristics::OtherHeuristic(DataManager aux, int k, bool toy) {
+   pair<int,vector<pair<int, Vertex *>>> path;
+   vector<int> clusters = cluster_graph(aux, k);
+   int i = 0;
+
+}
+
+vector<vector<double>> OtherHeuristics::getDistances(vector<pair<int, Vertex*>> vertices, bool toy) {
+    vector<vector<double>> distances(vertices.size(), vector<double>(vertices.size(), 0.0));
+    for (auto col: vertices) {
+        for (auto row: vertices) {
+            if (col.first != row.first) {
+                if (toy) {
+                    for (auto y : col.second->getAdj()) {
+                        if (y->getDest()->getInfo() == row.second->getInfo()) {
+                            distances[col.first][row.first] = y->getdistance();
+                        }
+                    }
+                }
+                else {
+                    distances[col.first][row.first] = haversine(col.second->getLatitude(), col.second->getLongitude(), row.second->getLatitude(), row.second->getLongitude());
+                }
+            }
+        }
+    }
+    return distances;
 }
