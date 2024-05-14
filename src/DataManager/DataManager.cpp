@@ -11,7 +11,7 @@ using namespace std;
 
 DataManager::DataManager() {
     this->g=Graph();
-    distMatrix = std::vector<std::vector<double>>(1000, std::vector<double>(1000, 0.0));
+    distMatrix = std::vector<std::vector<double>>(1000, std::vector<double>(100000, 0.0));
 
 }
 
@@ -21,7 +21,7 @@ void DataManager::start(int dataSet, int type) {
             readSmall(type);
             break;
         case 1:
-            readMid();
+            readMid(type);
             break;
         case 2:
             if(type==1 || type==2)
@@ -111,7 +111,10 @@ void DataManager::readSmall(int type) {
 }
 
 //01:14 minutos
-void DataManager::readMid() {
+
+
+void DataManager::readMid(int n) {
+    int x=0;
     ifstream file;
     file.open("../data/Extra_Fully_Connected_Graphs/nodes.csv");
 
@@ -122,6 +125,7 @@ void DataManager::readMid() {
     string value, line;
     getline(file, line);
     while (getline(file, line)) {
+        if(x==n)break;
         bool destInGraph = true;
         Vertex *newVertex;
         vector<string> values;
@@ -136,19 +140,50 @@ void DataManager::readMid() {
         string latitude = values[2];
         newVertex = new Vertex(code);
         g.addVertex(newVertex);
+        x++;
+
     }
-    readEdges("../data/Extra_Fully_Connected_Graphs/edges_25.csv");
-    readEdges("../data/Extra_Fully_Connected_Graphs/edges_50.csv");
-    readEdges("../data/Extra_Fully_Connected_Graphs/edges_75.csv");
-    readEdges("../data/Extra_Fully_Connected_Graphs/edges_100.csv");
-    readEdges("../data/Extra_Fully_Connected_Graphs/edges_200.csv");
-    readEdges("../data/Extra_Fully_Connected_Graphs/edges_300.csv");
-    readEdges("../data/Extra_Fully_Connected_Graphs/edges_400.csv");
-    readEdges("../data/Extra_Fully_Connected_Graphs/edges_500.csv");
-    readEdges("../data/Extra_Fully_Connected_Graphs/edges_600.csv");
-    readEdges("../data/Extra_Fully_Connected_Graphs/edges_700.csv");
-    readEdges("../data/Extra_Fully_Connected_Graphs/edges_800.csv");
-    readEdges("../data/Extra_Fully_Connected_Graphs/edges_900.csv");
+    switch (n) {
+        case 25:
+            readEdges("../data/Extra_Fully_Connected_Graphs/edges_25.csv");
+            break;
+        case 50:
+            readEdges("../data/Extra_Fully_Connected_Graphs/edges_50.csv");
+            break;
+        case 75:
+            readEdges("../data/Extra_Fully_Connected_Graphs/edges_75.csv");
+            break;
+        case 100:
+            readEdges("../data/Extra_Fully_Connected_Graphs/edges_100.csv");
+            break;
+        case 200:
+            readEdges("../data/Extra_Fully_Connected_Graphs/edges_200.csv");
+            break;
+        case 300:
+            readEdges("../data/Extra_Fully_Connected_Graphs/edges_300.csv");
+            break;
+        case 400:
+            readEdges("../data/Extra_Fully_Connected_Graphs/edges_400.csv");
+            break;
+        case 500:
+            readEdges("../data/Extra_Fully_Connected_Graphs/edges_500.csv");
+            break;
+        case 600:
+            readEdges("../data/Extra_Fully_Connected_Graphs/edges_600.csv");
+            break;
+        case 700:
+            readEdges("../data/Extra_Fully_Connected_Graphs/edges_700.csv");
+            break;
+        case 800:
+            readEdges("../data/Extra_Fully_Connected_Graphs/edges_800.csv");
+            break;
+        case 900:
+            readEdges("../data/Extra_Fully_Connected_Graphs/edges_900.csv");
+            break;
+        default:
+            cout<<"especific n";
+            break;
+    }
 }
 
 void DataManager::readReal(int type) {
@@ -211,6 +246,8 @@ void DataManager::readEdges(string filePath) {
         string origCode = values[0];
         string destCode = values[1];
         double dist = stod(values[2]);
+        distMatrix[stoi(origCode)][stoi(destCode)]= dist;
+        distMatrix[stoi(destCode)][stoi(origCode)]= dist;
         g.addEdge(origCode, destCode, dist, false);
     }
 }
@@ -226,6 +263,21 @@ Graph DataManager::getG() {
 void DataManager::setDistMatrix(const vector<vector<double>> &distMatrix) {
     this->distMatrix=distMatrix;
 
+}
+
+Graph &DataManager::getGC() {
+    return g;
+}
+
+void DataManager::printGraph(const Graph &g) {
+    for (const auto& vertex : g.getVertexSet()) {
+        std::cout << "Vertex: " << vertex->getInfo() << std::endl;
+        std::cout << "Adjacent vertices: ";
+        for (const auto& edge : vertex->getAdj()) {
+            std::cout << edge->getDest()->getInfo() << " (distance: " << edge->getdistance() << ") ";
+        }
+        std::cout << std::endl;
+    }
 }
 
 

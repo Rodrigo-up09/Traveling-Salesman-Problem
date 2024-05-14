@@ -2,10 +2,7 @@
 	"artifacts" : 
 	[
 		{
-			"path" : "projetDA2.exe"
-		},
-		{
-			"path" : "projetDA2.pdb"
+			"path" : "projetDA2"
 		}
 	],
 	"backtrace" : 1,
@@ -52,7 +49,7 @@
 			[
 				{
 					"backtrace" : 2,
-					"path" : "C:/Users/Utilizador/Desktop/LEIC/DA/projetDA2/src"
+					"path" : "/home/afonso/Desktop/DA/src"
 				}
 			],
 			"language" : "CXX",
@@ -89,16 +86,12 @@
 			{
 				"fragment" : "",
 				"role" : "flags"
-			},
-			{
-				"fragment" : "-lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32",
-				"role" : "libraries"
 			}
 		],
 		"language" : "CXX"
 	},
 	"name" : "projetDA2",
-	"nameOnDisk" : "projetDA2.exe",
+	"nameOnDisk" : "projetDA2",
 	"paths" : 
 	{
 		"build" : ".",

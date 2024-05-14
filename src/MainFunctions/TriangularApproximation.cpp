@@ -1,5 +1,7 @@
 #include "TriangularApproximation.h"
 
+#include "TriangularApproximation.h"
+
 double haversine(double lat1, double lon1, double lat2, double lon2) {
     double rad_lat1 = lat1 * M_PI / 180;
     double rad_lon1 = lon1 * M_PI / 180;
@@ -15,13 +17,15 @@ double haversine(double lat1, double lon1, double lat2, double lon2) {
     return c * 6371000;
 }
 
-double tspTriangular(DataManager aux, bool flag) {
+double tspTriangular(DataManager aux, vector<Vertex*>& path) {
     for(auto v : aux.getG().getVertexSet()) {
         v->setVisited(false);
     }
     double finalDistance = 0;
     auto current = aux.getG().getVertexSet()[0];
     current->setVisited(true);
+    path.push_back(current);
+
 
     for(int i=0; i < aux.getG().getVertexSet().size(); i++) {
         double minDist = DBL_MAX;
@@ -30,15 +34,11 @@ double tspTriangular(DataManager aux, bool flag) {
         for(auto v : aux.getG().getVertexSet()) {
             if(!v->isVisited()) {
                 double dist;
-                if(flag) {
-                    for(auto e : current->getAdj()) {
-                        if(e->getDest() == v) {
-                            dist = e->getdistance();
-                            break;
-                        }
+                for(auto e : current->getAdj()) {
+                    if(e->getDest()->getInfo() == v->getInfo()) {
+                        dist = e->getdistance();
+                        break;
                     }
-                }else {
-                    dist = haversine(current->getLatitude(), current->getLongitude(), v->getLatitude(), v->getLongitude());
                 }
                 if(dist < minDist) {
                     minDist = dist;
@@ -50,17 +50,17 @@ double tspTriangular(DataManager aux, bool flag) {
             next->setVisited(true);
             finalDistance += minDist;
             current = next;
+            path.push_back(current);
+
         }
     }
-    if (flag) {
-        for(auto e : current->getAdj()) {
-            if(e->getDest() == aux.getG().getVertexSet()[0]) {
-                finalDistance += e->getdistance();
-                break;
-            }
+    for(auto e : current->getAdj()) {
+        if(e->getDest()->getInfo() == aux.getG().getVertexSet()[0]->getInfo()) {
+            finalDistance += e->getdistance();
+            break;
         }
-    } else {
-        finalDistance += haversine(current->getLatitude(), current->getLongitude(), aux.getG().getVertexSet()[0]->getLatitude(), aux.getG().getVertexSet()[0]->getLongitude());
     }
+    path.push_back(aux.getG().getVertexSet()[0]);
+
     return finalDistance;
 }
