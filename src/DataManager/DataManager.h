@@ -22,6 +22,7 @@ public:
     Graph& getGC();
     vector<vector<double>> &getDistMatrix() ;
     void setDistMatrix(const vector<vector<double>> &distMatrix);
+    void printGraph(const Graph &g);
 
 private:
 Graph g;

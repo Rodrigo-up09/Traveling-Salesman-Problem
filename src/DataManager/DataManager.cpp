@@ -269,6 +269,17 @@ Graph &DataManager::getGC() {
     return g;
 }
 
+void DataManager::printGraph(const Graph &g) {
+    for (const auto& vertex : g.getVertexSet()) {
+        std::cout << "Vertex: " << vertex->getInfo() << std::endl;
+        std::cout << "Adjacent vertices: ";
+        for (const auto& edge : vertex->getAdj()) {
+            std::cout << edge->getDest()->getInfo() << " (distance: " << edge->getdistance() << ") ";
+        }
+        std::cout << std::endl;
+    }
+}
+
 
 
 

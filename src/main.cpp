@@ -9,9 +9,14 @@ int main() {
     DataManager dataManager;
     DataManager dataManager2;
     dataManager.readMid(200);
-   dataManager2.readMid(200);
+    dataManager2.readMid(200);
+    vector<Vertex*> path;
     //cout<<tspBackTrack(dataManager)<<endl;
-    cout<<tspTriangular(dataManager, true)<<endl;
+    cout<<tspTriangular(dataManager, true, path)<<endl;
+    for(auto v : path) {
+        cout << v->getInfo() << " ";
+    }
+    cout << endl;
     pair<vector<Vertex*>, double> tspResult = nearestNeighborTSP(dataManager2.getG(), "0");
 
     // Check if a feasible TSP tour exists
@@ -26,6 +31,17 @@ int main() {
     } else {
         cerr << "No feasible TSP tour found." << endl;
     }
+
+    DataManager dataManager3;
+    dataManager3.readSmall(2);
+    vector<Vertex*> path2;
+    cout<<tspBackTrack(dataManager3) << endl;
+    cout<<tspTriangular(dataManager3, true, path2) << endl;
+    for(auto v : path2) {
+        cout << v->getInfo() << " ";
+    }
+    cout << endl;
+
 
     return 0;
 }
