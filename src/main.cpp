@@ -8,11 +8,12 @@
 int main() {
     DataManager dataManager;
     DataManager dataManager2;
-    dataManager.readMid(200);
+    dataManager.readMid(25);
+    dataManager.printGraph(dataManager.getG());
     dataManager2.readMid(200);
     vector<Vertex*> path;
-    //cout<<tspBackTrack(dataManager)<<endl;
-    cout<<tspTriangular(dataManager, true, path)<<endl;
+    cout<<tspBackTrack(dataManager)<<endl;
+    cout<<tspTriangular(dataManager, path)<<endl;
     for(auto v : path) {
         cout << v->getInfo() << " ";
     }
@@ -33,10 +34,10 @@ int main() {
     }
 
     DataManager dataManager3;
-    dataManager3.readSmall(2);
+    dataManager3.readSmall(0);
     vector<Vertex*> path2;
     cout<<tspBackTrack(dataManager3) << endl;
-    cout<<tspTriangular(dataManager3, true, path2) << endl;
+    cout<<tspTriangular(dataManager3, path2) << endl;
     for(auto v : path2) {
         cout << v->getInfo() << " ";
     }

@@ -17,7 +17,7 @@ double haversine(double lat1, double lon1, double lat2, double lon2) {
     return c * 6371000;
 }
 
-double tspTriangular(DataManager aux, bool flag, vector<Vertex*>& path) {
+double tspTriangular(DataManager aux, vector<Vertex*>& path) {
     for(auto v : aux.getG().getVertexSet()) {
         v->setVisited(false);
     }
@@ -34,15 +34,11 @@ double tspTriangular(DataManager aux, bool flag, vector<Vertex*>& path) {
         for(auto v : aux.getG().getVertexSet()) {
             if(!v->isVisited()) {
                 double dist;
-                if(flag) {
-                    for(auto e : current->getAdj()) {
-                        if(e->getDest()->getInfo() == v->getInfo()) {
-                            dist = e->getdistance();
-                            break;
-                        }
+                for(auto e : current->getAdj()) {
+                    if(e->getDest()->getInfo() == v->getInfo()) {
+                        dist = e->getdistance();
+                        break;
                     }
-                }else {
-                    dist = haversine(current->getLatitude(), current->getLongitude(), v->getLatitude(), v->getLongitude());
                 }
                 if(dist < minDist) {
                     minDist = dist;
@@ -58,15 +54,11 @@ double tspTriangular(DataManager aux, bool flag, vector<Vertex*>& path) {
 
         }
     }
-    if (flag) {
-        for(auto e : current->getAdj()) {
-            if(e->getDest()->getInfo() == aux.getG().getVertexSet()[0]->getInfo()) {
-                finalDistance += e->getdistance();
-                break;
-            }
+    for(auto e : current->getAdj()) {
+        if(e->getDest()->getInfo() == aux.getG().getVertexSet()[0]->getInfo()) {
+            finalDistance += e->getdistance();
+            break;
         }
-    } else {
-        finalDistance += haversine(current->getLatitude(), current->getLongitude(), aux.getG().getVertexSet()[0]->getLatitude(), aux.getG().getVertexSet()[0]->getLongitude());
     }
     path.push_back(aux.getG().getVertexSet()[0]);
 
