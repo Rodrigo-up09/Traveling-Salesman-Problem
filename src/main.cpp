@@ -8,15 +8,11 @@
 int main() {
     DataManager dataManager;
     DataManager dataManager2;
-    dataManager.readMid(25);
-   dataManager2.readMid(25);
-    cout<<tspBackTrack(dataManager)<<endl;
-    cout<< tspTriangular(dataManager2, true);
-    return 0;
-}
-
-    /*
-    pair<vector<Vertex*>, double> tspResult = nearestNeighborTSP(dataManager.getG(), "0");
+    dataManager.readMid(200);
+   dataManager2.readMid(200);
+    //cout<<tspBackTrack(dataManager)<<endl;
+    cout<<tspTriangular(dataManager, true)<<endl;
+    pair<vector<Vertex*>, double> tspResult = nearestNeighborTSP(dataManager2.getG(), "0");
 
     // Check if a feasible TSP tour exists
     if (!tspResult.first.empty()) {
@@ -34,7 +30,6 @@ int main() {
     return 0;
 }
 
-*/
     /*
     OtherHeuristics heuristics;
 

@@ -114,6 +114,10 @@ void Vertex::setLabel(const string &label) {
     Vertex::label = label;
 }
 
+bool Vertex::operator<(const Vertex &other) const {
+    return dist < other.dist;
+}
+
 
 
 Edge::Edge(Vertex* orig, Vertex* dest, double distance)

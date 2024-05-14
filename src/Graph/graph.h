@@ -30,7 +30,7 @@ public:
     void setProcessing(bool processing);
     void setDist(double dist);
     void setPath(Edge* path);
-
+    bool operator<(const Vertex& other) const;
     void setLatitude(double latitude);
     double getLatitude() const;
     double getLongitude() const;

@@ -1,4 +1,5 @@
 
+#include <queue>
 #include "TSPInTheRealWorld.h"
 
 
@@ -24,6 +25,7 @@ Vertex* findNearestNeighbor(Vertex* vertex, const vector<Vertex*>& unvisited) {
 pair<vector<Vertex*>, double> nearestNeighborTSP(Graph graph, const string& origin) {
     vector<Vertex*> tour;
     vector<Vertex*> unvisited = graph.getVertexSet();
+
     double totalDistance = 0.0;
 
 
@@ -81,3 +83,45 @@ pair<vector<Vertex*>, double> nearestNeighborTSP(Graph graph, const string& orig
 
     return make_pair(tour, totalDistance);
 }
+
+
+// Christofides algorithm
+//this algoritm first get the mst-i will use prime algoritm
+//But there is a problem this algoritm just handle complete graph,so maybe it can be a risky solotion
+
+std::vector<Vertex*> prim(Graph* g) {
+    // Initialize
+    if (g->getVertexSet().empty()) return g->getVertexSet();
+    double INF = std::numeric_limits<double>::infinity();
+    for (Vertex* vertex : g->getVertexSet()) {
+        vertex->setDist(INF);
+        vertex->setPath(nullptr);
+        vertex->setVisited(false);
+    }
+    // Obtain a random vertex
+    Vertex* start = g->getVertexSet().front();
+    start->setDist(0);
+    priority_queue<Vertex*> q;
+    q.push(start);
+    while (!q.empty()) {
+        Vertex* v = q.top();
+        q.pop();
+        v->setVisited(true);
+        for (Edge* edge : v->getAdj()) {
+            Vertex* w = edge->getDest();
+            if (!w->isVisited()) {
+                double old_dist = w->getDist();
+                if (old_dist > edge->getdistance()) {
+                    w->setDist(edge->getdistance());
+                    w->setPath(edge);
+                    if (old_dist == INF) {
+                        q.push(w);
+                    }
+                }
+            }
+        }
+    }
+    return g->getVertexSet();
+}
+
+
