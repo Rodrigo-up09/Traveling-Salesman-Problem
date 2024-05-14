@@ -145,40 +145,40 @@ void DataManager::readMid(int n) {
     }
     switch (n) {
         case 25:
-            readEdges("../data/Extra_Fully_Connected_Graphs/edges_25.csv");
+            readEdges("../data/Extra_Fully_Connected_Graphs/edges_25.csv",false);
             break;
         case 50:
-            readEdges("../data/Extra_Fully_Connected_Graphs/edges_50.csv");
+            readEdges("../data/Extra_Fully_Connected_Graphs/edges_50.csv",false);
             break;
         case 75:
-            readEdges("../data/Extra_Fully_Connected_Graphs/edges_75.csv");
+            readEdges("../data/Extra_Fully_Connected_Graphs/edges_75.csv",false);
             break;
         case 100:
-            readEdges("../data/Extra_Fully_Connected_Graphs/edges_100.csv");
+            readEdges("../data/Extra_Fully_Connected_Graphs/edges_100.csv",false);
             break;
         case 200:
-            readEdges("../data/Extra_Fully_Connected_Graphs/edges_200.csv");
+            readEdges("../data/Extra_Fully_Connected_Graphs/edges_200.csv",false);
             break;
         case 300:
-            readEdges("../data/Extra_Fully_Connected_Graphs/edges_300.csv");
+            readEdges("../data/Extra_Fully_Connected_Graphs/edges_300.csv",false);
             break;
         case 400:
-            readEdges("../data/Extra_Fully_Connected_Graphs/edges_400.csv");
+            readEdges("../data/Extra_Fully_Connected_Graphs/edges_400.csv",false);
             break;
         case 500:
-            readEdges("../data/Extra_Fully_Connected_Graphs/edges_500.csv");
+            readEdges("../data/Extra_Fully_Connected_Graphs/edges_500.csv",false);
             break;
         case 600:
-            readEdges("../data/Extra_Fully_Connected_Graphs/edges_600.csv");
+            readEdges("../data/Extra_Fully_Connected_Graphs/edges_600.csv",false);
             break;
         case 700:
-            readEdges("../data/Extra_Fully_Connected_Graphs/edges_700.csv");
+            readEdges("../data/Extra_Fully_Connected_Graphs/edges_700.csv",false);
             break;
         case 800:
-            readEdges("../data/Extra_Fully_Connected_Graphs/edges_800.csv");
+            readEdges("../data/Extra_Fully_Connected_Graphs/edges_800.csv",false);
             break;
         case 900:
-            readEdges("../data/Extra_Fully_Connected_Graphs/edges_900.csv");
+            readEdges("../data/Extra_Fully_Connected_Graphs/edges_900.csv",false);
             break;
         default:
             cout<<"especific n";
@@ -218,15 +218,15 @@ void DataManager::readReal(int type) {
     }
     switch (type) {
         case 1:
-            readEdges("../data/Real-world Graphs/graph1/edges.csv");
+            readEdges("../data/Real-world Graphs/graph1/edges.csv",true);
             break;
         case 2:
-            readEdges("../data/Real-world Graphs/graph2/edges.csv");
+            readEdges("../data/Real-world Graphs/graph2/edges.csv",true);
             break;
     }
 }
 
-void DataManager::readEdges(string filePath) {
+void DataManager::readEdges(string filePath, bool flag) {
     ifstream file;
     file.open(filePath);
     if (!file.is_open()) {
@@ -234,6 +234,9 @@ void DataManager::readEdges(string filePath) {
         return;
     }
     string value, line;
+    if(flag) {
+        getline(file, line);
+    }
     while (getline(file, line)) {
         vector<string> values;
         int size = 3;

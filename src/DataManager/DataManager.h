@@ -17,7 +17,7 @@ public:
     void readSmall(int type);
     void readMid(int n);
     void readReal(int type);
-    void readEdges(string filePath);
+    void readEdges(string filePath, bool flag);
     Graph getG();
     Graph& getGC();
     vector<vector<double>> &getDistMatrix() ;
