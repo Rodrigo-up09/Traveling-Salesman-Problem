@@ -30,14 +30,14 @@ public:
     void setProcessing(bool processing);
     void setDist(double dist);
     void setPath(Edge* path);
-
+    bool operator<(const Vertex& other) const;
     void setLatitude(double latitude);
     double getLatitude() const;
     double getLongitude() const;
 
     void setLongitude(double longitude);
 
-    Edge* addEdge(Vertex* dest, int distance);
+    Edge* addEdge(Vertex* dest, double distance);
     const string &getLabel() const;
 
     void setLabel(const string &label);
@@ -61,12 +61,12 @@ protected:
 
 class Edge {
 public:
-    Edge(Vertex* orig, Vertex* dest, int distance);
-    void setDistance(int distance);
+    Edge(Vertex* orig, Vertex* dest, double distance);
+    void setDistance(double distance);
     ~Edge();
 
     Vertex* getDest();
-    int getdistance() const;
+    double getdistance() const;
     bool isSelected() const; 
     Vertex* getOrig() const; 
     Edge* getReverse() const; 
@@ -74,7 +74,7 @@ public:
     void setReverse(Edge* reverse); 
 protected:
     Vertex* dest; 
-    int distance;
+    double distance;
     bool selected = false;
     Vertex* orig; 
     Edge* reverse = nullptr; 
@@ -84,7 +84,7 @@ protected:
 class Graph {
 public:
     Graph();
-
+    void setAllNonVisited();
     Vertex *findVertex(const string &code) const;
 
     void addVertex(Vertex *vertex);
@@ -92,13 +92,14 @@ public:
 
     bool removeVertex(const string &code);
 
-    bool addEdge(const string &source, const string &dest, int distance, bool direction);
+    bool addEdge(const string &source, const string &dest, double distance, bool direction);
 
     bool removeEdge(const string &source, const string &dest);
-
+    Edge* getTheEdge(Vertex* sorce,string orig);
     void clear();
-
+    bool checkTheVertexInPath(Vertex* vertex,string infoToFound);
     vector<Vertex *> getVertexSet() const;
+    void setVertexSet(const std::vector<Vertex*>& newVertexSet);
 
 protected:
     vector<Vertex *> vertexset;
