@@ -43,7 +43,6 @@ double tspBackTrack(DataManager dataManager) {
     currPath[0] = 0;
     double minDist = DBL_MAX;
     tspBackTrackR(dataManager.getDistMatrix(), 0, minDist, n/2, 1, path, currPath);
-
     return minDist;
 }
 

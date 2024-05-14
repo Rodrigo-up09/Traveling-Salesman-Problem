@@ -15,10 +15,11 @@ public:
     DataManager();
     void start(int dataSet,int type);
     void readSmall(int type);
-    void readMid();
+    void readMid(int n);
     void readReal(int type);
     void readEdges(string filePath);
     Graph getG();
+    Graph& getGC();
     vector<vector<double>> &getDistMatrix() ;
     void setDistMatrix(const vector<vector<double>> &distMatrix);
 

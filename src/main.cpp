@@ -3,8 +3,39 @@
 #include "MainFunctions/TriangularApproximation.h"
 #include "MainFunctions/OtherHeuristics.h"
 #include "Graph/graph.h"
+#include "MainFunctions/TSPInTheRealWorld.h"
 
 int main() {
+    DataManager dataManager;
+    DataManager dataManager2;
+    dataManager.readMid(25);
+   dataManager2.readMid(25);
+    cout<<tspBackTrack(dataManager)<<endl;
+    cout<< tspTriangular(dataManager2, true);
+    return 0;
+}
+
+    /*
+    pair<vector<Vertex*>, double> tspResult = nearestNeighborTSP(dataManager.getG(), "0");
+
+    // Check if a feasible TSP tour exists
+    if (!tspResult.first.empty()) {
+        cout << "TSP Tour: ";
+        for (Vertex* vertex : tspResult.first) {
+            cout << vertex->getInfo() << " ";
+        }
+        cout << endl;
+
+        cout << "Total Distance: " << tspResult.second << endl;
+    } else {
+        cerr << "No feasible TSP tour found." << endl;
+    }
+
+    return 0;
+}
+
+*/
+    /*
     OtherHeuristics heuristics;
 
     std::vector<std::vector<double>> distances_large = {
@@ -34,4 +65,4 @@ int main() {
     }
 
     return 0;
-}
+     */
