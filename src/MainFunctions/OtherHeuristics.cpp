@@ -9,7 +9,6 @@
 
 using namespace std;
 
-
 vector<int> OtherHeuristics::cluster_graph(DataManager aux, int k) {
     vector<Vertex *> vertexes = aux.getG().getVertexSet();
     vector<int> closures;
