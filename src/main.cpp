@@ -54,13 +54,18 @@ int main() {
     /*
     DataManager dataManager;
     DataManager dataManager2;
-    dataManager.readMid(25);
+    //dataManager.readMid(25);
     //dataManager.printGraph(dataManager.getG());
-    dataManager2.readMid(25);
+    dataManager2.readReal(2);
     vector<Vertex *> path;
     cout << tspBackTrack(dataManager) << endl;
+<<<<<<< Updated upstream
     cout<< greedyTSP(dataManager2.getG(),"0").second;
     */
+=======
+   // auto result=greedyTSP2(dataManager2.getG(),"10",dataManager2.getDistMatrix());
+    //printTour(result.first, result.second);
+>>>>>>> Stashed changes
 
 }
     /*

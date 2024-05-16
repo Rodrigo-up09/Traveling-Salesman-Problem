@@ -11,7 +11,7 @@ using namespace std;
 
 DataManager::DataManager() {
     this->g=Graph();
-    distMatrix = std::vector<std::vector<double>>(1000, std::vector<double>(100000, 0.0));
+    distMatrix = std::vector<std::vector<double>>(10000, std::vector<double>(10000, 0.0));
 
 }
 
