@@ -2,18 +2,65 @@
 #include "MainFunctions/BacktrackingAlgorithm.h"
 #include "MainFunctions/TriangularApproximation.h"
 #include "MainFunctions/OtherHeuristics.h"
-#include "Graph/graph.h"
 #include "MainFunctions/TSPInTheRealWorld.h"
+#include "Graph/graph.h"
 
 int main() {
+    DataManager dataManager1;
+    DataManager dataManager2;
+    DataManager dataManager3;
+    DataManager dataManager4;
+    DataManager dataManager5;
+    dataManager1.readSmall(0);
+    dataManager2.readSmall(1);
+    dataManager3.readSmall(2);
+    dataManager4.readMid(25);
+    dataManager5.readReal(1);
+    vector<Vertex *> path1;
+    vector<Vertex *> path2;
+    vector<Vertex *> path3;
+    vector<Vertex *> path4;
+    vector<Vertex *> path5;
+    cout << tspTriangular(dataManager1, path1, true) << endl;
+    for(auto v : path1) {
+        cout << v->getInfo() << " ";
+    }
+    cout << endl;
+
+    cout << tspTriangular(dataManager2, path2, true) << endl;
+    for(auto v : path2) {
+        cout << v->getInfo() << " ";
+    }
+    cout << endl;
+
+    cout << tspTriangular(dataManager3, path3, true) << endl;
+    for(auto v : path3) {
+        cout << v->getInfo() << " ";
+    }
+    cout << endl;
+
+    cout << tspTriangular(dataManager4, path4, false) << endl;
+    for(auto v : path4) {
+        cout << v->getInfo() << " ";
+    }
+    cout << endl;
+
+    cout << tspTriangular(dataManager5, path5, false) << endl;
+    for(auto v : path5) {
+        cout << v->getInfo() << " ";
+    }
+    cout << endl;
+
+    /*
     DataManager dataManager;
     DataManager dataManager2;
     dataManager.readMid(25);
     //dataManager.printGraph(dataManager.getG());
     dataManager2.readMid(25);
     vector<Vertex *> path;
-   // cout << tspBackTrack(dataManager) << endl;
-    //cout<< greedyTSP(dataManager2.getG(),"0").second;
+    cout << tspBackTrack(dataManager) << endl;
+    cout<< greedyTSP(dataManager2.getG(),"0").second;
+    */
 
 }
     /*

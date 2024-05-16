@@ -3,10 +3,9 @@
 #include <cmath>
 #include <algorithm>
 #include <limits>
-#include <math.h>
 #include "DataManager/DataManager.h"
 #include "OtherHeuristics.h"
-//#include <corecrt_math_defines.h>
+#include "TriangularApproximation.h"
 
 using namespace std;
 
@@ -76,19 +75,25 @@ pair<int,vector<pair<int, Vertex *>>> joinSets(pair<int,vector<pair<int, Vertex 
     return {distance, joinedPath};
 }
 
-double haversine(double lat1, double lon1, double lat2, double lon2) {
-    double rad_lat1 = lat1 * M_PI / 180;
-    double rad_lon1 = lon1 * M_PI / 180;
-    double rad_lat2 = lat2 * M_PI / 180;
-    double rad_lon2 = lon2 * M_PI / 180;
-
-    double delta_lat = rad_lat2 - rad_lat1;
-    double delta_lon = rad_lon2 - rad_lon1;
-
-    double aux = pow(sin(delta_lat/2),2) + cos(rad_lat1) * cos(rad_lat2) * pow(sin(delta_lon/2),2);
-    double c = 2 * atan2(sqrt(aux), sqrt(1 - aux));
-
-    return c * 6371000;
+vector<vector<double>> getDistances(vector<pair<int, Vertex*>> vertices, bool toy) {
+    vector<vector<double>> distances(vertices.size(), vector<double>(vertices.size(), 0.0));
+    for (auto col: vertices) {
+        for (auto row: vertices) {
+            if (col.first != row.first) {
+                if (toy) {
+                    for (auto y : col.second->getAdj()) {
+                        if (y->getDest()->getInfo() == row.second->getInfo()) {
+                            distances[col.first][row.first] = y->getdistance();
+                        }
+                    }
+                }
+                else {
+                    distances[col.first][row.first] = haversine(col.second->getLatitude(), col.second->getLongitude(), row.second->getLatitude(), row.second->getLongitude());
+                }
+            }
+        }
+    }
+    return distances;
 }
 
 int OtherHeuristic(DataManager aux, int k, bool toy) {
@@ -123,25 +128,4 @@ int OtherHeuristic(DataManager aux, int k, bool toy) {
         finalPath.first += x;
     }
     return finalPath.first;
-}
-
-vector<vector<double>> getDistances(vector<pair<int, Vertex*>> vertices, bool toy) {
-    vector<vector<double>> distances(vertices.size(), vector<double>(vertices.size(), 0.0));
-    for (auto col: vertices) {
-        for (auto row: vertices) {
-            if (col.first != row.first) {
-                if (toy) {
-                    for (auto y : col.second->getAdj()) {
-                        if (y->getDest()->getInfo() == row.second->getInfo()) {
-                            distances[col.first][row.first] = y->getdistance();
-                        }
-                    }
-                }
-                else {
-                    distances[col.first][row.first] = haversine(col.second->getLatitude(), col.second->getLongitude(), row.second->getLatitude(), row.second->getLongitude());
-                }
-            }
-        }
-    }
-    return distances;
 }
