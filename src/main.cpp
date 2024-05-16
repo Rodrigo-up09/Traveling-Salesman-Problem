@@ -6,6 +6,10 @@
 #include "Graph/graph.h"
 
 int main() {
+
+
+
+/*
     DataManager dataManager1;
     DataManager dataManager2;
     DataManager dataManager3;
@@ -51,21 +55,17 @@ int main() {
     }
     cout << endl;
 
-    /*
-    DataManager dataManager;
-    DataManager dataManager2;
-    //dataManager.readMid(25);
-    //dataManager.printGraph(dataManager.getG());
-    dataManager2.readReal(2);
-    vector<Vertex *> path;
-    cout << tspBackTrack(dataManager) << endl;
-<<<<<<< Updated upstream
-    cout<< greedyTSP(dataManager2.getG(),"0").second;
     */
-=======
-   // auto result=greedyTSP2(dataManager2.getG(),"10",dataManager2.getDistMatrix());
-    //printTour(result.first, result.second);
->>>>>>> Stashed changes
+    DataManager dataManager1;
+    DataManager dataManager2;
+    dataManager1.readMid(900);
+    dataManager2.readMid(900);
+    vector<Vertex *> path;
+    auto result1=greedyTSP3(dataManager2.getG(),"49",dataManager2.getDistMatrix());
+   auto result=greedyTSP2(dataManager2.getG(),"49",dataManager2.getDistMatrix());
+    printTour(result.first, result.second);
+    printTour(result1.first,result1.second);
+    return 0;
 
 }
     /*

@@ -171,6 +171,8 @@ Vertex* Edge::getDest() {
 }
 
 
+
+
 Vertex * Graph::findVertex(const string &code)const {
     for (Vertex *vertex: vertexset ) {
         if (vertex->getInfo()== code) {

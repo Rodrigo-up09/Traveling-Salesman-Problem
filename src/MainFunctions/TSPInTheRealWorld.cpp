@@ -164,7 +164,7 @@ void printTour(const vector<Vertex*>& tour, double totalDistance) {
     cout << "Total distance: " << totalDistance << endl;
 }
 pair<vector<Vertex*>, double> greedyTSP2(Graph graph, const string& origin, vector<vector<double>> distMatrix) {//very good,but dont know why with big dataSets repeat numbers
-    
+
     vector<Vertex *> tour;
     double totalDistance = 0.0;
     Vertex *currentVertex = graph.findVertex(origin);
@@ -174,11 +174,10 @@ pair<vector<Vertex*>, double> greedyTSP2(Graph graph, const string& origin, vect
         cerr << "Origin vertex not found in the graph." << endl;
         return make_pair(tour, totalDistance);
     }
-
+    tour.push_back(first);
 
     graph.setAllNonVisited();
-
-
+    //Priority_queeu that stores a edge and a pair,douvle and edge in vector of pair,using a greater operator
     priority_queue<pair<double, Edge*>, vector<pair<double, Edge*>>, greater<>> pq;
 
 
@@ -186,7 +185,7 @@ pair<vector<Vertex*>, double> greedyTSP2(Graph graph, const string& origin, vect
         pq.push({edge->getdistance(), edge});
     }
 
-    currentVertex->setVisited(true); // Mark the current vertex as visited
+    currentVertex->setVisited(true);
 
 
     while (!pq.empty()) {
@@ -194,7 +193,6 @@ pair<vector<Vertex*>, double> greedyTSP2(Graph graph, const string& origin, vect
         pq.pop();
         Vertex *nextVertex = edge->getDest();
 
-        // Check if the next vertex has not been visited and it's not the same as the first vertex (to ensure bidirectionality)
         if (!nextVertex->isVisited() && nextVertex != first) {
             tour.push_back(nextVertex);
             lastAddedVertex = nextVertex; // Update the last added vertex
@@ -203,7 +201,9 @@ pair<vector<Vertex*>, double> greedyTSP2(Graph graph, const string& origin, vect
 
 
             for (auto nextEdge : nextVertex->getAdj()) {
-                pq.push({nextEdge->getdistance(), nextEdge});
+                if(!nextEdge->getDest()->isVisited()) {
+                    pq.push({nextEdge->getdistance(), nextEdge});
+                }
             }
         }
     }
@@ -262,3 +262,63 @@ std::vector<Vertex*> prim(Graph* g) {
 }
 
 
+pair<vector<Vertex*>, double> greedyTSP3(Graph graph, const string& origin, vector<vector<double>> distMatrix) {
+    vector<Vertex *> tour;
+    double totalDistance = 0.0;
+    Vertex *currentVertex = graph.findVertex(origin);
+    Vertex *first = currentVertex;
+    Vertex *lastAddedVertex = nullptr; // Store the last added vertex
+
+    if (currentVertex == nullptr) {
+        cerr << "Origin vertex not found in the graph." << endl;
+        return make_pair(tour, totalDistance);
+    }
+
+    tour.push_back(first);
+    graph.setAllNonVisited();
+
+    auto compareEdges = [](const Edge* a, const Edge* b) {
+        return a->getdistance() > b->getdistance(); // Use > for min-heap
+    };
+
+    //Decltype,used to declare the custom operator
+    priority_queue<Edge*, vector<Edge*>, decltype(compareEdges)> pq(compareEdges);
+
+    for (auto edge : currentVertex->getAdj()) {
+        pq.push(edge);
+    }
+
+    currentVertex->setVisited(true); // Mark the current vertex as visited
+
+    while (!pq.empty()) {
+        Edge* minEdge = pq.top();
+        pq.pop();
+        Vertex *nextVertex = minEdge->getDest();
+
+        if (!nextVertex->isVisited()) {
+            tour.push_back(nextVertex);
+            lastAddedVertex = nextVertex;
+            nextVertex->setVisited(true);
+            totalDistance += minEdge->getdistance();
+
+
+            for (auto nextEdge : nextVertex->getAdj()) {
+                if(!nextEdge->getDest()->isVisited()) {
+                    pq.push(nextEdge);
+                }
+            }
+        }
+    }
+
+
+    if (lastAddedVertex != nullptr) {
+        int a = stoi(origin);
+        int b = stoi(lastAddedVertex->getInfo());
+        double value = distMatrix[a][b];
+        totalDistance += value;
+    }
+
+    tour.push_back(first);
+
+    return make_pair(tour, totalDistance);
+}

@@ -79,6 +79,7 @@ protected:
     Vertex* orig; 
     Edge* reverse = nullptr; 
     bool isReverse;
+    bool operator>(const Edge& other) const;
 };
 
 class Graph {
