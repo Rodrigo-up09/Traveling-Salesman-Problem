@@ -10,7 +10,7 @@
 
 using namespace std;
 
-vector<int> OtherHeuristics::cluster_graph(DataManager aux, int k) {
+vector<int> cluster_graph(DataManager aux, int k) {
     vector<Vertex *> vertexes = aux.getG().getVertexSet();
     vector<int> closures;
     int j = 0;
@@ -21,7 +21,7 @@ vector<int> OtherHeuristics::cluster_graph(DataManager aux, int k) {
     return closures;
 }
 
-pair<int,vector<pair<int,Vertex *>>> OtherHeuristics::tsp_dynamic_programming(vector<vector<double>> distances, vector<pair<int,Vertex *>> vertices, int pos, int mask, int k, pair<int,vector<pair<int,Vertex *>>> path) {
+pair<int,vector<pair<int,Vertex *>>> tsp_dynamic_programming(vector<vector<double>> distances, vector<pair<int,Vertex *>> vertices, int pos, int mask, int k, pair<int,vector<pair<int,Vertex *>>> path) {
     int allVisited = (1 << k) - 1;
     if (mask == allVisited) {
         return path;
@@ -53,7 +53,7 @@ pair<int,vector<pair<int,Vertex *>>> OtherHeuristics::tsp_dynamic_programming(ve
     return best_path;
 }
 
-pair<int,vector<pair<int, Vertex *>>> OtherHeuristics::joinSets(pair<int,vector<pair<int, Vertex *>>> set1, pair<int,vector<pair<int, Vertex *>>> set2, bool toy) {
+pair<int,vector<pair<int, Vertex *>>> joinSets(pair<int,vector<pair<int, Vertex *>>> set1, pair<int,vector<pair<int, Vertex *>>> set2, bool toy) {
     pair<int,vector<pair<int, Vertex *>>> merged;
     Vertex * single1 = set1.second.back().second;
     Vertex * single2 = set2.second[0].second;
@@ -76,7 +76,7 @@ pair<int,vector<pair<int, Vertex *>>> OtherHeuristics::joinSets(pair<int,vector<
     return {distance, joinedPath};
 }
 
-double OtherHeuristics::haversine(double lat1, double lon1, double lat2, double lon2) {
+double haversine(double lat1, double lon1, double lat2, double lon2) {
     double rad_lat1 = lat1 * M_PI / 180;
     double rad_lon1 = lon1 * M_PI / 180;
     double rad_lat2 = lat2 * M_PI / 180;
@@ -91,14 +91,41 @@ double OtherHeuristics::haversine(double lat1, double lon1, double lat2, double 
     return c * 6371000;
 }
 
-int OtherHeuristics::OtherHeuristic(DataManager aux, int k, bool toy) {
-   pair<int,vector<pair<int, Vertex *>>> path;
+int OtherHeuristic(DataManager aux, int k, bool toy) {
+   vector<Vertex *> vertices = aux.getG().getVertexSet();
+   vector<pair<int,Vertex *>> workingVertices = {};
+   pair<int,vector<pair<int, Vertex *>>> finalPath;
+   finalPath.first = 0;
+   finalPath.second = {};
    vector<int> clusters = cluster_graph(aux, k);
    int i = 0;
-
+   for (int y : clusters) {
+        for (int w = 0; w < k; w++) {
+           workingVertices.push_back({i, vertices[y + w]});
+        }
+        vector<vector<double>> distances = getDistances(workingVertices, toy);
+        joinSets(finalPath, tsp_dynamic_programming(distances, workingVertices, 0, 0, k, {0, {}}), toy);
+    }
+    if (toy) {
+        int x;
+        for (auto y: finalPath.second.back().second->getAdj()) {
+            if (y->getDest()->getInfo() == finalPath.second[0].second->getInfo()) {
+                x = y->getdistance();
+            }
+        }
+        finalPath.first += x;
+    }
+    else {
+        int x;
+        Vertex* v1 = finalPath.second[0].second;
+        Vertex* v2 = finalPath.second.back().second;
+        x = haversine(v1->getLatitude(), v1->getLongitude(), v2->getLatitude(), v2->getLongitude());
+        finalPath.first += x;
+    }
+    return finalPath.first;
 }
 
-vector<vector<double>> OtherHeuristics::getDistances(vector<pair<int, Vertex*>> vertices, bool toy) {
+vector<vector<double>> getDistances(vector<pair<int, Vertex*>> vertices, bool toy) {
     vector<vector<double>> distances(vertices.size(), vector<double>(vertices.size(), 0.0));
     for (auto col: vertices) {
         for (auto row: vertices) {
