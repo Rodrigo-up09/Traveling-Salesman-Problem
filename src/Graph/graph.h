@@ -100,6 +100,7 @@ public:
     bool checkTheVertexInPath(Vertex* vertex,string infoToFound);
     vector<Vertex *> getVertexSet() const;
     void setVertexSet(const std::vector<Vertex*>& newVertexSet);
+    Edge* getEdgeP(Vertex* origin,Vertex* dest);
 
 protected:
     vector<Vertex *> vertexset;

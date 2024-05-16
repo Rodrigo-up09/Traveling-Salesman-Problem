@@ -85,6 +85,106 @@ pair<vector<Vertex*>, double> nearestNeighborTSP(Graph graph, const string& orig
 }
 
 
+
+//Greedy heuristic
+//Algoritm that is better than the nn, but still with not the best preformance.
+//This algoritm iterate throw all the vertex, and check the shortest edge.Always cheking it the smallest edge have an Indegree of 1,if it have a Indegree>1,can go to that edge.
+//At the end it goes to the init vertice,its a better aproximation than the nn algoritm
+
+void GetTour(Vertex* vertex, vector<Vertex*>& tour) {
+    // Traverse the path starting from the given vertex
+    while (vertex != nullptr) {
+        tour.push_back(vertex);
+        if(vertex->getPath()== nullptr){
+            cerr<<"Graph is not conected";
+            return;
+        }
+        vertex = vertex->getPath()->getDest();
+    }
+}
+
+pair<vector<Vertex*>, double> greedyTSP(Graph graph, const string& origin) {
+
+    vector<Vertex *> tour;
+    Vertex* lastVertex = nullptr;
+    double totalDistance = 0.0;
+    Vertex *currentVertex = graph.findVertex(origin);
+    if (currentVertex == nullptr) {
+        cerr << "Origin vertex not found in the graph." << endl;
+        return make_pair(tour, totalDistance);
+    }
+    for(auto vertex:graph.getVertexSet()){
+
+        if(vertex!=currentVertex){
+           lastVertex=vertex;
+        }
+        lastVertex=vertex;
+        double smallestDist=numeric_limits<double>::max();
+        Edge* smallEdgge=nullptr;
+        for(Edge*  edge:vertex->getAdj()){
+            bool degree=edge->getDest()->getPath()== nullptr;
+            if(edge->getdistance()<smallestDist && (degree)){
+                smallestDist=edge->getdistance();
+                smallEdgge=edge;
+            }
+        }
+        totalDistance+=smallEdgge->getdistance();
+        vertex->setPath(smallEdgge);
+    }
+    if (lastVertex != nullptr) {
+        Edge* edgeToOrigin = graph.getEdgeP(lastVertex,currentVertex);
+        if (edgeToOrigin != nullptr) {
+            totalDistance += edgeToOrigin->getdistance();
+            lastVertex->setPath(edgeToOrigin);
+
+        }
+        if(edgeToOrigin!= nullptr){
+            cerr<<"Graph is not conected";
+        }
+    }
+    GetTour(currentVertex,tour);
+    return make_pair(tour,totalDistance);
+
+
+
+}//not tested
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 // Christofides algorithm
 //this algoritm first get the mst-i will use prime algoritm
 //But there is a problem this algoritm just handle complete graph,so maybe it can be a risky solotion

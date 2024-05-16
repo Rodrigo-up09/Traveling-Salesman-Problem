@@ -12,4 +12,5 @@ using namespace std;
 
 Vertex* findNearestNeighbor(Vertex* vertex, const vector<Vertex*>& unvisited);
 pair<vector<Vertex*>, double> nearestNeighborTSP(Graph graph, const string& origin);
+pair<vector<Vertex*>, double> greedyTSP(Graph graph, const string& origin);
 #endif

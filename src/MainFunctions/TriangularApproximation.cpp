@@ -1,7 +1,7 @@
 #include "TriangularApproximation.h"
 
 #include "TriangularApproximation.h"
-#include <corecrt_math_defines.h>
+//#include <corecrt_math_defines.h>
 
 double haversine(double lat1, double lon1, double lat2, double lon2) {
     double rad_lat1 = lat1 * M_PI / 180;

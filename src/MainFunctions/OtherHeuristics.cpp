@@ -6,7 +6,7 @@
 #include <math.h>
 #include "DataManager/DataManager.h"
 #include "OtherHeuristics.h"
-#include <corecrt_math_defines.h>
+//#include <corecrt_math_defines.h>
 
 using namespace std;
 

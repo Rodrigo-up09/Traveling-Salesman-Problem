@@ -285,3 +285,12 @@ Edge *Graph::getTheEdge(Vertex *sorce, string orig) {
     return nullptr;
 
 }
+
+Edge *Graph::getEdgeP(Vertex *origin, Vertex *dest) {
+    for(auto edge:origin->getAdj()){
+        if(edge->getDest()==dest){
+            return edge;
+        }
+    }
+    return nullptr;
+}
