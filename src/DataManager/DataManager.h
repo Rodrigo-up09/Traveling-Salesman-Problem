@@ -20,14 +20,15 @@ public:
     void readEdges(string filePath, bool flag);
     Graph getG();
     Graph& getGC();
-    vector<vector<double>> &getDistMatrix() ;
-    void setDistMatrix(const vector<vector<double>> &distMatrix);
+    double** &getDistMatrix() ;
+    void setDistMatrix(double **&distMatrix);
     void printGraph(const Graph &g);
 
 private:
 Graph g;
-vector<vector<double>> distMatrix;
+double **distMatrix;
 };
+
 
 
 #endif //DAPROJ2_DATAMANAGER_H

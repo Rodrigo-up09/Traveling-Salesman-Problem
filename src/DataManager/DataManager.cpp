@@ -11,9 +11,19 @@ using namespace std;
 
 DataManager::DataManager() {
     this->g=Graph();
-    distMatrix = std::vector<std::vector<double>>(10000, std::vector<double>(10000, 0.0));
+    distMatrix = (double **)malloc(1000 * sizeof(double *));
+    for (int i = 0; i < 1000; i++) {
+        distMatrix[i] = (double *)malloc(1000 * sizeof(double));
 
+        // Set each element to zero
+        for (int j = 0; j < 1000; j++) {
+            distMatrix[i][j] = 0.0;
+        }
+    }
 }
+
+
+
 
 void DataManager::start(int dataSet, int type) {
     switch (dataSet) {
@@ -103,11 +113,7 @@ void DataManager::readSmall(int type) {
             }
         }
     }
-    vector<Vertex*> copy=g.getVertexSet();
-    std::sort(copy.begin(), copy.end(), [](const Vertex* v1, const Vertex* v2) {
-        return v1->getInfo() < v2->getInfo();
-    });
-    g.setVertexSet(copy);
+
 }
 
 //01:14 minutos
@@ -217,7 +223,6 @@ void DataManager::readReal(int type) {
         v = new Vertex(code);
         vertices.push_back(v);
     }
-    distMatrix.resize(vertices.size(), vector<double>(vertices.size(), 0.0));
     for(auto v : vertices) {
         g.addVertex(v);
     }
@@ -263,11 +268,11 @@ Graph DataManager::getG() {
     return g;
 }
 
- vector<vector<double>> &DataManager::getDistMatrix()  {
+  double** &DataManager::getDistMatrix()  {
     return this->distMatrix;
 }
 
-void DataManager::setDistMatrix(const vector<vector<double>> &distMatrix) {
+void DataManager::setDistMatrix(double **&distMatrix) {
     this->distMatrix=distMatrix;
 
 }

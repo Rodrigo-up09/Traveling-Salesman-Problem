@@ -163,7 +163,7 @@ void printTour(const vector<Vertex*>& tour, double totalDistance) {
     cout << endl;
     cout << "Total distance: " << totalDistance << endl;
 }
-pair<vector<Vertex*>, double> greedyTSP2(Graph graph, const string& origin, vector<vector<double>> distMatrix) {//very good,but dont know why with big dataSets repeat numbers
+pair<vector<Vertex*>, double> greedyTSP2(Graph graph, const string& origin, double** distMatrix) {//very good,but dont know why with big dataSets repeat numbers
 
     vector<Vertex *> tour;
     double totalDistance = 0.0;
@@ -262,7 +262,7 @@ std::vector<Vertex*> prim(Graph* g) {
 }
 
 
-pair<vector<Vertex*>, double> greedyTSP3(Graph graph, const string& origin, vector<vector<double>> distMatrix) {
+pair<vector<Vertex*>, double> greedyTSP3(Graph graph, const string& origin, double** distMatrix ) {
     vector<Vertex *> tour;
     double totalDistance = 0.0;
     Vertex *currentVertex = graph.findVertex(origin);
