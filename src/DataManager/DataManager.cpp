@@ -11,7 +11,7 @@ using namespace std;
 
 DataManager::DataManager() {
     this->g=Graph();
-    distMatrix = std::vector<std::vector<double>>(1000, std::vector<double>(100000, 0.0));
+    distMatrix = std::vector<std::vector<double>>(10000, std::vector<double>(10000, 0.0));
 
 }
 
@@ -202,6 +202,7 @@ void DataManager::readReal(int type) {
     }
     string value, line;
     getline(file,line);
+    vector<Vertex*> vertices;
     while(getline(file,line)) {
         Vertex *v;
         vector<string> values;
@@ -214,6 +215,10 @@ void DataManager::readReal(int type) {
         string lon = values[1];
         string lat = values[2];
         v = new Vertex(code);
+        vertices.push_back(v);
+    }
+    distMatrix.resize(vertices.size(), vector<double>(vertices.size(), 0.0));
+    for(auto v : vertices) {
         g.addVertex(v);
     }
     switch (type) {

@@ -13,4 +13,10 @@ using namespace std;
 Vertex* findNearestNeighbor(Vertex* vertex, const vector<Vertex*>& unvisited);
 pair<vector<Vertex*>, double> nearestNeighborTSP(Graph graph, const string& origin);
 pair<vector<Vertex*>, double> greedyTSP(Graph graph, const string& origin);
+pair<vector<Vertex*>, double> greedyTSP(Graph graph, const string& origin);
+void GetTour(Vertex* origin, vector<Vertex*>& tour);
+void printTour(const vector<Vertex*>& tour, double totalDistance);
+pair<vector<Vertex*>, double> greedyTSP2(Graph graph, const string& origin,vector<vector<double>> distMatrix);
+pair<vector<Vertex*>, double> greedyTSP3(Graph graph, const string& origin,vector<vector<double>> distMatrix);
+
 #endif

@@ -3,7 +3,6 @@
 #include <cmath>
 #include <algorithm>
 #include <limits>
-#include <math.h>
 #include "DataManager/DataManager.h"
 #include "OtherHeuristics.h"
 #include "TriangularApproximation.h"
@@ -77,7 +76,7 @@ pair<int,vector<pair<int, Vertex *>>> joinSets(pair<int,vector<pair<int, Vertex 
         joinedPath.insert(joinedPath.end(), set1.second.begin(), set1.second.end());
         joinedPath.insert(joinedPath.end(), set2.second.begin(), set2.second.end());
         return {distance, joinedPath};
-    }
+    } 
 }
 
 int OtherHeuristic(DataManager aux, int k, bool toy) {
@@ -116,25 +115,4 @@ int OtherHeuristic(DataManager aux, int k, bool toy) {
         finalPath.first += x;
     }
     return finalPath.first;
-}
-
-vector<vector<double>> getDistances(vector<pair<int, Vertex*>> vertices, bool toy) {
-    vector<vector<double>> distances(vertices.size(), vector<double>(vertices.size(), 0.0));
-    for (auto col: vertices) {
-        for (auto row: vertices) {
-            if (col.first != row.first) {
-                if (toy) {
-                    for (auto y : col.second->getAdj()) {
-                        if (y->getDest()->getInfo() == row.second->getInfo()) {
-                            distances[col.first][row.first] = y->getdistance();
-                        }
-                    }
-                }
-                else {
-                    distances[col.first][row.first] = haversine(col.second->getLatitude(), col.second->getLongitude(), row.second->getLatitude(), row.second->getLongitude());
-                }
-            }
-        }
-    }
-    return distances;
 }

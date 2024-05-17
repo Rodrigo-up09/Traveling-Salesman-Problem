@@ -171,6 +171,8 @@ Vertex* Edge::getDest() {
 }
 
 
+
+
 Vertex * Graph::findVertex(const string &code)const {
     for (Vertex *vertex: vertexset ) {
         if (vertex->getInfo()== code) {
@@ -287,8 +289,8 @@ Edge *Graph::getTheEdge(Vertex *sorce, string orig) {
 }
 
 Edge *Graph::getEdgeP(Vertex *origin, Vertex *dest) {
-    for(auto edge:origin->getAdj()){
-        if(edge->getDest()==dest){
+    for(auto edge : origin->getAdj()) {
+        if (edge->getDest() == dest) {
             return edge;
         }
     }

@@ -1,8 +1,5 @@
 #include "TriangularApproximation.h"
 
-#include "TriangularApproximation.h"
-//#include <corecrt_math_defines.h>
-
 double haversine(double lat1, double lon1, double lat2, double lon2) {
     double rad_lat1 = lat1 * M_PI / 180;
     double rad_lon1 = lon1 * M_PI / 180;
@@ -18,7 +15,7 @@ double haversine(double lat1, double lon1, double lat2, double lon2) {
     return c * 6371000;
 }
 
-double tspTriangular(DataManager aux, vector<Vertex*>& path) {
+double tspTriangular(DataManager aux, vector<Vertex*>& path, bool toy) {
     for(auto v : aux.getG().getVertexSet()) {
         v->setVisited(false);
     }
@@ -31,14 +28,20 @@ double tspTriangular(DataManager aux, vector<Vertex*>& path) {
     for(int i=0; i < aux.getG().getVertexSet().size(); i++) {
         double minDist = DBL_MAX;
         Vertex* next = nullptr;
-
         for(auto v : aux.getG().getVertexSet()) {
             if(!v->isVisited()) {
                 double dist;
+                bool flag = false;
                 for(auto e : current->getAdj()) {
                     if(e->getDest()->getInfo() == v->getInfo()) {
+                        flag = true;
                         dist = e->getdistance();
                         break;
+                    }
+                }
+                if(!toy) {
+                    if (!flag) {
+                        dist = haversine(current->getLatitude(), current->getLongitude(), v->getLatitude(),v->getLongitude());
                     }
                 }
                 if(dist < minDist) {
