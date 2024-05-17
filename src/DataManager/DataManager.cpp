@@ -11,13 +11,13 @@ using namespace std;
 
 DataManager::DataManager() {
     this->g=Graph();
-    distMatrix = (double **)malloc(1000 * sizeof(double *));
-    for (int i = 0; i < 1000; i++) {
-        distMatrix[i] = (double *)malloc(1000 * sizeof(double));
+    distMatrix = (double **)malloc(10000 * sizeof(double *));
+    for (int i = 0; i < 10000; i++) {
+        distMatrix[i] = (double *)malloc(10000 * sizeof(double));
 
         // Set each element to zero
-        for (int j = 0; j < 1000; j++) {
-            distMatrix[i][j] = 0.0;
+        for (int j = 0; j < 10000; j++) {
+            distMatrix[i][j] = INF;
         }
     }
 }

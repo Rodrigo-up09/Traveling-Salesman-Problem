@@ -58,13 +58,13 @@ int main() {
     */
     DataManager dataManager1;
     DataManager dataManager2;
-    dataManager1.readSmall(0);
-    dataManager2.readMid(25);
-    cout<<tspBackTrack(dataManager1);
-    //auto result1=greedyTSP3(dataManager2.getG(),"0",dataManager2.getDistMatrix());
+    dataManager1.readReal(2);
+
+
+    auto result1=greedyTSP3(dataManager1.getG(),"0",dataManager1.getDistMatrix());
    //auto result=greedyTSP2(dataManager2.getG(),"49",dataManager2.getDistMatrix());
     //printTour(result.first, result.second);
-    //printTour(result1.first,result1.second);
+    printTour(result1.first,result1.second);
     return 0;
 
 }

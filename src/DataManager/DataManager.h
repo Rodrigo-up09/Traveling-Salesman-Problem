@@ -7,7 +7,9 @@
 #include <fstream>
 #include <sstream>
 #include "Graph/graph.h"
+#include <limits>
 
+#define INF std::numeric_limits<double>::infinity()
 using namespace std;
 class DataManager {
 

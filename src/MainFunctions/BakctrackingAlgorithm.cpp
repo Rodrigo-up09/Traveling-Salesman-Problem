@@ -3,7 +3,8 @@
 
 void tspBackTrackR(double **distMatrix, double actualDist, double &minDist, int n, int currI, unsigned int  path[], unsigned int currPath[]) {
     //break case
-    if(currI==n){
+    if(currI==n && distMatrix[currPath[n-1]][0]!=INF){
+
         actualDist+=distMatrix[currPath[n-1]][0];
         if(actualDist<minDist){
             minDist=actualDist;
@@ -13,10 +14,13 @@ void tspBackTrackR(double **distMatrix, double actualDist, double &minDist, int 
 
 //need to add the final valuez
         }
+        path[n]=0;
+
         return;
     }
 for(int i=1;i<n;i++){
-    if((actualDist+distMatrix[currPath[currI-1]][i]<minDist) && distMatrix[currPath[currI-1]][i]>0){
+
+    if((actualDist+distMatrix[currPath[currI-1]][i]<minDist) && distMatrix[currPath[currI-1]][i]!=INF){
 
         //If this dont happen is a non minDist  path,so backTrack
         bool isNew= true;
@@ -48,11 +52,11 @@ double tspBackTrack(DataManager dataManager) {
     currPath[0] = 0;
     double minDist = DBL_MAX;
     tspBackTrackR(dataManager.getDistMatrix(), 0, minDist, n, 1, path, currPath);
-
-    for (int i = 0; i < n+1; ++i) {
+    for (int i = 0; i <= n; ++i) {
         cout << path[i] << " ";
     }
     return minDist;
 }
+
 
 

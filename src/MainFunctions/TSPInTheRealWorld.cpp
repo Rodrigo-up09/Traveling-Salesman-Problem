@@ -143,6 +143,7 @@ pair<vector<Vertex*>, double> greedyTSP(Graph graph, const string& origin) {
         }
         if(edgeToOrigin!= nullptr){
             cerr<<"Graph is not conected";
+
         }
     }
     GetTour(currentVertex,tour);
@@ -163,104 +164,13 @@ void printTour(const vector<Vertex*>& tour, double totalDistance) {
     cout << endl;
     cout << "Total distance: " << totalDistance << endl;
 }
-pair<vector<Vertex*>, double> greedyTSP2(Graph graph, const string& origin, double** distMatrix) {//very good,but dont know why with big dataSets repeat numbers
-
-    vector<Vertex *> tour;
-    double totalDistance = 0.0;
-    Vertex *currentVertex = graph.findVertex(origin);
-    Vertex *first = currentVertex;
-    Vertex *lastAddedVertex = nullptr; // Store the last added vertex
-    if (currentVertex == nullptr) {
-        cerr << "Origin vertex not found in the graph." << endl;
-        return make_pair(tour, totalDistance);
-    }
-    tour.push_back(first);
-
-    graph.setAllNonVisited();
-    //Priority_queeu that stores a edge and a pair,douvle and edge in vector of pair,using a greater operator
-    priority_queue<pair<double, Edge*>, vector<pair<double, Edge*>>, greater<>> pq;
-
-
-    for (auto edge : currentVertex->getAdj()) {
-        pq.push({edge->getdistance(), edge});
-    }
-
-    currentVertex->setVisited(true);
-
-
-    while (!pq.empty()) {
-        auto [distance, edge] = pq.top();
-        pq.pop();
-        Vertex *nextVertex = edge->getDest();
-
-        if (!nextVertex->isVisited() && nextVertex != first) {
-            tour.push_back(nextVertex);
-            lastAddedVertex = nextVertex; // Update the last added vertex
-            nextVertex->setVisited(true);
-            totalDistance += distance;
-
-
-            for (auto nextEdge : nextVertex->getAdj()) {
-                if(!nextEdge->getDest()->isVisited()) {
-                    pq.push({nextEdge->getdistance(), nextEdge});
-                }
-            }
-        }
-    }
-
-
-
-    // Add the distance between the last added vertex and the origin to the total distance
-    if (lastAddedVertex != nullptr) {
-        int a = stoi(origin);
-        int b = stoi(lastAddedVertex->getInfo());
-        double value = distMatrix[a][b];
-        totalDistance += value;
-    }
-    tour.push_back(first);
-
-    return make_pair(tour, totalDistance);
-}
 
 // Christofides algorithm
 //this algoritm first get the mst-i will use prime algoritm
 //But there is a problem this algoritm just handle complete graph,so maybe it can be a risky solotion
 
-std::vector<Vertex*> prim(Graph* g) {
-    // Initialize
-    if (g->getVertexSet().empty()) return g->getVertexSet();
-    double INF = std::numeric_limits<double>::infinity();
-    for (Vertex* vertex : g->getVertexSet()) {
-        vertex->setDist(INF);
-        vertex->setPath(nullptr);
-        vertex->setVisited(false);
-    }
-    // Obtain a random vertex
-    Vertex* start = g->getVertexSet().front();
-    start->setDist(0);
-    priority_queue<Vertex*> q;
-    q.push(start);
-    while (!q.empty()) {
-        Vertex* v = q.top();
-        q.pop();
-        v->setVisited(true);
-        for (Edge* edge : v->getAdj()) {
-            Vertex* w = edge->getDest();
-            if (!w->isVisited()) {
-                double old_dist = w->getDist();
-                if (old_dist > edge->getdistance()) {
-                    w->setDist(edge->getdistance());
-                    w->setPath(edge);
-                    if (old_dist == INF) {
-                        q.push(w);
-                    }
-                }
-            }
-        }
-    }
-    return g->getVertexSet();
-}
 
+//Greedy algoritm,its the NN algoritm but with beter performance,It doenst need to iterate trow a vector to get the closest edge.Insted just pop the top edge of the queeu.
 
 pair<vector<Vertex*>, double> greedyTSP3(Graph graph, const string& origin, double** distMatrix ) {
     vector<Vertex *> tour;
@@ -271,9 +181,9 @@ pair<vector<Vertex*>, double> greedyTSP3(Graph graph, const string& origin, doub
 
     if (currentVertex == nullptr) {
         cerr << "Origin vertex not found in the graph." << endl;
-        return make_pair(tour, totalDistance);
+        return make_pair(vector<Vertex*>(), -1.0);
     }
-
+    first->setVisited(true);
     tour.push_back(first);
     graph.setAllNonVisited();
 
@@ -296,9 +206,14 @@ pair<vector<Vertex*>, double> greedyTSP3(Graph graph, const string& origin, doub
         Vertex *nextVertex = minEdge->getDest();
 
         if (!nextVertex->isVisited()) {
+            nextVertex->setVisited(true);
+            if(nextVertex->getInfo()==origin){
+                cerr<<"not conected Graph";
+                return make_pair(vector<Vertex*>(), -1.0);
+            }
             tour.push_back(nextVertex);
             lastAddedVertex = nextVertex;
-            nextVertex->setVisited(true);
+
             totalDistance += minEdge->getdistance();
 
 
@@ -315,6 +230,11 @@ pair<vector<Vertex*>, double> greedyTSP3(Graph graph, const string& origin, doub
         int a = stoi(origin);
         int b = stoi(lastAddedVertex->getInfo());
         double value = distMatrix[a][b];
+        if(value==INF ||value==0){
+            cerr<<"not conected Graph";
+            return make_pair(vector<Vertex*>(), -1.0);
+
+        }
         totalDistance += value;
     }
 
