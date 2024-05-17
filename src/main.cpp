@@ -7,16 +7,13 @@
 
 int main() {
     DataManager dataManager;
+    /*
     DataManager dataManager2;
     dataManager.readMid(25);
-    //dataManager.printGraph(dataManager.getG());
-    dataManager2.readMid(25);
-    vector<Vertex *> path;
-   // cout << tspBackTrack(dataManager) << endl;
-    //cout<< greedyTSP(dataManager2.getG(),"0").second;
-
-}
-    /*
+    dataManager.printGraph(dataManager.getG());
+    dataManager2.readMid(200);
+    vector<Vertex*> path;
+    cout<<tspBackTrack(dataManager)<<endl;
     cout<<tspTriangular(dataManager, path)<<endl;
     for(auto v : path) {
         cout << v->getInfo() << " ";
@@ -35,13 +32,14 @@ int main() {
         cout << "Total Distance: " << tspResult.second << endl;
     } else {
         cerr << "No feasible TSP tour found." << endl;
-    }
+    } */
 
     DataManager dataManager3;
     dataManager3.readSmall(0);
     vector<Vertex*> path2;
     cout<<tspBackTrack(dataManager3) << endl;
     cout<<tspTriangular(dataManager3, path2) << endl;
+    cout<<OtherHeuristic(dataManager3, 4, true);
     for(auto v : path2) {
         cout << v->getInfo() << " ";
     }
@@ -50,7 +48,7 @@ int main() {
 
     return 0;
 }
-*/
+
     /*
     OtherHeuristics heuristics;
 

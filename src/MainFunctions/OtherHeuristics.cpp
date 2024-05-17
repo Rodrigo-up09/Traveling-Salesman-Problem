@@ -6,17 +6,15 @@
 #include <math.h>
 #include "DataManager/DataManager.h"
 #include "OtherHeuristics.h"
-//#include <corecrt_math_defines.h>
+#include "TriangularApproximation.h"
 
 using namespace std;
 
 vector<int> cluster_graph(DataManager aux, int k) {
     vector<Vertex *> vertexes = aux.getG().getVertexSet();
-    vector<int> closures;
-    int j = 0;
-    for (size_t i = 0; i < vertexes.size(); i+k) {
-        closures[j] = i;
-        j++;
+    vector<int> closures = {};
+    for (size_t i = 0; i < vertexes.size(); i = i+k) {
+        closures.push_back(i);
     }
     return closures;
 }
@@ -55,40 +53,31 @@ pair<int,vector<pair<int,Vertex *>>> tsp_dynamic_programming(vector<vector<doubl
 
 pair<int,vector<pair<int, Vertex *>>> joinSets(pair<int,vector<pair<int, Vertex *>>> set1, pair<int,vector<pair<int, Vertex *>>> set2, bool toy) {
     pair<int,vector<pair<int, Vertex *>>> merged;
-    Vertex * single1 = set1.second.back().second;
-    Vertex * single2 = set2.second[0].second;
-    double distance = 0;
-    if (toy) {
-        Edge * connection;
-        for (auto i : single1->getAdj()) {
-            if (i->getDest()->getInfo() == single2->getInfo()) {
-                connection = i;
-            }
-        }
-        distance = set1.first + set2.first + connection->getdistance();
+    if (set1.second.empty()) {
+        set1 = set2;
+        return set1;
     }
     else {
-        distance = haversine(single1->getLatitude(), single1->getLongitude(), single2->getLatitude(), single2->getLongitude());
+        Vertex * single1 = set1.second.back().second;
+        Vertex * single2 = set2.second[0].second;
+        double distance = 0;
+        if (toy) {
+            Edge * connection;
+            for (auto i : single1->getAdj()) {
+                if (i->getDest()->getInfo() == single2->getInfo()) {
+                    connection = i;
+                }
+            }
+            distance = set1.first + set2.first + connection->getdistance();
+        }
+        else {
+            distance = haversine(single1->getLatitude(), single1->getLongitude(), single2->getLatitude(), single2->getLongitude());
+        }
+        vector<pair<int, Vertex*>> joinedPath;
+        joinedPath.insert(joinedPath.end(), set1.second.begin(), set1.second.end());
+        joinedPath.insert(joinedPath.end(), set2.second.begin(), set2.second.end());
+        return {distance, joinedPath};
     }
-    vector<pair<int, Vertex*>> joinedPath;
-    joinedPath.insert(joinedPath.end(), set1.second.begin(), set1.second.end());
-    joinedPath.insert(joinedPath.end(), set2.second.begin(), set2.second.end());
-    return {distance, joinedPath};
-}
-
-double haversine(double lat1, double lon1, double lat2, double lon2) {
-    double rad_lat1 = lat1 * M_PI / 180;
-    double rad_lon1 = lon1 * M_PI / 180;
-    double rad_lat2 = lat2 * M_PI / 180;
-    double rad_lon2 = lon2 * M_PI / 180;
-
-    double delta_lat = rad_lat2 - rad_lat1;
-    double delta_lon = rad_lon2 - rad_lon1;
-
-    double aux = pow(sin(delta_lat/2),2) + cos(rad_lat1) * cos(rad_lat2) * pow(sin(delta_lon/2),2);
-    double c = 2 * atan2(sqrt(aux), sqrt(1 - aux));
-
-    return c * 6371000;
 }
 
 int OtherHeuristic(DataManager aux, int k, bool toy) {
@@ -101,10 +90,14 @@ int OtherHeuristic(DataManager aux, int k, bool toy) {
    int i = 0;
    for (int y : clusters) {
         for (int w = 0; w < k; w++) {
-           workingVertices.push_back({i, vertices[y + w]});
+            if (y + w > vertices.size()) {
+                break;
+            }
+            workingVertices.push_back({i, vertices[y + w]});
+            i++;
         }
         vector<vector<double>> distances = getDistances(workingVertices, toy);
-        joinSets(finalPath, tsp_dynamic_programming(distances, workingVertices, 0, 0, k, {0, {}}), toy);
+        finalPath = joinSets(finalPath, tsp_dynamic_programming(distances, workingVertices, 0, 0, k, {0, {}}), toy);
     }
     if (toy) {
         int x;
