@@ -139,6 +139,8 @@ void DataManager::readMid(int n) {
         string longitude = values[1];
         string latitude = values[2];
         newVertex = new Vertex(code);
+        newVertex->setLatitude(stod(latitude));
+        newVertex->setLongitude(stod(longitude));
         g.addVertex(newVertex);
         x++;
 

@@ -7,6 +7,13 @@
 
 int main() {
     DataManager dataManager1;
+    dataManager1.readMid(100);
+    vector<Vertex *> path1;
+    cout << tspTriangular(dataManager1, path1) << endl;
+    cout << OtherHeuristic(dataManager1, 6, false) << endl;
+
+    /*
+    DataManager dataManager1;
     DataManager dataManager2;
     DataManager dataManager3;
     DataManager dataManager4;
@@ -52,7 +59,6 @@ int main() {
     cout << endl;
     cout << endl;
     cout << "approximation: " <<tspTriangular(dataManager5, path5) << endl;
-    /*
     DataManager dataManager1;
     DataManager dataManager2;
     dataManager1.readMid(900);
