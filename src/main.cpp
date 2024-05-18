@@ -7,10 +7,10 @@
 
 int main() {
     DataManager dataManager1;
-    dataManager1.readMid(100);
+    dataManager1.readMid(25);
     vector<Vertex *> path1;
     cout << tspTriangular(dataManager1, path1) << endl;
-    cout << OtherHeuristic(dataManager1, 6, false) << endl;
+    cout << OtherHeuristic2(dataManager1, 4, false) << endl;
 
     /*
     DataManager dataManager1;
