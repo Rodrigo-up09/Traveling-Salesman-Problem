@@ -8,6 +8,7 @@
 		<Option virtualFolders="CMake Files\;"/>
 		<Build>
 			<Target title="all">
+<<<<<<< HEAD
 				<Option working_dir="/home/afonso/Desktop/DA2/cmake-build-debug"/>
 				<Option type="4"/>
 				<MakeCommands>
@@ -20,10 +21,25 @@
 			<Target title="projetDA2">
 				<Option output="/home/afonso/Desktop/DA2/cmake-build-debug/projetDA2" prefix_auto="0" extension_auto="0"/>
 				<Option working_dir="/home/afonso/Desktop/DA2/cmake-build-debug"/>
+=======
+				<Option working_dir="C:/Users/Rodrigo Ribeiro/Desktop/DA/DAProj2/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="C:/PROGRA~1/JETBRA~1/CLION2~1.4/bin/mingw/bin/mingw32-make.exe -f &quot;C:/Users/Rodrigo Ribeiro/Desktop/DA/DAProj2/cmake-build-debug/Makefile&quot;  VERBOSE=1 all"/>
+					<CompileFile command="C:/PROGRA~1/JETBRA~1/CLION2~1.4/bin/mingw/bin/mingw32-make.exe -f &quot;C:/Users/Rodrigo Ribeiro/Desktop/DA/DAProj2/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/PROGRA~1/JETBRA~1/CLION2~1.4/bin/mingw/bin/mingw32-make.exe -f &quot;C:/Users/Rodrigo Ribeiro/Desktop/DA/DAProj2/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/PROGRA~1/JETBRA~1/CLION2~1.4/bin/mingw/bin/mingw32-make.exe -f &quot;C:/Users/Rodrigo Ribeiro/Desktop/DA/DAProj2/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="projetDA2">
+				<Option output="C:/Users/Rodrigo Ribeiro/Desktop/DA/DAProj2/cmake-build-debug/projetDA2.exe" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="C:/Users/Rodrigo Ribeiro/Desktop/DA/DAProj2/cmake-build-debug"/>
+>>>>>>> DataBug
 				<Option object_output="./"/>
 				<Option type="1"/>
 				<Option compiler="gcc"/>
 				<Compiler>
+<<<<<<< HEAD
 					<Add directory="/home/afonso/Desktop/DA2/src"/>
 					<Add directory="/usr/include/c++/11"/>
 					<Add directory="/usr/include/x86_64-linux-gnu/c++/11"/>
@@ -43,10 +59,32 @@
 			<Target title="projetDA2/fast">
 				<Option output="/home/afonso/Desktop/DA2/cmake-build-debug/projetDA2" prefix_auto="0" extension_auto="0"/>
 				<Option working_dir="/home/afonso/Desktop/DA2/cmake-build-debug"/>
+=======
+					<Add directory="C:/Users/Rodrigo Ribeiro/Desktop/DA/DAProj2/src"/>
+					<Add directory="C:/Program Files/JetBrains/CLion 2023.3.4/bin/mingw/bin/../lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++"/>
+					<Add directory="C:/Program Files/JetBrains/CLion 2023.3.4/bin/mingw/bin/../lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/x86_64-w64-mingw32"/>
+					<Add directory="C:/Program Files/JetBrains/CLion 2023.3.4/bin/mingw/bin/../lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/backward"/>
+					<Add directory="C:/Program Files/JetBrains/CLion 2023.3.4/bin/mingw/bin/../lib/gcc/x86_64-w64-mingw32/13.1.0/include"/>
+					<Add directory="C:/Program Files/JetBrains/CLion 2023.3.4/bin/mingw/bin/../lib/gcc/x86_64-w64-mingw32/13.1.0/../../../../include"/>
+					<Add directory="C:/Program Files/JetBrains/CLion 2023.3.4/bin/mingw/bin/../lib/gcc/x86_64-w64-mingw32/13.1.0/include-fixed"/>
+					<Add directory="C:/Program Files/JetBrains/CLion 2023.3.4/bin/mingw/bin/../lib/gcc/x86_64-w64-mingw32/13.1.0/../../../../x86_64-w64-mingw32/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="C:/PROGRA~1/JETBRA~1/CLION2~1.4/bin/mingw/bin/mingw32-make.exe -f &quot;C:/Users/Rodrigo Ribeiro/Desktop/DA/DAProj2/cmake-build-debug/Makefile&quot;  VERBOSE=1 projetDA2"/>
+					<CompileFile command="C:/PROGRA~1/JETBRA~1/CLION2~1.4/bin/mingw/bin/mingw32-make.exe -f &quot;C:/Users/Rodrigo Ribeiro/Desktop/DA/DAProj2/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/PROGRA~1/JETBRA~1/CLION2~1.4/bin/mingw/bin/mingw32-make.exe -f &quot;C:/Users/Rodrigo Ribeiro/Desktop/DA/DAProj2/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/PROGRA~1/JETBRA~1/CLION2~1.4/bin/mingw/bin/mingw32-make.exe -f &quot;C:/Users/Rodrigo Ribeiro/Desktop/DA/DAProj2/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="projetDA2/fast">
+				<Option output="C:/Users/Rodrigo Ribeiro/Desktop/DA/DAProj2/cmake-build-debug/projetDA2.exe" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="C:/Users/Rodrigo Ribeiro/Desktop/DA/DAProj2/cmake-build-debug"/>
+>>>>>>> DataBug
 				<Option object_output="./"/>
 				<Option type="1"/>
 				<Option compiler="gcc"/>
 				<Compiler>
+<<<<<<< HEAD
 					<Add directory="/home/afonso/Desktop/DA2/src"/>
 					<Add directory="/usr/include/c++/11"/>
 					<Add directory="/usr/include/x86_64-linux-gnu/c++/11"/>
@@ -133,6 +171,91 @@
 			<Option target="projetDA2"/>
 		</Unit>
 		<Unit filename="/home/afonso/Desktop/DA2/CMakeLists.txt">
+=======
+					<Add directory="C:/Users/Rodrigo Ribeiro/Desktop/DA/DAProj2/src"/>
+					<Add directory="C:/Program Files/JetBrains/CLion 2023.3.4/bin/mingw/bin/../lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++"/>
+					<Add directory="C:/Program Files/JetBrains/CLion 2023.3.4/bin/mingw/bin/../lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/x86_64-w64-mingw32"/>
+					<Add directory="C:/Program Files/JetBrains/CLion 2023.3.4/bin/mingw/bin/../lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/backward"/>
+					<Add directory="C:/Program Files/JetBrains/CLion 2023.3.4/bin/mingw/bin/../lib/gcc/x86_64-w64-mingw32/13.1.0/include"/>
+					<Add directory="C:/Program Files/JetBrains/CLion 2023.3.4/bin/mingw/bin/../lib/gcc/x86_64-w64-mingw32/13.1.0/../../../../include"/>
+					<Add directory="C:/Program Files/JetBrains/CLion 2023.3.4/bin/mingw/bin/../lib/gcc/x86_64-w64-mingw32/13.1.0/include-fixed"/>
+					<Add directory="C:/Program Files/JetBrains/CLion 2023.3.4/bin/mingw/bin/../lib/gcc/x86_64-w64-mingw32/13.1.0/../../../../x86_64-w64-mingw32/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="C:/PROGRA~1/JETBRA~1/CLION2~1.4/bin/mingw/bin/mingw32-make.exe -f &quot;C:/Users/Rodrigo Ribeiro/Desktop/DA/DAProj2/cmake-build-debug/Makefile&quot;  VERBOSE=1 projetDA2/fast"/>
+					<CompileFile command="C:/PROGRA~1/JETBRA~1/CLION2~1.4/bin/mingw/bin/mingw32-make.exe -f &quot;C:/Users/Rodrigo Ribeiro/Desktop/DA/DAProj2/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/PROGRA~1/JETBRA~1/CLION2~1.4/bin/mingw/bin/mingw32-make.exe -f &quot;C:/Users/Rodrigo Ribeiro/Desktop/DA/DAProj2/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/PROGRA~1/JETBRA~1/CLION2~1.4/bin/mingw/bin/mingw32-make.exe -f &quot;C:/Users/Rodrigo Ribeiro/Desktop/DA/DAProj2/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="edit_cache">
+				<Option working_dir="C:/Users/Rodrigo Ribeiro/Desktop/DA/DAProj2/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="C:/PROGRA~1/JETBRA~1/CLION2~1.4/bin/mingw/bin/mingw32-make.exe -f &quot;C:/Users/Rodrigo Ribeiro/Desktop/DA/DAProj2/cmake-build-debug/Makefile&quot;  VERBOSE=1 edit_cache"/>
+					<CompileFile command="C:/PROGRA~1/JETBRA~1/CLION2~1.4/bin/mingw/bin/mingw32-make.exe -f &quot;C:/Users/Rodrigo Ribeiro/Desktop/DA/DAProj2/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/PROGRA~1/JETBRA~1/CLION2~1.4/bin/mingw/bin/mingw32-make.exe -f &quot;C:/Users/Rodrigo Ribeiro/Desktop/DA/DAProj2/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/PROGRA~1/JETBRA~1/CLION2~1.4/bin/mingw/bin/mingw32-make.exe -f &quot;C:/Users/Rodrigo Ribeiro/Desktop/DA/DAProj2/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="rebuild_cache">
+				<Option working_dir="C:/Users/Rodrigo Ribeiro/Desktop/DA/DAProj2/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="C:/PROGRA~1/JETBRA~1/CLION2~1.4/bin/mingw/bin/mingw32-make.exe -f &quot;C:/Users/Rodrigo Ribeiro/Desktop/DA/DAProj2/cmake-build-debug/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
+					<CompileFile command="C:/PROGRA~1/JETBRA~1/CLION2~1.4/bin/mingw/bin/mingw32-make.exe -f &quot;C:/Users/Rodrigo Ribeiro/Desktop/DA/DAProj2/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/PROGRA~1/JETBRA~1/CLION2~1.4/bin/mingw/bin/mingw32-make.exe -f &quot;C:/Users/Rodrigo Ribeiro/Desktop/DA/DAProj2/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/PROGRA~1/JETBRA~1/CLION2~1.4/bin/mingw/bin/mingw32-make.exe -f &quot;C:/Users/Rodrigo Ribeiro/Desktop/DA/DAProj2/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+		</Build>
+		<Unit filename="C:/Users/Rodrigo Ribeiro/Desktop/DA/DAProj2/src/DataManager/DataManager.cpp">
+			<Option target="projetDA2"/>
+		</Unit>
+		<Unit filename="C:/Users/Rodrigo Ribeiro/Desktop/DA/DAProj2/src/DataManager/DataManager.h">
+			<Option target="projetDA2"/>
+		</Unit>
+		<Unit filename="C:/Users/Rodrigo Ribeiro/Desktop/DA/DAProj2/src/Graph/graph.cpp">
+			<Option target="projetDA2"/>
+		</Unit>
+		<Unit filename="C:/Users/Rodrigo Ribeiro/Desktop/DA/DAProj2/src/Graph/graph.h">
+			<Option target="projetDA2"/>
+		</Unit>
+		<Unit filename="C:/Users/Rodrigo Ribeiro/Desktop/DA/DAProj2/src/MainFunctions/BacktrackingAlgorithm.h">
+			<Option target="projetDA2"/>
+		</Unit>
+		<Unit filename="C:/Users/Rodrigo Ribeiro/Desktop/DA/DAProj2/src/MainFunctions/BakctrackingAlgorithm.cpp">
+			<Option target="projetDA2"/>
+		</Unit>
+		<Unit filename="C:/Users/Rodrigo Ribeiro/Desktop/DA/DAProj2/src/MainFunctions/OtherHeuristics.cpp">
+			<Option target="projetDA2"/>
+		</Unit>
+		<Unit filename="C:/Users/Rodrigo Ribeiro/Desktop/DA/DAProj2/src/MainFunctions/OtherHeuristics.h">
+			<Option target="projetDA2"/>
+		</Unit>
+		<Unit filename="C:/Users/Rodrigo Ribeiro/Desktop/DA/DAProj2/src/MainFunctions/TSPInTheRealWorld.cpp">
+			<Option target="projetDA2"/>
+		</Unit>
+		<Unit filename="C:/Users/Rodrigo Ribeiro/Desktop/DA/DAProj2/src/MainFunctions/TSPInTheRealWorld.h">
+			<Option target="projetDA2"/>
+		</Unit>
+		<Unit filename="C:/Users/Rodrigo Ribeiro/Desktop/DA/DAProj2/src/MainFunctions/TriangularApproximation.cpp">
+			<Option target="projetDA2"/>
+		</Unit>
+		<Unit filename="C:/Users/Rodrigo Ribeiro/Desktop/DA/DAProj2/src/MainFunctions/TriangularApproximation.h">
+			<Option target="projetDA2"/>
+		</Unit>
+		<Unit filename="C:/Users/Rodrigo Ribeiro/Desktop/DA/DAProj2/src/Menu/menu.cpp">
+			<Option target="projetDA2"/>
+		</Unit>
+		<Unit filename="C:/Users/Rodrigo Ribeiro/Desktop/DA/DAProj2/src/Menu/menu.h">
+			<Option target="projetDA2"/>
+		</Unit>
+		<Unit filename="C:/Users/Rodrigo Ribeiro/Desktop/DA/DAProj2/src/main.cpp">
+			<Option target="projetDA2"/>
+		</Unit>
+		<Unit filename="C:/Users/Rodrigo Ribeiro/Desktop/DA/DAProj2/CMakeLists.txt">
+>>>>>>> DataBug
 			<Option virtualFolder="CMake Files\"/>
 		</Unit>
 	</Project>
