@@ -8,7 +8,7 @@
 using namespace std;
 
 
-void tspBackTrackR(const vector<vector<double>>& distMatrix, double actualDist, double &minDist, int n, int pos, unsigned int  path[], unsigned int currPath[]);
+void tspBackTrackR(double **distMatrix, double actualDist, double &minDist, int n, int pos, unsigned int  path[], unsigned int currPath[]);
 
 double tspBackTrack(DataManager dataManager);
 #endif
