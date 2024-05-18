@@ -51,6 +51,7 @@ Vertex:: Vertex(const string& code) {
     this->latitude=0;
     this->longitude=0;
     this->label=label="";
+    this->queueIndex=0;
 }
 Vertex::Vertex(const string &code, const string& label) {
     this->info = code;
@@ -61,6 +62,7 @@ Vertex::Vertex(const string &code, const string& label) {
     this->latitude=0;
     this->longitude=0;
     this->label=label;
+    this->queueIndex=0;
 }
 
 
@@ -112,6 +114,14 @@ const string &Vertex::getLabel() const {
 
 void Vertex::setLabel(const string &label) {
     Vertex::label = label;
+}
+
+unsigned int Vertex::getQueueIndex() const {
+    return queueIndex;
+}
+
+void Vertex::setQueueIndex(unsigned int index) {
+    Vertex::queueIndex = index;
 }
 
 bool Vertex::operator<(const Vertex &other) const {

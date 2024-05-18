@@ -95,8 +95,8 @@ int OtherHeuristic(DataManager aux, int k, bool toy) {
             workingVertices.push_back({i, vertices[y + w]});
             i++;
         }
-        vector<vector<double>> distances = getDistances(workingVertices, toy);
-        finalPath = joinSets(finalPath, tsp_dynamic_programming(distances, workingVertices, 0, 0, k, {0, {}}), toy);
+        //vector<vector<double>> distances = getDistances(workingVertices, toy);
+        //finalPath = joinSets(finalPath, tsp_dynamic_programming(distances, workingVertices, 0, 0, k, {0, {}}), toy);
     }
     if (toy) {
         int x;

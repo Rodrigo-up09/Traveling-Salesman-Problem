@@ -6,64 +6,53 @@
 #include "Graph/graph.h"
 
 int main() {
-    DataManager dataManager;
-    /*
-    DataManager dataManager2;
-    dataManager.readMid(25);
-    dataManager.printGraph(dataManager.getG());
-    dataManager2.readMid(200);
-    vector<Vertex*> path;
-    cout<<tspBackTrack(dataManager)<<endl;
-
-
-
-/*
     DataManager dataManager1;
     DataManager dataManager2;
     DataManager dataManager3;
     DataManager dataManager4;
     DataManager dataManager5;
+
     dataManager1.readSmall(0);
     dataManager2.readSmall(1);
     dataManager3.readSmall(2);
     dataManager4.readMid(25);
     dataManager5.readReal(1);
+
     vector<Vertex *> path1;
     vector<Vertex *> path2;
     vector<Vertex *> path3;
     vector<Vertex *> path4;
     vector<Vertex *> path5;
-    cout << tspTriangular(dataManager1, path1, true) << endl;
-    for(auto v : path1) {
-        cout << v->getInfo() << " ";
+
+    cout << "optimal solution: " <<tspBackTrack(dataManager1) << endl;
+    cout << "approximation: " <<tspTriangular(dataManager1, path1) << endl;
+    for (const auto& vertex : path1) {
+        cout << vertex->getInfo() << " ";
     }
     cout << endl;
-
-    cout << tspTriangular(dataManager2, path2, true) << endl;
-    for(auto v : path2) {
-        cout << v->getInfo() << " ";
+    cout << endl;
+    cout << "optimal solution: " <<tspBackTrack(dataManager2) << endl;
+    cout << "approximation: " <<tspTriangular(dataManager2, path2) << endl;
+    for (const auto& vertex : path2) {
+        cout << vertex->getInfo() << " ";
     }
     cout << endl;
-
-    cout << tspTriangular(dataManager3, path3, true) << endl;
-    for(auto v : path3) {
-        cout << v->getInfo() << " ";
+    cout << endl;
+    cout << "optimal solution: " <<tspBackTrack(dataManager3) << endl;
+    cout << "approximation: " <<tspTriangular(dataManager3, path3) << endl;
+    for (const auto& vertex : path3) {
+        cout << vertex->getInfo() << " ";
     }
     cout << endl;
-
-    cout << tspTriangular(dataManager4, path4, false) << endl;
-    for(auto v : path4) {
-        cout << v->getInfo() << " ";
-    }
     cout << endl;
+    cout << "optimal solution: " <<tspBackTrack(dataManager4) << endl;
+    cout << "approximation: " <<tspTriangular(dataManager4, path4) << endl;
 
-    cout << tspTriangular(dataManager5, path5, false) << endl;
-    for(auto v : path5) {
-        cout << v->getInfo() << " ";
-    }
+
     cout << endl;
-
-    */
+    cout << endl;
+    cout << "approximation: " <<tspTriangular(dataManager5, path5) << endl;
+    /*
     DataManager dataManager1;
     DataManager dataManager2;
     dataManager1.readMid(900);
@@ -74,7 +63,7 @@ int main() {
     printTour(result.first, result.second);
     printTour(result1.first,result1.second);
     return 0;
-
+    */
 }
     /*
 
@@ -97,21 +86,6 @@ int main() {
     } else {
         cerr << "No feasible TSP tour found." << endl;
     } */
-
-    DataManager dataManager3;
-    dataManager3.readSmall(0);
-    vector<Vertex*> path2;
-    cout<<tspBackTrack(dataManager3) << endl;
-    cout<<tspTriangular(dataManager3, path2) << endl;
-    cout<<OtherHeuristic(dataManager3, 4, true);
-    for(auto v : path2) {
-        cout << v->getInfo() << " ";
-    }
-    cout << endl;
-
-
-    return 0;
-}
 
     /*
     OtherHeuristics heuristics;

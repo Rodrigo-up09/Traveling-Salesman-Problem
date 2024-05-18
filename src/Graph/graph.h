@@ -43,6 +43,9 @@ public:
     void setLabel(const string &label);
     void deleteEdge(Edge *edge);
 
+    unsigned int getQueueIndex() const;
+    void setQueueIndex(unsigned int index);
+
 protected:
 
     std::string info;              
@@ -55,6 +58,7 @@ protected:
     Edge* path ;
     double latitude;
     double longitude;
+    unsigned int queueIndex;
 
 };
 

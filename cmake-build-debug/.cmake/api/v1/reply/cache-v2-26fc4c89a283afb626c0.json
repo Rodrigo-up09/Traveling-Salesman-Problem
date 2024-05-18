@@ -55,7 +55,7 @@
 				}
 			],
 			"type" : "INTERNAL",
-			"value" : "/home/afonso/Desktop/DA/cmake-build-debug"
+			"value" : "/home/afonso/Desktop/DA2/cmake-build-debug"
 		},
 		{
 			"name" : "CMAKE_CACHE_MAJOR_VERSION",
@@ -627,7 +627,7 @@
 				}
 			],
 			"type" : "STATIC",
-			"value" : "/home/afonso/Desktop/DA/cmake-build-debug/CMakeFiles/pkgRedirects"
+			"value" : "/home/afonso/Desktop/DA2/cmake-build-debug/CMakeFiles/pkgRedirects"
 		},
 		{
 			"name" : "CMAKE_GENERATOR",
@@ -687,7 +687,7 @@
 				}
 			],
 			"type" : "INTERNAL",
-			"value" : "/home/afonso/Desktop/DA"
+			"value" : "/home/afonso/Desktop/DA2"
 		},
 		{
 			"name" : "CMAKE_INSTALL_PREFIX",
@@ -1283,7 +1283,7 @@
 				}
 			],
 			"type" : "STATIC",
-			"value" : "/home/afonso/Desktop/DA/cmake-build-debug"
+			"value" : "/home/afonso/Desktop/DA2/cmake-build-debug"
 		},
 		{
 			"name" : "projetDA2_IS_TOP_LEVEL",
@@ -1307,7 +1307,7 @@
 				}
 			],
 			"type" : "STATIC",
-			"value" : "/home/afonso/Desktop/DA"
+			"value" : "/home/afonso/Desktop/DA2"
 		}
 	],
 	"kind" : "cache",

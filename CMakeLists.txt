@@ -17,4 +17,5 @@ add_executable(projetDA2 src/main.cpp
         src/MainFunctions/OtherHeuristics.cpp
         src/MainFunctions/TriangularApproximation.cpp
         src/MainFunctions/TSPInTheRealWorld.cpp
+        src/DataStructure/MutablePriorityQueue.h
 )

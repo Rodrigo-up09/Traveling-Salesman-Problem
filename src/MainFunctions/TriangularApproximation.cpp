@@ -15,56 +15,78 @@ double haversine(double lat1, double lon1, double lat2, double lon2) {
     return c * 6371000;
 }
 
-double tspTriangular(DataManager aux, vector<Vertex*>& path, bool toy) {
+double calculateDistance(Vertex* v1, Vertex* v2) {
+    for(auto e : v1->getAdj()) {
+        if(e->getDest()->getInfo() == v2->getInfo()) {
+            return e->getdistance();
+        }
+    }
+    double haversineDistance = haversine(v1->getLatitude(), v1->getLongitude(), v2->getLatitude(), v2->getLongitude());
+    return haversineDistance;
+}
+
+vector<Edge*> prim(DataManager aux) {
+    vector<Edge*> mst;
+    if(aux.getG().getVertexSet().empty()) {
+        return mst;
+    }
     for(auto v : aux.getG().getVertexSet()) {
+        v->setDist(DBL_MAX);
+        v->setPath(nullptr);
         v->setVisited(false);
     }
-    double finalDistance = 0;
-    auto current = aux.getG().getVertexSet()[0];
-    current->setVisited(true);
-    path.push_back(current);
+    auto source = aux.getG().getVertexSet()[0];
+    source->setDist(0);
+    MutablePriorityQueue<Vertex> q;
+    q.insert(source);
 
-
-    for(int i=0; i < aux.getG().getVertexSet().size(); i++) {
-        double minDist = DBL_MAX;
-        Vertex* next = nullptr;
-        for(auto v : aux.getG().getVertexSet()) {
-            if(!v->isVisited()) {
-                double dist;
-                bool flag = false;
-                for(auto e : current->getAdj()) {
-                    if(e->getDest()->getInfo() == v->getInfo()) {
-                        flag = true;
-                        dist = e->getdistance();
-                        break;
+    while(!q.empty()){
+        auto v = q.extractMin();
+        if(v->getPath() != nullptr) {
+            mst.push_back(v->getPath());
+        }
+        v->setVisited(true);
+        for(auto e : v->getAdj()) {
+            auto w = e->getDest();
+            if(!w->isVisited()){
+                double old_dist = w->getDist();
+                if(old_dist > e->getdistance()) {
+                    w->setDist(e->getdistance());
+                    w->setPath(e);
+                    if(old_dist == DBL_MAX) {
+                        q.insert(w);
+                    }else {
+                        q.decreaseKey(w);
                     }
-                }
-                if(!toy) {
-                    if (!flag) {
-                        dist = haversine(current->getLatitude(), current->getLongitude(), v->getLatitude(),v->getLongitude());
-                    }
-                }
-                if(dist < minDist) {
-                    minDist = dist;
-                    next = v;
                 }
             }
         }
-        if(next != nullptr) {
-            next->setVisited(true);
-            finalDistance += minDist;
-            current = next;
-            path.push_back(current);
+    }
+    return mst;
+}
 
+// Function to perform a preorder traversal of the MST
+void preorderTraversal(vector<Edge*> mst, Vertex* v, vector<Vertex*>& path) {
+    v->setVisited(true);
+    path.push_back(v);
+    for(auto e : mst) {
+        if(e->getOrig()->getInfo() == v->getInfo()) {
+            if(e->getDest()->isVisited()) {
+                preorderTraversal(mst, e->getDest(), path);
+            }
         }
     }
-    for(auto e : current->getAdj()) {
-        if(e->getDest()->getInfo() == aux.getG().getVertexSet()[0]->getInfo()) {
-            finalDistance += e->getdistance();
-            break;
-        }
-    }
+}
+
+// Function to implement the Triangular Approximation Heuristic
+double tspTriangular(DataManager aux, vector<Vertex*>& path) {
+    double finalDistance = 0;
+    vector<Edge*> mst = prim(aux);
+    preorderTraversal(mst, aux.getG().getVertexSet()[0], path);
     path.push_back(aux.getG().getVertexSet()[0]);
+    for(int i=0; i < path.size()-1; i++) {
+        finalDistance += calculateDistance(path[i], path[i+1]);
+    }
 
     return finalDistance;
 }

@@ -49,11 +49,7 @@
 			[
 				{
 					"backtrace" : 2,
-<<<<<<<< HEAD:cmake-build-debug/.cmake/api/v1/reply/target-projetDA2-Debug-3de74babbd1eccaac886.json
-					"path" : "C:/Users/Utilizador/Desktop/LEIC/DA/projetDA2/src"
-========
-					"path" : "/home/afonso/Desktop/DA/src"
->>>>>>>> 821e0eed508d472f9e9d4188065588d4a3cbb49e:cmake-build-debug/.cmake/api/v1/reply/target-projetDA2-Debug-fed55ad49f46a26286c9.json
+					"path" : "/home/afonso/Desktop/DA2/src"
 				}
 			],
 			"language" : "CXX",
@@ -124,7 +120,8 @@
 				2,
 				3,
 				5,
-				7
+				7,
+				12
 			]
 		}
 	],
@@ -197,6 +194,11 @@
 			"compileGroupIndex" : 0,
 			"path" : "src/MainFunctions/TSPInTheRealWorld.cpp",
 			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"path" : "src/DataStructure/MutablePriorityQueue.h",
+			"sourceGroupIndex" : 1
 		}
 	],
 	"type" : "EXECUTABLE"
