@@ -157,7 +157,7 @@ pair<vector<Vertex*>, double> greedyTSP(Graph graph, const string& origin) {
 
 
 void printTour(const vector<Vertex*>& tour, double totalDistance) {
-    cout << "Tour: ";
+    cout << "Path: "<<endl;
     for (Vertex* vertex : tour) {
         cout << vertex->getInfo() << " ";
     }

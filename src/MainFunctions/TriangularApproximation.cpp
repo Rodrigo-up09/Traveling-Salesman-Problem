@@ -90,12 +90,9 @@ double tspTriangular(DataManager aux, vector<Vertex*>& path) {
     return finalDistance;
 }
 void printTSPResultTriangular(const vector<Vertex*>& path, double finalDistance) {
-    cout << "Path: ";
+    cout << "Path: "<<endl;
     for (size_t i = 0; i < path.size(); ++i) {
-        cout << path[i]->getInfo();
-        if (i < path.size() - 1) {
-            cout << " -> ";
-        }
+        cout << path[i]->getInfo()<<" ";
     }
     cout << endl;
     cout << "Total Distance: " << finalDistance << endl;
