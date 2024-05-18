@@ -1,7 +1,3 @@
-//
-// Created by Rodrigo on 04/05/2024.
-//
-
 #include <iostream>
 #include <vector>
 #include <algorithm>
@@ -22,9 +18,13 @@ DataManager::DataManager() {
     }
 }
 
-
-
-
+/**
+    * @brief Initializes the DataManager based on the provided dataset and type.
+    * @param dataSet The dataset to be used. This can be 0 for small, 1 for mid, and 2 for real.
+    * @param type The type of graph to read. For small and mid datasets, this can be 0, 1, or 2. For real datasets, this can be 1 or 2.
+    * @details This method decides what type of graph to read based on the provided dataset and type.
+    * @complexity O(n^2) for small datasets, O(n) for mid datasets and for real datasets, where n is the number of vertices in the graph.
+    */
 void DataManager::start(int dataSet, int type) {
     switch (dataSet) {
         case 0:
@@ -40,7 +40,13 @@ void DataManager::start(int dataSet, int type) {
     }
 }
 
-
+/**
+    * @brief Reads a small graph from a file based on the provided type.
+    * @param type The type of graph to read. This can be 0 for shipping, 1 for stadiums, and 2 for tourism.
+    * @details This method opens the appropriate file based on the type parameter. It then reads each line of the file.
+    * The distance between each pair of vertices is also stored in the distance matrix.
+    * @complexity O(n^2), where n is the number of vertices in the graph.
+    */
 void DataManager::readSmall(int type) {
     ifstream file;
     bool tourism = false;
@@ -116,9 +122,13 @@ void DataManager::readSmall(int type) {
 
 }
 
-//01:14 minutos
-
-
+/**
+    * @brief Reads a mid-sized graph from a file.
+    * @param n The number of nodes to read from the file.
+    * @details This method opens the nodes.csv file and reads the first n lines,
+    * creating a vertex for each line and adding it to the graph of the DataManager instance.
+    * @complexity O(n), where n is the number of vertices in the graph.
+    */
 void DataManager::readMid(int n) {
     int x=0;
     ifstream file;
@@ -192,6 +202,13 @@ void DataManager::readMid(int n) {
     }
 }
 
+/**
+    * @brief Reads a real-world graph from a file based on the provided type.
+    * @param type The type of graph to read. This can be 1 for graph1, and 2 for graph2.
+    * @details This method opens the appropriate file based on the type parameter,
+    * then reads each line of the file, creating vertices as it goes.
+    * @complexity O(n), where n is the number of vertices in the graph.
+    */
 void DataManager::readReal(int type) {
     ifstream file;
     switch (type) {
@@ -236,6 +253,13 @@ void DataManager::readReal(int type) {
     }
 }
 
+/**
+    * @brief Reads edges from a file and adds them to the graph.
+    * @param filePath The path to the file containing the edges.
+    * @param flag A boolean flag indicating whether the first line of the file should be skipped.
+    * @details This method opens the file specified by filePath, then reads each line of the file, creating edges.
+    * @complexity O(e), where e is the number of edges in the graph.
+ */
 void DataManager::readEdges(string filePath, bool flag) {
     ifstream file;
     file.open(filePath);
@@ -264,23 +288,47 @@ void DataManager::readEdges(string filePath, bool flag) {
     }
 }
 
+/**
+    * @brief Gets the graph.
+    * @return the graph.
+    */
 Graph DataManager::getG() {
     return g;
 }
 
-  double** &DataManager::getDistMatrix()  {
+/**
+    * @brief Sets the graph.
+    * @param graph The graph to set.
+    */
+void DataManager::setG(Graph graph) {
+    this->g=graph;
+
+}
+
+/**
+    * @brief Gets the distance matrix.
+    * @return A reference to the distance matrix.
+    */
+double** &DataManager::getDistMatrix()  {
     return this->distMatrix;
 }
 
+/**
+    * @brief Sets the distance matrix.
+    * @param distMatrix A reference to the distance matrix to set.
+    */
 void DataManager::setDistMatrix(double **&distMatrix) {
     this->distMatrix=distMatrix;
 
 }
 
-Graph &DataManager::getGC() {
-    return g;
-}
-
+/**
+    * @brief Prints the vertices and their adjacent vertices of the graph.
+    * @param g The graph to be printed.
+    * @details This method iterates over each vertex in the graph and prints the vertex's information
+    * and the information of its adjacent vertices along with the distance to them.
+    * @complexity O(v + e), where v is the number of vertices and e is the number of edges in the graph.
+    */
 void DataManager::printGraph(const Graph &g) {
     for (const auto& vertex : g.getVertexSet()) {
         std::cout << "Vertex: " << vertex->getInfo() << std::endl;
@@ -292,14 +340,13 @@ void DataManager::printGraph(const Graph &g) {
     }
 }
 
+/**
+    * @brief Copies the state of the current DataManager instance to another.
+    * @param copy The DataManager instance to copy to.
+    */
 void DataManager::copy(DataManager &copy) {
     copy.setDistMatrix(distMatrix);
     copy.setG(g);
-}
-
-void DataManager::setG(Graph graph) {
-    this->g=graph;
-
 }
 
 
