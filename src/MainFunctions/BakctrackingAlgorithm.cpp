@@ -1,5 +1,7 @@
 #include <cfloat>
 #include "BacktrackingAlgorithm.h"
+#include <chrono>
+
 
 void tspBackTrackR(double **distMatrix, double actualDist, double &minDist, int n, int currI, unsigned int  path[], unsigned int currPath[]) {
     //break case
@@ -51,11 +53,18 @@ double tspBackTrack(DataManager dataManager) {
     unsigned int currPath[1000];
     currPath[0] = 0;
     double minDist = DBL_MAX;
+    auto start = std::chrono::high_resolution_clock::now();
+
     tspBackTrackR(dataManager.getDistMatrix(), 0, minDist, n, 1, path, currPath);
+    auto end = std::chrono::high_resolution_clock::now();
+    std::chrono::duration<double> duration = end - start;
+
     cout<<"Path: "<<endl;
     for (int i = 0; i <= n; ++i) {
         cout << path[i] << " ";
     }
+    std::cout << "The function took " << duration.count() << " seconds to execute." << std::endl;
+
     return minDist;
 }
 
