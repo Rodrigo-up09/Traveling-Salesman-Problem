@@ -63,13 +63,13 @@ void displayMenu() {
     dataManager.start(dataSet, type);
     int option;
 
-    cout << "What you to test?" << endl;
-    cout << "0 - Single Algoritm" << endl;
+    cout << "What do you want to test?" << endl;
+    cout << "0 - Single Algorithm" << endl;
     cout << "1 - Compare Multiple" << endl;
     cin >> option;
     switch (option) {
         case 0:
-            displaySingleAlgoritm(dataManager);
+            displaySingleAlgorithm(dataManager);
             break;
         case 1:
           displayMultiple( dataManager);
@@ -83,19 +83,19 @@ void displayMenu() {
 
 }
 
-void displaySingleAlgoritm(DataManager dataManager){
-    int algoritm;
+void displaySingleAlgorithm(DataManager dataManager){
+    int algorithm;
 
-    cout << "Select Algoritm:" << endl;
-    cout << "0 - Bactrack" << endl;
+    cout << "Select Algorithm:" << endl;
+    cout << "0 - Backtrack" << endl;
     cout << "1 - Triangular" << endl;
-    cout << "2 -Other Heuristic" << endl;
-    cout << "3 -Real Word" << endl;
+    cout << "2 - Other Heuristic" << endl;
+    cout << "3 - Real Word" << endl;
     cout << "Enter your choice: ";
-    cin >> algoritm;
+    cin >> algorithm;
 
 
-    switch (algoritm) {
+    switch (algorithm) {
         case 0:
             displayBackTrac(dataManager);
 
@@ -112,7 +112,7 @@ void displaySingleAlgoritm(DataManager dataManager){
             break;
         case 3:{
             string origin;
-            cout << "Chose the Sorce Vertex:" << endl;
+            cout << "Choose the Source Vertex:" << endl;
             cin >> origin;
             displayReal( dataManager, origin);
             break;
@@ -130,13 +130,13 @@ void displaySingleAlgoritm(DataManager dataManager){
 
 
 void displayMultiple(DataManager dataManager) {
-    int algoritm;
+    int algorithm;
     cout << "Select one option:" << endl;
-    cout << "0 -Compare Light Algoritms(use small )" << endl;
-    cout << "1 -Compare Mid Algoritms(use mid Graph,Backtrack is not called )" << endl;
-    cout << "2 - Compare heavy algoritms (BackTrack its not called and Other Heuristic)" << endl;
+    cout << "0 - Compare Light Algorithms (use small)" << endl;
+    cout << "1 - Compare Mid Algorithms (use mid Graph, Backtrack is not called)" << endl;
+    cout << "2 - Compare heavy algorithms (BackTrack is not called and Other Heuristic)" << endl;
     cout << "Enter your choice: ";
-    cin >> algoritm;
+    cin >> algorithm;
     DataManager dataManagerB;
     DataManager dataManagerT;
     DataManager dataManagerH;
@@ -146,7 +146,7 @@ void displayMultiple(DataManager dataManager) {
     dataManager.copy(dataManagerH);
     dataManager.copy(dataManagerR);
 
-    switch (algoritm) {
+    switch (algorithm) {
         case 0:
             displayTriangular(dataManagerT);
             displayBackTrac(dataManagerB);
@@ -189,7 +189,7 @@ void displayTriangular(DataManager dataManager){
     auto result2= tspTriangular(dataManager,path);
     auto end = std::chrono::high_resolution_clock::now();
     std::chrono::duration<double> duration = end - start;
-    printTSPResultTriangular(path, result2);
+    printTSPTriangular(path, result2);
     std::cout << "The function took " << duration.count() << " seconds to execute." << std::endl;
 
 }
@@ -197,10 +197,10 @@ void displayReal(DataManager dataManager,const string& origin){
     cout<<"---------------------------------------------------------"<<endl;
     cout<<"Real "<<endl;
     auto start = std::chrono::high_resolution_clock::now();
-    auto resullt= greedyTSP3(dataManager.getG(),origin,dataManager.getDistMatrix());
+    auto result= greedyTSP3(dataManager.getG(),origin,dataManager.getDistMatrix());
     auto end = std::chrono::high_resolution_clock::now();
     std::chrono::duration<double> duration = end - start;
-    printTour(resullt.first,resullt.second);
+    printTour(result.first,result.second);
     std::cout << "The function took " << duration.count() << " seconds to execute." << std::endl;
 
 

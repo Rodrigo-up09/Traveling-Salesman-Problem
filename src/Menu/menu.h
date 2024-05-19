@@ -4,8 +4,9 @@
 #include "MainFunctions/TriangularApproximation.h"
 #include "MainFunctions/OtherHeuristics.h"
 #include <chrono>
+
 void displayMenu();
-void displaySingleAlgoritm( DataManager dataManager);
+void displaySingleAlgorithm(DataManager dataManager);
 void displayBackTrac(DataManager dataManager);
 void displayTriangular(DataManager dataManager);
 void displayReal(DataManager dataManager,const string& origin);

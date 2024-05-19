@@ -7,6 +7,10 @@
 #include <vector>
 #include "../Graph/graph.h" // Include the header file for your Vertex class
 
+/**
+ *
+ * @tparam T
+ */
 template <class T>
 class MutablePriorityQueue {
     std::vector<T *> H;

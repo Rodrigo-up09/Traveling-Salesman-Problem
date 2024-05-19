@@ -21,8 +21,7 @@ double calculateDistance(Vertex* v1, Vertex* v2) {
             return e->getdistance();
         }
     }
-    double haversineDistance = haversine(v1->getLatitude(), v1->getLongitude(), v2->getLatitude(), v2->getLongitude());
-    return haversineDistance;
+    return haversine(v1->getLatitude(), v1->getLongitude(), v2->getLatitude(), v2->getLongitude());;
 }
 
 vector<Edge*> prim(DataManager aux) {
@@ -89,7 +88,8 @@ double tspTriangular(DataManager aux, vector<Vertex*>& path) {
 
     return finalDistance;
 }
-void printTSPResultTriangular(const vector<Vertex*>& path, double finalDistance) {
+
+void printTSPTriangular(const vector<Vertex*>& path, double finalDistance) {
     cout << "Path: "<<endl;
     for (size_t i = 0; i < path.size(); ++i) {
         cout << path[i]->getInfo()<<" ";
