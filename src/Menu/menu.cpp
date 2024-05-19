@@ -175,17 +175,17 @@ void displayMultiple(DataManager dataManager, bool shipping) {
             case 0:
                 displayTriangular(dataManagerT, shipping);
                 displayBackTrac(dataManagerB);
-                displayOtherHeuristic(dataManager, shipping, k);
+                displayOtherHeuristic(dataManagerH, shipping, k);
                 displayReal(dataManagerR, "0");
                 break;
             case 1:
                 displayTriangular(dataManagerT, shipping);
-                displayOtherHeuristic(dataManager, shipping, k);
+                displayOtherHeuristic(dataManagerH, shipping, k);
                 displayReal(dataManagerR, "0");
                 break;
             case 2:
                 displayTriangular(dataManagerT, shipping);
-                displayOtherHeuristic(dataManager, shipping, k);
+                displayOtherHeuristic(dataManagerH, shipping, k);
                 displayReal(dataManagerR, "0");
                 break;
 
