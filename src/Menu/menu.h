@@ -19,7 +19,7 @@ void displayMenu();
  * @brief Displays the results of a single algorithm.
  * @param dataManager Instance containing the graph and other related data.
  */
-void displaySingleAlgorithm(DataManager dataManager);
+void displaySingleAlgorithm(DataManager dataManager, bool shipping);
 
 /**
  * @brief Displays the results of Backtrack Algorithm.
@@ -31,7 +31,7 @@ void displayBackTrac(DataManager dataManager);
  * @brief Displays the results of Triangular Approximation Algorithm.
  * @param dataManager Instance containing the graph and other related data.
  */
-void displayTriangular(DataManager dataManager);
+void displayTriangular(DataManager dataManager, bool shipping);
 
 /**
  * @brief Displays the results of TSP in Real World Algorithm.
@@ -43,4 +43,4 @@ void displayReal(DataManager dataManager,const string& origin);
  * @brief Displays the results of multiple algorithms for comparison.
  * @param dataManager Instance containing the graph and other related data.
  */
-void displayMultiple(DataManager dataManager);
+void displayMultiple(DataManager dataManager, bool shipping);

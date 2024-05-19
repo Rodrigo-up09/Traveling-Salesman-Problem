@@ -25,19 +25,27 @@ DataManager::DataManager() {
     * @details This method decides what type of graph to read based on the provided dataset and type.
     * @complexity O(n^2) for small datasets, O(n) for mid datasets and for real datasets, where n is the number of vertices in the graph.
     */
-void DataManager::start(int dataSet, int type) {
+bool DataManager::start(int dataSet, int type) {
+    bool shipping;
     switch (dataSet) {
         case 0:
-            readSmall(type);
+            if(!readSmall(type)) {
+                shipping = false;
+            }else {
+                shipping = true;
+            }
             break;
         case 1:
             readMid(type);
+            shipping = false;
             break;
         case 2:
             if(type==1 || type==2)
                 readReal(type);
+            shipping = false;
             break;
     }
+    return shipping;
 }
 
 /**
@@ -47,24 +55,27 @@ void DataManager::start(int dataSet, int type) {
     * The distance between each pair of vertices is also stored in the distance matrix.
     * @complexity O(n^2), where n is the number of vertices in the graph.
     */
-void DataManager::readSmall(int type) {
+bool DataManager::readSmall(int type) {
     ifstream file;
-    bool tourism = false;
+    bool tourism = false, shipping;
     switch (type) {
         case 0:
             file.open("../data/Toy-Graphs/shipping.csv");
+            shipping = true;
             break;
         case 1:
             file.open("../data/Toy-Graphs/stadiums.csv");
+            shipping = false;
             break;
         case 2:
             file.open("../data/Toy-Graphs/tourism.csv");
             tourism = true;
+            shipping = false;
             break;
     }
     if (!file.is_open()) {
         cout << "Erro ao abrir o ficheiro" << endl;
-        return;
+        return false;
     }
     string value, line;
     getline(file, line);
@@ -119,7 +130,7 @@ void DataManager::readSmall(int type) {
             }
         }
     }
-
+    return shipping;
 }
 
 /**

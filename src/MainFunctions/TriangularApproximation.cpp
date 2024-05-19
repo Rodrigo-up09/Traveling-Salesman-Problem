@@ -33,13 +33,17 @@ double haversine(double lat1, double lon1, double lat2, double lon2) {
  * If there is, it returns the distance of the edge.
  * If there isn't, it calculates the haversine distance between the two vertices and returns it.
  */
-double calculateDistance(Vertex* v1, Vertex* v2) {
+double calculateDistance(Vertex* v1, Vertex* v2, bool shipping) {
     for(auto e : v1->getAdj()) {
         if(e->getDest()->getInfo() == v2->getInfo()) {
             return e->getdistance();
         }
     }
-    return haversine(v1->getLatitude(), v1->getLongitude(), v2->getLatitude(), v2->getLongitude());;
+    if(!shipping) {
+        return haversine(v1->getLatitude(), v1->getLongitude(), v2->getLatitude(), v2->getLongitude());
+    }else {
+        return DBL_MAX;
+    }
 }
 
 /**
@@ -54,7 +58,7 @@ double calculateDistance(Vertex* v1, Vertex* v2) {
  * This process continues until all vertices have been visited, at which point the function returns the MST.
  * @complexity O(E log V), where E is the number of edges and V is the number of vertices in the graph.
  */
-vector<Edge*> prim(DataManager aux) {
+vector<Edge*> prim(DataManager aux, bool shipping) {
     vector<Edge*> mst;
     if(aux.getG().getVertexSet().empty()) {
         return mst;
@@ -64,7 +68,7 @@ vector<Edge*> prim(DataManager aux) {
         v->setPath(nullptr);
         v->setVisited(false);
     }
-    auto source = aux.getG().getVertexSet()[0];
+    auto source = aux.getG().findVertex("0");
     source->setDist(0);
     MutablePriorityQueue<Vertex> q;
     q.insert(source);
@@ -77,7 +81,7 @@ vector<Edge*> prim(DataManager aux) {
         v->setVisited(true);
         for(auto w : aux.getG().getVertexSet()) {
             if(v->getInfo() != w->getInfo() && !w->isVisited()){
-                double distance = calculateDistance(v,w);
+                double distance = calculateDistance(v,w,shipping);
                 double old_dist = w->getDist();
                 if(old_dist > distance) {
                     w->setDist(distance);
@@ -124,13 +128,14 @@ void preorderTraversal(vector<Edge*> mst, Vertex* v, vector<Vertex*>& path) {
  * The function finally calculates the total distance of the path and returns it.
  * @complexity O(E log 2V), where V is the number of vertices and E is the number of edges in the graph.
  */
-double tspTriangular(DataManager aux, vector<Vertex*>& path) {
+double tspTriangular(DataManager aux, vector<Vertex*>& path, bool shipping) {
     double finalDistance = 0;
-    vector<Edge*> mst = prim(aux);
-    preorderTraversal(mst, aux.getG().getVertexSet()[0], path);
-    path.push_back(aux.getG().getVertexSet()[0]);
+    vector<Edge*> mst = prim(aux, shipping);
+    preorderTraversal(mst, aux.getG().findVertex("0"), path);
+    path.push_back(aux.getG().findVertex("0"));
+    shipping = false;
     for(int i=0; i < path.size()-1; i++) {
-        finalDistance += calculateDistance(path[i], path[i+1]);
+        finalDistance += calculateDistance(path[i], path[i+1], shipping);
     }
 
     return finalDistance;
@@ -144,7 +149,7 @@ double tspTriangular(DataManager aux, vector<Vertex*>& path) {
  * @complexity The time complexity of this function is O(n), where n is the number of vertices in the path.
  */
 void printTSPTriangular(const vector<Vertex*>& path, double finalDistance) {
-    cout << "Path: "<<endl;
+    cout << "Path: " << endl;
     for (size_t i = 0; i < path.size(); ++i) {
         cout << path[i]->getInfo()<<" ";
     }

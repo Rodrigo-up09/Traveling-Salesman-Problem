@@ -325,7 +325,7 @@ double adaptedTspTriangular(vector<Vertex*> vertices, vector<Vertex*>& path) {
     preorderTraversal(mst, vertices[0], path);
     path.push_back(vertices[0]);
     for(int i=0; i < path.size()-1; i++) {
-        finalDistance += calculateDistance(path[i], path[i+1]);
+        finalDistance += calculateDistance(path[i], path[i+1], false);
     }
 
     return finalDistance;

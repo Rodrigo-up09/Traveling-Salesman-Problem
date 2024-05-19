@@ -85,7 +85,8 @@ void displayMenu() {
     }
 
     DataManager dataManager;
-    dataManager.start(dataSet, type);
+    bool shipping;
+    shipping = dataManager.start(dataSet, type);
     int option;
 
     while (true) {
@@ -102,9 +103,9 @@ void displayMenu() {
         }
 
         if (option == 0) {
-            displaySingleAlgorithm(dataManager);
+            displaySingleAlgorithm(dataManager, shipping);
         } else if (option == 1) {
-            displayMultiple(dataManager);
+            displayMultiple(dataManager, shipping);
         }
 
         break;
@@ -116,7 +117,7 @@ void displayMenu() {
  * @param dataManager The DataManager instance containing the graph and other related data.
  * @details This function prompts the user to select an algorithm, runs the selected algorithm, and displays the results.
  */
-void displaySingleAlgorithm(DataManager dataManager) {
+void displaySingleAlgorithm(DataManager dataManager, bool shipping) {
     int algorithm;
 
     while (true) {
@@ -140,7 +141,7 @@ void displaySingleAlgorithm(DataManager dataManager) {
                 displayBackTrac(dataManager);
                 break;
             case 1:
-                displayTriangular(dataManager);
+                displayTriangular(dataManager, shipping);
                 break;
             case 2:
                 // TODO: Implement heuristic display function
@@ -162,7 +163,7 @@ void displaySingleAlgorithm(DataManager dataManager) {
  * @param dataManager The DataManager instance containing the graph and other related data.
  * @details This function prompts the user to select an option for comparing different algorithms, runs the selected algorithms, and displays the results.
  */
-void displayMultiple(DataManager dataManager) {
+void displayMultiple(DataManager dataManager, bool shipping) {
     int algorithm;
     while (true) {
         cout << "Select one option:" << endl;
@@ -187,18 +188,18 @@ void displayMultiple(DataManager dataManager) {
 
         switch (algorithm) {
             case 0:
-                displayTriangular(dataManagerT);
+                displayTriangular(dataManagerT, shipping);
                 displayBackTrac(dataManagerB);
                 // TODO: Call heuristic display function
                 displayReal(dataManagerR, "0");
                 break;
             case 1:
-                displayTriangular(dataManagerT);
+                displayTriangular(dataManagerT, shipping);
                 // TODO: Call heuristic display function
                 displayReal(dataManagerR, "0");
                 break;
             case 2:
-                displayTriangular(dataManagerT);
+                displayTriangular(dataManagerT, shipping);
                 // TODO: Call heuristic display function
                 displayReal(dataManagerR, "0");
                 break;
@@ -225,12 +226,12 @@ void displayBackTrac(DataManager dataManager){
  * @param dataManager The DataManager instance containing the graph and other related data.
  * @details This function runs the Triangular Approximation algorithm on the provided data, measures the execution time, and displays the results.
  */
-void displayTriangular(DataManager dataManager){
+void displayTriangular(DataManager dataManager, bool shipping){
     cout<<"---------------------------------------------------------"<<endl;
     cout<<"Triangular "<<endl;
     vector<Vertex*>path;
     auto start = std::chrono::high_resolution_clock::now();
-    auto result2= tspTriangular(dataManager,path);
+    auto result2= tspTriangular(dataManager,path, shipping);
     auto end = std::chrono::high_resolution_clock::now();
     std::chrono::duration<double> duration = end - start;
     printTSPTriangular(path, result2);

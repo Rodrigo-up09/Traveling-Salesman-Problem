@@ -24,17 +24,19 @@ double haversine(double lat1, double lon1, double lat2, double lon2);
  * @brief Calculates the distance between two vertices.
  * @param v1 Pointer to the first vertex.
  * @param v2 Pointer to the second vertex.
+ * @param shipping To check if the graph is the shipping graph.
  * @return The distance between the two vertices. If there is an edge between the vertices,
- * the distance of the edge is returned. Otherwise, the haversine distance is calculated and returned.
+ * the distance of the edge is returned or , the haversine distance is calculated and returned. Otherwise return DBL_MAX.
  */
-double calculateDistance(Vertex* v1, Vertex* v2);
+double calculateDistance(Vertex* v1, Vertex* v2, bool shipping);
 
 /**
  * @brief Executes the Prim's algorithm on the given graph.
  * @param aux The DataManager instance containing the graph and other related data.
+ * @param shipping To check if the graph is the shipping graph.
  * @return A vector of edges representing the Minimum Spanning Tree (MST) of the graph.
  */
-vector<Edge*> prim(DataManager aux);
+vector<Edge*> prim(DataManager aux, bool shipping);
 
 /**
  * @brief Performs a preorder traversal on the minimum spanning tree (MST).
@@ -50,12 +52,13 @@ void preorderTraversal(vector<Edge*> mst, Vertex* v, vector<Vertex*>& path);
  * @param path A reference to a vector where the path of the traversal will be stored.
  * @return The total distance of the path.
  */
-double tspTriangular(DataManager aux, vector<Vertex*>& path);
+double tspTriangular(DataManager aux, vector<Vertex*>& path, bool shipping);
 
 /**
  * @brief Prints the path and total distance of the Triangular Approximation algorithm.
  * @param path A vector of Vertex pointers representing the path taken by the algorithm.
  * @param finalDistance The total distance covered by the path.
+ * @param shipping To check if the graph is the shipping graph.
  */
 void printTSPTriangular(const vector<Vertex*>& path, double finalDistance);
 

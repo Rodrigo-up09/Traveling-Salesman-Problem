@@ -32,9 +32,9 @@ public:
      * @param dataSet Indicating what type of graph to read.
      * @param type Indicating what graph to read.
      */
-    void start(int dataSet,int type);
+    bool start(int dataSet,int type);
 
-    void readSmall(int type);
+    bool readSmall(int type);
     void readMid(int n);
     void readReal(int type);
     void readEdges(string filePath, bool flag);
