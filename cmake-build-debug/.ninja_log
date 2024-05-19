@@ -1,0 +1,14 @@
+# ninja log v5
+12	1670	7378460262126290	CMakeFiles/projetDA2.dir/src/main.cpp.obj	61c91fdb3ae95b74
+28	1811	7378460263487629	CMakeFiles/projetDA2.dir/src/MainFunctions/BakctrackingAlgorithm.cpp.obj	2558c7111e34fcdb
+20	2016	7378460265489817	CMakeFiles/projetDA2.dir/src/Menu/menu.cpp.obj	3a3bff0e114aa609
+2	2328	7378460265800887	CMakeFiles/projetDA2.dir/src/Graph/graph.cpp.obj	cf53710efe066304
+38	2329	7378460268059289	CMakeFiles/projetDA2.dir/src/DataManager/DataManager.cpp.obj	f7fc1307d81a71cc
+48	2347	7378460268917684	CMakeFiles/projetDA2.dir/src/MainFunctions/TSPInTheRealWorld.cpp.obj	3a9eb2b921e700ac
+1676	3672	7378460281402062	CMakeFiles/projetDA2.dir/src/MainFunctions/TriangularApproximation.cpp.obj	feca9bd86624374b
+1812	5110	7378460296566435	CMakeFiles/projetDA2.dir/src/MainFunctions/OtherHeuristics.cpp.obj	e945e3a5b26f184
+5111	6076	7378460306139774	projetDA2.exe	f9dffb05075adff
+7	1108	7378467252560429	CMakeFiles/projetDA2.dir/src/Menu/menu.cpp.obj	3a3bff0e114aa609
+1109	1812	7378467259536055	projetDA2.exe	f9dffb05075adff
+10	1307	7378472815675271	CMakeFiles/projetDA2.dir/src/Menu/menu.cpp.obj	3a3bff0e114aa609
+1308	2009	7378472822604978	projetDA2.exe	f9dffb05075adff

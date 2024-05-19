@@ -261,7 +261,7 @@ double OtherHeuristic(DataManager aux, int k, bool toy) {
  * If the 'toy' flag is set to true, the function uses toy distances; otherwise, it uses real distances.
  * @complexity The time complexity is O(n^2 * 2^n), where n is the number of vertices in the graph.
  */
-double OtherHeuristic2(DataManager aux, int k, bool toy) {
+pair<int, vector<Vertex*>> OtherHeuristic2(DataManager aux, int k, bool toy) {
     vector<Vertex *> vertices = aux.getG().getVertexSet();
     vector<vector<Vertex*>> divisions;
     pair<int,vector<Vertex *>> finalPath;
@@ -305,7 +305,7 @@ double OtherHeuristic2(DataManager aux, int k, bool toy) {
             finalPath = joinClustersWithPaths(finalPath, {dis, path1});
         }
     }
-    return finalPath.first;
+    return finalPath;
 }
 
 /**
@@ -485,6 +485,16 @@ pair<double, std::vector<Vertex*>> joinClustersWithPaths(
  */
 double calculateDistanceVer(Vertex* a, Vertex* b) {
     return haversine(a->getLatitude(), a->getLongitude(), b->getLatitude(), b->getLongitude());
+}
+
+void printOtherHeuristic(pair<int, vector<Vertex*>> path) {
+    cout << "Path: " << endl;
+    for (size_t i = 0; i < path.second.size(); ++i) {
+        cout << path.second[i]->getInfo()<<" ";
+    }
+    cout << 0;
+    cout << endl;
+    cout << "Total Distance: " << path.first << endl;
 }
 
 

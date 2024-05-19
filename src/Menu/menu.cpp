@@ -144,7 +144,10 @@ void displaySingleAlgorithm(DataManager dataManager, bool shipping) {
                 displayTriangular(dataManager, shipping);
                 break;
             case 2:
-                // TODO: Implement heuristic display function
+                int k;
+                cout << "Choose size of Cluster: ";
+                cin >> k;
+                displayOtherHeuristic(dataManager, shipping, k);
                 break;
             case 3: {
                 string origin;
@@ -164,7 +167,7 @@ void displaySingleAlgorithm(DataManager dataManager, bool shipping) {
  * @details This function prompts the user to select an option for comparing different algorithms, runs the selected algorithms, and displays the results.
  */
 void displayMultiple(DataManager dataManager, bool shipping) {
-    int algorithm;
+    int algorithm, k;
     while (true) {
         cout << "Select one option:" << endl;
         cout << "0 - Compare Light Algorithms (use small)" << endl;
@@ -179,6 +182,8 @@ void displayMultiple(DataManager dataManager, bool shipping) {
             cout << "Invalid choice. Please try again." << endl;
             continue;
         }
+        cout << "Choose size of Cluster: ";
+        cin >> k;
 
         DataManager dataManagerB, dataManagerT, dataManagerH, dataManagerR;
         dataManager.copy(dataManagerB);
@@ -190,17 +195,17 @@ void displayMultiple(DataManager dataManager, bool shipping) {
             case 0:
                 displayTriangular(dataManagerT, shipping);
                 displayBackTrac(dataManagerB);
-                // TODO: Call heuristic display function
+                displayOtherHeuristic(dataManager, shipping, k);
                 displayReal(dataManagerR, "0");
                 break;
             case 1:
                 displayTriangular(dataManagerT, shipping);
-                // TODO: Call heuristic display function
+                displayOtherHeuristic(dataManager, shipping, k);
                 displayReal(dataManagerR, "0");
                 break;
             case 2:
                 displayTriangular(dataManagerT, shipping);
-                // TODO: Call heuristic display function
+                displayOtherHeuristic(dataManager, shipping, k);
                 displayReal(dataManagerR, "0");
                 break;
         }
@@ -245,6 +250,19 @@ void displayTriangular(DataManager dataManager, bool shipping){
  * @param origin The origin vertex from where the algorithm starts.
  * @details This function runs the Real World algorithm on the provided data, measures the execution time, and displays the results.
  */
+
+void displayOtherHeuristic(DataManager dataManager, bool shipping, int k){
+    cout<<"---------------------------------------------------------"<<endl;
+    cout<<"Other Heuristic "<<endl;
+    auto start = std::chrono::high_resolution_clock::now();
+    auto result2= OtherHeuristic2(dataManager, k, shipping);
+    auto end = std::chrono::high_resolution_clock::now();
+    std::chrono::duration<double> duration = end - start;
+    printOtherHeuristic(result2);
+    std::cout << "The function took " << duration.count() << " seconds to execute." << std::endl;
+
+}
+
 void displayReal(DataManager dataManager,const string& origin){
     cout<<"---------------------------------------------------------"<<endl;
     cout<<"Real "<<endl;

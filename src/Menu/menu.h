@@ -44,3 +44,5 @@ void displayReal(DataManager dataManager,const string& origin);
  * @param dataManager Instance containing the graph and other related data.
  */
 void displayMultiple(DataManager dataManager, bool shipping);
+
+void displayOtherHeuristic(DataManager dataManager, bool shipping, int k);

@@ -107,7 +107,7 @@ vector<vector<double>> getDistances(vector<pair<int, Vertex*>> vertices, bool to
  * @param toy A boolean flag indicating whether the function should use toy distances or real distances.
  * @return The minimum total distance of the path.
  */
-double OtherHeuristic2(DataManager aux, int k, bool toy);
+pair<int, vector<Vertex*>> OtherHeuristic2(DataManager aux, int k, bool toy);
 
 /**
  * @brief Executes the Prim's algorithm to find the Minimum Spanning Tree (MST) of a graph.
@@ -133,5 +133,7 @@ double adaptedTspTriangular(vector<Vertex*> vertices, vector<Vertex*>& path);
  * @return A pair consisting of the total distance of the joined path and a vector of vertices representing the joined path.
  */
 pair<double,vector< Vertex*>> joinSets2(pair<double,vector< Vertex*>> set1, pair<double,vector< Vertex*>> set2, bool toy);
+
+void printOtherHeuristic(pair<int, vector<Vertex*>> path);
 
 #endif
