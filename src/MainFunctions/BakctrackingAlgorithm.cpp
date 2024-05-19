@@ -2,7 +2,21 @@
 #include "BacktrackingAlgorithm.h"
 #include <chrono>
 
-
+/**
+ * @brief Recursive helper function for the Backtracking algorithm in the Traveling Salesman Problem (TSP).
+ * @param distMatrix The distance matrix of the graph.
+ * @param actualDist The current distance of the path.
+ * @param minDist The minimum distance found so far.
+ * @param n The total number of vertices in the graph.
+ * @param currI The current index in the path.
+ * @param path An array to store the best path found so far.
+ * @param currPath An array to store the current path.
+ * @details This function is a part of the Backtracking algorithm for the TSP. It recursively explores all possible paths in the graph,
+ * updating the minimum distance and the best path whenever a shorter path is found. The function uses a pruning condition to avoid
+ * exploring paths that are guaranteed to be longer than the best path found so far. This significantly reduces the search space and
+ * improves the efficiency of the algorithm.
+ * @complexity O(n!), where n is the number of vertices in the graph.
+ */
 void tspBackTrackR(double **distMatrix, double actualDist, double &minDist, int n, int currI, unsigned int  path[], unsigned int currPath[]) {
     //break case
     if(currI==n && distMatrix[currPath[n-1]][0]!=INF){
@@ -14,7 +28,7 @@ void tspBackTrackR(double **distMatrix, double actualDist, double &minDist, int 
                 path[i]=currPath[i];
             }
 
-//need to add the final valuez
+//need to add the final values
         }
         path[n]=0;
 
@@ -44,6 +58,17 @@ for(int i=1;i<n;i++){
 
 }
 
+/**
+ * @brief Executes the Backtracking algorithm for the Traveling Salesman Problem (TSP).
+ * @param dataManager The DataManager instance containing the graph and other related data.
+ * @return The minimum distance of the path.
+ * @details This function first checks if the number of vertices in the graph is greater than 1000. If it is, the function prints a message and returns 0.0.
+ * Otherwise, it initializes the path and currPath arrays, sets the first element of currPath to 0, and sets minDist to the maximum possible double value.
+ * It then calls the recursive helper function tspBackTrackR, passing the distance matrix, the current distance (0), the minimum distance, the number of vertices,
+ * the current index (1), the path, and the currPath.
+ * After the recursive function returns, it calculates the execution time, prints the path and the execution time, and returns the minimum distance.
+ * @complexity O(n!), where n is the number of vertices in the graph.
+ */
 double tspBackTrack(DataManager dataManager) {
     int n = dataManager.getG().getVertexSet().size();
     if(n>1000){

@@ -27,7 +27,6 @@
 void displayMenu() {
     int dataSet, type;
 
-
     while (true) {
         cout << "Select Dataset:" << endl;
         cout << "0 - Small" << endl;
@@ -103,7 +102,7 @@ void displayMenu() {
         }
 
         if (option == 0) {
-            displaySingleAlgoritm(dataManager);
+            displaySingleAlgorithm(dataManager);
         } else if (option == 1) {
             displayMultiple(dataManager);
         }
@@ -111,7 +110,13 @@ void displayMenu() {
         break;
     }
 }
-void displaySingleAlgoritm(DataManager dataManager) {
+
+/**
+ * @brief Displays the results of a single algorithm.
+ * @param dataManager The DataManager instance containing the graph and other related data.
+ * @details This function prompts the user to select an algorithm, runs the selected algorithm, and displays the results.
+ */
+void displaySingleAlgorithm(DataManager dataManager) {
     int algorithm;
 
     while (true) {
@@ -152,8 +157,11 @@ void displaySingleAlgoritm(DataManager dataManager) {
     }
 }
 
-
-
+/**
+ * @brief Displays the results of multiple algorithms for comparison.
+ * @param dataManager The DataManager instance containing the graph and other related data.
+ * @details This function prompts the user to select an option for comparing different algorithms, runs the selected algorithms, and displays the results.
+ */
 void displayMultiple(DataManager dataManager) {
     int algorithm;
     while (true) {
@@ -199,6 +207,11 @@ void displayMultiple(DataManager dataManager) {
     }
 }
 
+/**
+ * @brief Displays the results of the Backtrack algorithm.
+ * @param dataManager The DataManager instance containing the graph and other related data.
+ * @details This function runs the Backtrack algorithm on the provided data and displays the results.
+ */
 void displayBackTrac(DataManager dataManager){
     cout<<"---------------------------------------------------------"<<endl;
     cout<<"BackTrack"<<endl;
@@ -206,6 +219,12 @@ void displayBackTrac(DataManager dataManager){
     cout<<"Total Distance: " <<result<<endl;
 
 }
+
+/**
+ * @brief Displays the results of the Triangular Approximation algorithm.
+ * @param dataManager The DataManager instance containing the graph and other related data.
+ * @details This function runs the Triangular Approximation algorithm on the provided data, measures the execution time, and displays the results.
+ */
 void displayTriangular(DataManager dataManager){
     cout<<"---------------------------------------------------------"<<endl;
     cout<<"Triangular "<<endl;
@@ -214,10 +233,17 @@ void displayTriangular(DataManager dataManager){
     auto result2= tspTriangular(dataManager,path);
     auto end = std::chrono::high_resolution_clock::now();
     std::chrono::duration<double> duration = end - start;
-    printTSPResultTriangular(path, result2);
+    printTSPTriangular(path, result2);
     std::cout << "The function took " << duration.count() << " seconds to execute." << std::endl;
 
 }
+
+/**
+ * @brief Displays the results of the Real World algorithm.
+ * @param dataManager The DataManager instance containing the graph and other related data.
+ * @param origin The origin vertex from where the algorithm starts.
+ * @details This function runs the Real World algorithm on the provided data, measures the execution time, and displays the results.
+ */
 void displayReal(DataManager dataManager,const string& origin){
     cout<<"---------------------------------------------------------"<<endl;
     cout<<"Real "<<endl;
@@ -227,7 +253,6 @@ void displayReal(DataManager dataManager,const string& origin){
     std::chrono::duration<double> duration = end - start;
     printTour(resullt.first,resullt.second);
     std::cout << "The function took " << duration.count() << " seconds to execute." << std::endl;
-
 
 }
 //TODO DISPLay other

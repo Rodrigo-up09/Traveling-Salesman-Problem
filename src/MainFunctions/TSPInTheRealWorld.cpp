@@ -1,11 +1,20 @@
-
 #include <queue>
 #include "TSPInTheRealWorld.h"
 
-
-//greedy algortim that seach for the nearest neibor with less distance
+//greedy algorithm that search for the nearest neighbor with less distance
 //works for complete graphs
-//complexidade e certa de 0(v^2*E),principal problema e que o resultado acaba por ser aproximado e por vezes pode ser uma aproximação bastante distante da real
+//complexidade é certa de 0(v^2*E),principal problema e que o resultado acaba por ser aproximado e por vezes pode ser uma aproximação bastante distante da real
+
+/**
+ * @brief Finds the nearest unvisited neighbor of a given vertex.
+ * @param vertex The vertex for which the nearest neighbor is to be found.
+ * @param unvisited A vector of vertices that have not been visited yet.
+ * @return A pointer to the nearest unvisited neighbor. If no unvisited neighbor is found, returns nullptr.
+ * @details This function iterates over the vector of unvisited vertices and for each unvisited vertex,
+ * it checks if there is an edge from the given vertex to the unvisited vertex. If such an edge exists,
+ * it compares the distance of this edge with the minimum distance found so far. If the distance is less
+ * than the minimum distance, it updates the minimum distance and sets the nearest neighbor to the current unvisited vertex.
+ */
 Vertex* findNearestNeighbor(Vertex* vertex, const vector<Vertex*>& unvisited) {
     double minDistance = numeric_limits<double>::max();
     Vertex* nearestNeighbor = nullptr;
@@ -22,12 +31,22 @@ Vertex* findNearestNeighbor(Vertex* vertex, const vector<Vertex*>& unvisited) {
     return nearestNeighbor;
 }
 
+/**
+ * @brief Executes the Nearest Neighbor algorithm for the Traveling Salesman Problem (TSP).
+ * @param graph The graph on which the TSP is to be solved.
+ * @param origin The starting vertex for the TSP.
+ * @return A pair consisting of a vector of vertices representing the path of the tour and the total distance of the tour.
+ * @details This function implements the Nearest Neighbor heuristic for the TSP. It starts at the given origin vertex and,
+ * at each step, it selects the unvisited vertex that is closest to the current vertex. This process is repeated until all vertices have been visited,
+ * at which point the path returns to the origin vertex. The function returns the path of the tour as a vector of vertices and the total distance of the tour.
+ * Note that this heuristic does not always produce the optimal solution, but it is efficient and the solution is often good enough for practical purposes.
+ * @complexity O(n^2), where n is the number of vertices in the graph.
+ */
 pair<vector<Vertex*>, double> nearestNeighborTSP(Graph graph, const string& origin) {
     vector<Vertex*> tour;
     vector<Vertex*> unvisited = graph.getVertexSet();
 
     double totalDistance = 0.0;
-
 
     Vertex* currentVertex = graph.findVertex(origin);
     if (currentVertex == nullptr) {
@@ -84,13 +103,20 @@ pair<vector<Vertex*>, double> nearestNeighborTSP(Graph graph, const string& orig
     return make_pair(tour, totalDistance);
 }
 
-
-
 //Greedy heuristic
 //Algoritm that is better than the nn, but still with not the best preformance.
 //This algoritm iterate throw all the vertex, and check the shortest edge.Always cheking it the smallest edge have an Indegree of 1,if it have a Indegree>1,can go to that edge.
 //At the end it goes to the init vertice,its a better aproximation than the nn algoritm
 
+/**
+ * @brief Constructs the tour from the origin vertex.
+ * @param origin A pointer to the origin vertex.
+ * @param tour A reference to a vector of Vertex pointers where the tour will be stored.
+ * @details This function starts at the origin vertex and follows the path set by the algorithm,
+ * adding each vertex to the tour vector. The function stops when it encounters a vertex
+ * with no path set or when it has visited all vertices in the graph.
+ * @complexity O(n), where n is the number of vertices in the graph.
+ */
 void GetTour(Vertex* origin, vector<Vertex*>& tour) {
 
     Vertex* vertex = origin;
@@ -105,6 +131,18 @@ void GetTour(Vertex* origin, vector<Vertex*>& tour) {
         n++;
     }
 }
+
+/**
+ * @brief Executes the Greedy algorithm for the Traveling Salesman Problem (TSP).
+ * @param graph The graph on which the TSP is to be solved.
+ * @param origin The starting vertex for the TSP.
+ * @return A pair consisting of a vector of vertices representing the path of the tour and the total distance of the tour.
+ * @details This function implements the Greedy heuristic for the TSP. It starts at the given origin vertex and,
+ * at each step, it selects the unvisited vertex that is closest to the current vertex. This process is repeated until all vertices have been visited,
+ * at which point the path returns to the origin vertex. The function returns the path of the tour as a vector of vertices and the total distance of the tour.
+ * Note that this heuristic does not always produce the optimal solution, but it is efficient and the solution is often good enough for practical purposes.
+ * @complexity O(n^2), where n is the number of vertices in the graph.
+ */
 pair<vector<Vertex*>, double> greedyTSP(Graph graph, const string& origin) {
 
     vector<Vertex *> tour;
@@ -149,13 +187,17 @@ pair<vector<Vertex*>, double> greedyTSP(Graph graph, const string& origin) {
     GetTour(currentVertex,tour);
     return make_pair(tour,totalDistance);
 
-
-
 }//not tested
 
-
-
-
+/**
+ * @brief Prints the tour path and total distance of the Traveling Salesman Problem (TSP).
+ * @param tour A vector of Vertex pointers representing the path taken by the algorithm.
+ * @param totalDistance The total distance covered by the path.
+ * @details This function iterates over the 'tour' vector and prints each vertex's information.
+ * After all vertices are printed, it prints the total distance of the tour.
+ * This function is typically used for debugging and results presentation.
+ * @complexity O(n), where n is the number of vertices in the tour.
+ */
 void printTour(const vector<Vertex*>& tour, double totalDistance) {
     cout << "Path: "<<endl;
     for (Vertex* vertex : tour) {
@@ -165,13 +207,19 @@ void printTour(const vector<Vertex*>& tour, double totalDistance) {
     cout << "Total distance: " << totalDistance << endl;
 }
 
-// Christofides algorithm
-//this algoritm first get the mst-i will use prime algoritm
-//But there is a problem this algoritm just handle complete graph,so maybe it can be a risky solotion
-
-
-//Greedy algoritm,its the NN algoritm but with beter performance,It doenst need to iterate trow a vector to get the closest edge.Insted just pop the top edge of the queeu.
-
+/**
+ * @brief Executes the Greedy algorithm for the Traveling Salesman Problem (TSP) with a priority queue.
+ * @param graph The graph on which the TSP is to be solved.
+ * @param origin The starting vertex for the TSP.
+ * @param distMatrix The distance matrix of the graph.
+ * @return A pair consisting of a vector of vertices representing the path of the tour and the total distance of the tour.
+ * @details This function implements the Greedy heuristic for the TSP. It starts at the given origin vertex and,
+ * at each step, it selects the unvisited vertex that is closest to the current vertex. This process is repeated until all vertices have been visited,
+ * at which point the path returns to the origin vertex. The function returns the path of the tour as a vector of vertices and the total distance of the tour.
+ * Note that this heuristic does not always produce the optimal solution, but it is efficient and the solution is often good enough for practical purposes.
+ * The function uses a priority queue to select the next vertex to visit, which improves the efficiency of the algorithm.
+ * @complexity O(n^2 log n), where n is the number of vertices in the graph.
+ */
 pair<vector<Vertex*>, double> greedyTSP3(Graph graph, const string& origin, double** distMatrix ) {
     vector<Vertex *> tour;
     double totalDistance = 0.0;

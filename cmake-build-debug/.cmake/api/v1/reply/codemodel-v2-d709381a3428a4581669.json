@@ -6,7 +6,7 @@
 			[
 				{
 					"build" : ".",
-					"jsonFile" : "directory-.-Debug-d0094a50bb2071803777.json",
+					"jsonFile" : "directory-.-Debug-f5ebdc15457944623624.json",
 					"minimumCMakeVersion" : 
 					{
 						"string" : "3.26"
@@ -39,7 +39,7 @@
 				{
 					"directoryIndex" : 0,
 					"id" : "projetDA2::@6890427a1f51a3e7e1df",
-					"jsonFile" : "target-projetDA2-Debug-aa28e0c37dcf3bd2a4d2.json",
+					"jsonFile" : "target-projetDA2-Debug-19e8e617f34158599e8d.json",
 					"name" : "projetDA2",
 					"projectIndex" : 0
 				}
@@ -49,12 +49,12 @@
 	"kind" : "codemodel",
 	"paths" : 
 	{
-		"build" : "C:/Users/Utilizador/Desktop/LEIC/DA/projetDA2/cmake-build-debug",
-		"source" : "C:/Users/Utilizador/Desktop/LEIC/DA/projetDA2"
+		"build" : "/home/afonso/Desktop/DA2/cmake-build-debug",
+		"source" : "/home/afonso/Desktop/DA2"
 	},
 	"version" : 
 	{
 		"major" : 2,
-		"minor" : 5
+		"minor" : 6
 	}
 }
