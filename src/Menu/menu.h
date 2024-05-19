@@ -44,3 +44,7 @@ void displayReal(DataManager dataManager,const string& origin);
  * @param dataManager Instance containing the graph and other related data.
  */
 void displayMultiple(DataManager dataManager, bool shipping);
+
+
+
+void displayReal2(DataManager dataManager,const string& origin);

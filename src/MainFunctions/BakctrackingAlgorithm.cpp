@@ -28,32 +28,32 @@ void tspBackTrackR(double **distMatrix, double actualDist, double &minDist, int 
                 path[i]=currPath[i];
             }
 
-//need to add the final values
+
         }
         path[n]=0;
 
         return;
     }
-for(int i=1;i<n;i++){
+    for(int i=1;i<n;i++){
 
-    if((actualDist+distMatrix[currPath[currI-1]][i]<minDist) && distMatrix[currPath[currI-1]][i]!=INF){
+        if((actualDist+distMatrix[currPath[currI-1]][i]<minDist) && distMatrix[currPath[currI-1]][i]!=INF){
 
-        //If this dont happen is a non minDist  path,so backTrack
-        bool isNew= true;
-        for(int j=1;j<currI;j++){//check if the value was already process
-            if(currPath[j]==i){
-                isNew= false;
-                break;
+            //If this dont happen is a non minDist  path,so backTrack
+            bool isNew= true;
+            for(int j=1;j<currI;j++){//check if the value was already process
+                if(currPath[j]==i){
+                    isNew= false;
+                    break;
+                }
+
+            }
+            if(isNew){//add the new vertex,and recursive call the next index
+                currPath[currI]=i;
+
+                tspBackTrackR(distMatrix,actualDist+distMatrix[currPath[currI-1]][currPath[currI]],minDist,n,currI+1,path,currPath);
             }
 
         }
-        if(isNew){//add the new vertex,and recursive call the next index
-            currPath[currI]=i;
-
-            tspBackTrackR(distMatrix,actualDist+distMatrix[currPath[currI-1]][currPath[currI]],minDist,n,currI+1,path,currPath);
-        }
-
-    }
 }
 
 }
@@ -88,6 +88,7 @@ double tspBackTrack(DataManager dataManager) {
     for (int i = 0; i <= n; ++i) {
         cout << path[i] << " ";
     }
+    cout<<endl;
     std::cout << "The function took " << duration.count() << " seconds to execute." << std::endl;
 
     return minDist;

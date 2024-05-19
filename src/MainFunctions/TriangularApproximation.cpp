@@ -34,7 +34,9 @@ double haversine(double lat1, double lon1, double lat2, double lon2) {
  * If there isn't, it calculates the haversine distance between the two vertices and returns it.
  */
 double calculateDistance(Vertex* v1, Vertex* v2, bool shipping) {
-    for(auto e : v1->getAdj()) {
+    for(auto edge : v1->getAdj()) {
+        Edge* e=edge.second;
+
         if(e->getDest()->getInfo() == v2->getInfo()) {
             return e->getdistance();
         }
@@ -63,7 +65,8 @@ vector<Edge*> prim(DataManager aux, bool shipping) {
     if(aux.getG().getVertexSet().empty()) {
         return mst;
     }
-    for(auto v : aux.getG().getVertexSet()) {
+    for(auto vertex: aux.getG().getVertexSet()) {
+        Vertex* v=vertex.second;
         v->setDist(DBL_MAX);
         v->setPath(nullptr);
         v->setVisited(false);
@@ -79,7 +82,9 @@ vector<Edge*> prim(DataManager aux, bool shipping) {
             mst.push_back(v->getPath());
         }
         v->setVisited(true);
-        for(auto w : aux.getG().getVertexSet()) {
+        for(auto ver : aux.getG().getVertexSet()) {
+           Vertex* w=ver.second;
+
             if(v->getInfo() != w->getInfo() && !w->isVisited()){
                 double distance = calculateDistance(v,w,shipping);
                 double old_dist = w->getDist();

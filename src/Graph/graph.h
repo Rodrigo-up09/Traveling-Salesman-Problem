@@ -39,21 +39,21 @@ public:
      */
     Vertex(const string &code, const string& label);
 
-    //Getters
-    std::vector<Edge*> getAdj(); 
-    std::vector<Edge*> getIncoming(); 
-    bool isVisited() const; 
+    // Getters
+    unordered_map<string, Edge*> getAdj() const;
+    unordered_map<string, Edge*> getIncoming() const;
+    bool isVisited() const;
     bool isProcessing() const;
-    double getDist() const; 
-    Edge* getPath() const; 
+    double getDist() const;
+    Edge* getPath() const;
     std::string getInfo() const;
     double getLatitude() const;
     double getLongitude() const;
     const string &getLabel() const;
     unsigned int getQueueIndex() const;
 
-    //Setters
-    void setInfo(const std::string& info); 
+    // Setters
+    void setInfo(const std::string& info);
     void setVisited(bool visited);
     void setProcessing(bool processing);
     void setDist(double dist);
@@ -71,9 +71,9 @@ public:
     bool operator<(const Vertex& other) const;
 
     /**
-     * @brief Adds an edge form this vertex to the specified destination vertex.
+     * @brief Adds an edge from this vertex to the specified destination vertex.
      * @param dest The destination vertex.
-     * @param distance The distance between the two vertex.
+     * @param distance The distance between the two vertices.
      * @return Pointer to the created edge.
      */
     Edge* addEdge(Vertex* dest, double distance);
@@ -84,20 +84,18 @@ public:
      */
     void deleteEdge(Edge *edge);
 
-
 protected:
-    std::string info;              
-    std::vector<Edge*> adj;        
-    std::vector<Edge*> incoming;
+    std::string info;
+    unordered_map<string, Edge*> adj;
+    unordered_map<string, Edge*> incoming;
     string label;
     bool visited;
     bool processing;
     double dist;
-    Edge* path ;
+    Edge* path;
     double latitude;
     double longitude;
     unsigned int queueIndex;
-
 };
 
 /**
@@ -116,25 +114,24 @@ public:
     Edge(Vertex* orig, Vertex* dest, double distance);
     ~Edge();
 
-    //Getters
+    // Getters
     Vertex* getDest();
     double getdistance() const;
-    bool isSelected() const; 
-    Vertex* getOrig() const; 
+    bool isSelected() const;
+    Vertex* getOrig() const;
     Edge* getReverse() const;
 
-    //Setters
+    // Setters
     void setDistance(double distance);
-    void setSelected(bool selected); 
+    void setSelected(bool selected);
     void setReverse(Edge* reverse);
 
 protected:
-
     Vertex* dest;
     double distance;
     bool selected = false;
-    Vertex* orig; 
-    Edge* reverse = nullptr; 
+    Vertex* orig;
+    Edge* reverse = nullptr;
     bool isReverse;
     bool operator>(const Edge& other) const;
 };
@@ -194,17 +191,17 @@ public:
      */
     void clear();
 
-    //Getters
-    Edge* getEdgeP(Vertex* origin,Vertex* dest);
-    bool checkTheVertexInPath(Vertex* vertex,string infoToFound);
-    vector<Vertex *> getVertexSet() const;
+    // Getters
+    Edge* getEdgeP(Vertex* origin, Vertex* dest);
+    bool checkTheVertexInPath(Vertex* vertex, string infoToFound);
+    unordered_map<string, Vertex*>  getVertexSet() const;
 
-    //Setters
+    // Setters
     void setAllNonVisited();
-    void setVertexSet(const std::vector<Vertex*>& newVertexSet);
+    void setVertexSet(const std::unordered_map<string, Vertex*>& newVertexSet);
 
 protected:
-    vector<Vertex *> vertexset;
+    unordered_map<string, Vertex*> vertexset;
 };
 
-#endif 
+#endif // PROJETDA2_GRAPH_H

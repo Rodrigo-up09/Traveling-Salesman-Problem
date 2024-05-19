@@ -90,15 +90,16 @@ Vertex:: Vertex(const string& code) {
     this->dist = 0;
     this->processing = false;
     this->visited = false;
-    this->latitude=0;
-    this->longitude=0;
-    this->label=label="";
-    this->queueIndex=0;
+    this->latitude = 0;
+    this->longitude = 0;
+    this->label = "";
+    this->queueIndex = 0;
 }
 
 /**
  * @brief Constructor for creating a vertex with the given code and label.
  * @param code The code associated with the vertex.
+ * @param label The label associated with the vertex.
  */
 Vertex::Vertex(const string &code, const string& label) {
     this->info = code;
@@ -106,10 +107,10 @@ Vertex::Vertex(const string &code, const string& label) {
     this->dist = 0;
     this->processing = false;
     this->visited = false;
-    this->latitude=0;
-    this->longitude=0;
-    this->label=label;
-    this->queueIndex=0;
+    this->latitude = 0;
+    this->longitude = 0;
+    this->label = label;
+    this->queueIndex = 0;
 }
 
 /**
@@ -122,8 +123,8 @@ Edge* Vertex::addEdge(Vertex* dest, double distance) {
     Edge* edge = new Edge(this, dest, distance);
     Edge* edgeReverse = new Edge(dest, this, distance);
     edge->setReverse(edgeReverse);
-    adj.push_back(edge);
-    dest->incoming.push_back(edge);
+    adj[dest->getInfo()] = edge;
+    dest->incoming[this->getInfo()] = edge;
     return edge;
 }
 
@@ -132,19 +133,15 @@ Edge* Vertex::addEdge(Vertex* dest, double distance) {
  * @param edge The edge to be deleted.
  */
 void Vertex::deleteEdge(Edge* edge) {
-    for(auto it = adj.begin(); it != adj.end(); ++it) {
-        if(*it == edge) {
-            adj.erase(it);
-            break;
-        }
-    }
+    adj.erase(edge->getDest()->getInfo());
+    edge->getDest()->incoming.erase(this->getInfo());
 }
 
 /**
  * @brief Get the adjacency list of the vertex.
  * @return The adjacency list of the vertex.
  */
-std::vector<Edge*> Vertex::getAdj() {
+unordered_map<string, Edge*> Vertex::getAdj() const {
     return adj;
 }
 
@@ -152,7 +149,7 @@ std::vector<Edge*> Vertex::getAdj() {
  * @brief Get the incoming edges to the vertex.
  * @return The incoming edges to the vertex.
  */
-std::vector<Edge*> Vertex::getIncoming() {
+unordered_map<string, Edge*> Vertex::getIncoming() const {
     return incoming;
 }
 
@@ -236,7 +233,7 @@ bool Vertex::operator<(const Vertex &other) const {
  * @param distance The distance of the edge.
  */
 Edge::Edge(Vertex* orig, Vertex* dest, double distance)
-        : orig(orig), dest(dest),distance(distance), selected(false),isReverse(false) {
+        : orig(orig), dest(dest), distance(distance), selected(false), isReverse(false) {
 }
 
 /**
@@ -250,7 +247,7 @@ Edge::~Edge() {
  * @brief Get the distance of the edge.
  * @return The distance of the edge.
  */
-double Edge::getdistance()const {
+double Edge::getdistance() const {
     return distance;
 }
 
@@ -299,7 +296,7 @@ void Edge::setReverse(Edge* reverse) {
  * @param distance The distance to be set.
  */
 void Edge::setDistance(double distance) {
-    this-> distance=  distance;
+    this->distance = distance;
 }
 
 /**
@@ -315,21 +312,20 @@ Vertex* Edge::getDest() {
  * @param code The code of the vertex to find.
  * @return The found vertex or nullptr if not found.
  */
-Vertex * Graph::findVertex(const string &code)const {
-    for (Vertex *vertex: vertexset ) {
-        if (vertex->getInfo()== code) {
-            return vertex;
-        }
+Vertex *Graph::findVertex(const string &code) const {
+    auto it = vertexset.find(code);
+    if (it != vertexset.end()) {
+        return it->second;
     }
     return nullptr;
 }
 
 /**
  * @brief Add a vertex with the given code to the graph.
- * @param code The code of the vertex to be added.
+ * @param vertex The vertex to be added.
  */
 void Graph::addVertex(Vertex *vertex) {
-    vertexset.push_back(vertex);
+    vertexset[vertex->getInfo()] = vertex;
 }
 
 /**
@@ -338,26 +334,25 @@ void Graph::addVertex(Vertex *vertex) {
  * @return True if the vertex is successfully removed, otherwise false.
  */
 bool Graph::removeVertex(const string &code) {
-    for (auto it = vertexset.begin(); it != vertexset.end(); ++it) {
-        if ((*it)->getInfo() == code) {
+    auto it = vertexset.find(code);
+    if (it != vertexset.end()) {
+        Vertex* vertex = it->second;
 
-            for (Edge *edge : (*it)->getAdj()) {
-                removeEdge((*it)->getInfo(), edge->getDest()->getInfo());
-            }
-
-
-            for (auto i : vertexset) {
-                for (auto a : i->getIncoming()) {
-                    if (a->getOrig()->getInfo() == code) {
-                        removeEdge(a->getOrig()->getInfo(), a->getDest()->getInfo());
-                    }
-                }
-            }
-
-            delete *it;
-            vertexset.erase(it);
-            return true;
+        for (auto& pair : vertex->getAdj()) {
+            removeEdge(vertex->getInfo(), pair.second->getDest()->getInfo());
         }
+
+        for (auto& pair : vertexset) {
+            auto incoming = pair.second->getIncoming();
+            auto it_in = incoming.find(code);
+            if (it_in != incoming.end()) {
+                removeEdge(it_in->second->getOrig()->getInfo(), it_in->second->getDest()->getInfo());
+            }
+        }
+
+        delete vertex;
+        vertexset.erase(it);
+        return true;
     }
     return false;
 }
@@ -366,7 +361,7 @@ bool Graph::removeVertex(const string &code) {
  * @brief Add an edge between two vertices in the graph.
  * @param source The source vertex code.
  * @param dest The destination vertex code.
- * @param capacity The capacity of the edge.
+ * @param distance The distance of the edge.
  * @param direction The direction of the edge.
  * @return True if the edge is added successfully, otherwise false.
  */
@@ -386,7 +381,7 @@ bool Graph::addEdge(const std::string& source, const std::string& dest, double d
  * @brief Get the vertex set of the graph.
  * @return The vertex set of the graph.
  */
-vector<Vertex *>  Graph::getVertexSet() const {
+unordered_map<string, Vertex*> Graph::getVertexSet() const {
     return vertexset;
 }
 
@@ -401,11 +396,10 @@ bool Graph::removeEdge(const std::string& source, const std::string& dest) {
     Vertex* destV = findVertex(dest);
     if (sourceV == nullptr || destV == nullptr)
         return false;
-    for (auto e : sourceV->getAdj()) {
-        if (e->getDest() == destV) {
-            sourceV->deleteEdge(e);
-            return true;
-        }
+    auto it = sourceV->getAdj().find(dest);
+    if (it != sourceV->getAdj().end()) {
+        sourceV->deleteEdge(it->second);
+        return true;
     }
     return false;
 }
@@ -419,8 +413,8 @@ Graph::Graph() = default;
  * @brief Clear the graph by removing all vertices and edges.
  */
 void Graph::clear() {
-    for (auto v : vertexset) {
-        v->getAdj().clear();
+    for (auto& pair : vertexset) {
+        pair.second->getAdj().clear();
     }
     vertexset.clear();
 }
@@ -430,10 +424,10 @@ void Graph::clear() {
  *
  */
 void Graph::setAllNonVisited() {
-    for(auto & i : vertexset){
-        i->setVisited(false);
-        i->setProcessing(false);
-        i->setPath(nullptr);
+    for (auto& pair : vertexset) {
+        pair.second->setVisited(false);
+        pair.second->setProcessing(false);
+        pair.second->setPath(nullptr);
     }
 }
 
@@ -442,11 +436,10 @@ void Graph::setAllNonVisited() {
  * @param vertex The vertex whose path is to be checked.
  * @param infoToFound The information string of the vertex to be found in the path.
  * @return True if the vertex with the information string is found in the path, false otherwise.
- * @complexity O(V), where V is the number of vertices in the path
  */
 bool Graph::checkTheVertexInPath(Vertex* vertex, string infoToFound) {
     Edge* edgePath = vertex->getPath();
-    if(edgePath->getDest()== nullptr)return false;
+    if (edgePath->getDest() == nullptr) return false;
     if (edgePath->getDest()->getInfo() == infoToFound) {
         return true;
     }
@@ -457,7 +450,7 @@ bool Graph::checkTheVertexInPath(Vertex* vertex, string infoToFound) {
  * @brief Sets the vertex set of the graph.
  * @param newVertexSet A vector of pointers to Vertex objects, representing the new set of vertices for the graph.
  */
-void Graph::setVertexSet(const std::vector<Vertex*>& newVertexSet) {
+void Graph::setVertexSet(const std::unordered_map<string, Vertex*>& newVertexSet) {
     vertexset = newVertexSet;
 }
 
@@ -467,11 +460,10 @@ void Graph::setVertexSet(const std::vector<Vertex*>& newVertexSet) {
  * @param dest A pointer to the destination vertex.
  * @return A pointer to the edge between the origin and destination vertices.
  */
-Edge *Graph::getEdgeP(Vertex *origin, Vertex *dest) {
-    for(auto edge : origin->getAdj()) {
-        if (edge->getDest() == dest) {
-            return edge;
-        }
+Edge* Graph::getEdgeP(Vertex* origin, Vertex* dest) {
+    auto it = origin->getAdj().find(dest->getInfo());
+    if (it != origin->getAdj().end()) {
+        return it->second;
     }
     return nullptr;
 }
