@@ -266,7 +266,8 @@ double OtherHeuristic(DataManager aux, int k, bool toy) {
  */
 
 pair<int, vector<Vertex*>> OtherHeuristic2(DataManager aux, int k, bool toy) {
-    auto vertices = aux.getG().getVertexSet();
+    auto verticesMap = aux.getG().getVertexSet();
+    auto vertices = sortVerticesByDistanceToZero(verticesMap);
     vector<vector<Vertex*>> divisions;
     pair<int,vector<Vertex *>> finalPath;
     finalPath.first = 0;
@@ -278,7 +279,7 @@ pair<int, vector<Vertex*>> OtherHeuristic2(DataManager aux, int k, bool toy) {
             if (y + w > vertices.size() - 1) {
                 break;
             }
-            workingVertices.push_back( vertices[to_string(y + w)]);
+            workingVertices.push_back( vertices[y + w]);
         }
         vector<Vertex*> path1;
         if (toy) {
@@ -474,7 +475,7 @@ pair<double, std::vector<Vertex*>> joinClustersWithPaths(
 
                 std::vector<Vertex*> newPath;
                 newPath.insert(newPath.end(), path1.begin(), path1.begin() + i + 1);
-                newPath.insert(newPath.end(), path2.begin() + j + 1, path2.end());
+                newPath.insert(newPath.end(), path2.begin() + j + 1, path2.end() - 1);
                 newPath.insert(newPath.end(), path2.begin(), path2.begin() + j + 1);
                 newPath.insert(newPath.end(), path1.begin() + i + 1, path1.end());
 
@@ -504,9 +505,28 @@ void printOtherHeuristic(pair<int, vector<Vertex*>> path) {
     for (size_t i = 0; i < path.second.size(); ++i) {
         cout << path.second[i]->getInfo()<<" ";
     }
-    cout << 0;
     cout << endl;
     cout << "Total Distance: " << path.first << endl;
+}
+
+vector< Vertex*> sortVerticesByDistanceToZero(unordered_map<string, Vertex*>& vertexMap) {
+    Vertex* zeroVertex = vertexMap["0"];
+
+    if (zeroVertex == nullptr) {
+        throw std::invalid_argument("Vertex with label '0' not found");
+    }
+    vector< Vertex*> sortedVertices;
+    for (auto x : vertexMap) {
+        sortedVertices.push_back(x.second);
+    }
+
+
+    sort(sortedVertices.begin(), sortedVertices.end(),
+              [zeroVertex]( Vertex* a,  Vertex*b) {
+                  return calculateDistanceVer(zeroVertex, a) < calculateDistanceVer(zeroVertex, b);
+              });
+
+    return sortedVertices;
 }
 
 

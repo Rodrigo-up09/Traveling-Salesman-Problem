@@ -136,4 +136,6 @@ pair<double,vector< Vertex*>> joinSets2(pair<double,vector< Vertex*>> set1, pair
 
 void printOtherHeuristic(pair<int, vector<Vertex*>> path);
 
+vector< Vertex*> sortVerticesByDistanceToZero(unordered_map<string, Vertex*>& vertexMap);
+
 #endif
