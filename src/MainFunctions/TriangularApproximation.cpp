@@ -87,6 +87,11 @@ vector<Edge*> prim(DataManager aux, bool shipping) {
 
             if(v->getInfo() != w->getInfo() && !w->isVisited()){
                 double distance = calculateDistance(v,w,shipping);
+                if(distance == DBL_MAX && shipping == true) {
+                    cout << "Error, found dead end!" << endl;
+                    mst.empty();
+                    return mst;
+                }
                 double old_dist = w->getDist();
                 if(old_dist > distance) {
                     w->setDist(distance);
@@ -140,7 +145,12 @@ double tspTriangular(DataManager aux, vector<Vertex*>& path, bool shipping) {
     path.push_back(aux.getG().findVertex("0"));
     shipping = false;
     for(int i=0; i < path.size()-1; i++) {
-        finalDistance += calculateDistance(path[i], path[i+1], shipping);
+        if(calculateDistance(path[i], path[i+1], shipping) != DBL_MAX) {
+            finalDistance += calculateDistance(path[i], path[i + 1], shipping);
+        }else {
+            cout << "Error, found dead end!" << endl;
+            return 0;
+        }
     }
 
     return finalDistance;
