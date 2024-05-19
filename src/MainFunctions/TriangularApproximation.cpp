@@ -46,13 +46,13 @@ vector<Edge*> prim(DataManager aux) {
             mst.push_back(v->getPath());
         }
         v->setVisited(true);
-        for(auto e : v->getAdj()) {
-            auto w = e->getDest();
-            if(!w->isVisited()){
+        for(auto w : aux.getG().getVertexSet()) {
+            if(v->getInfo() != w->getInfo() && !w->isVisited()){
+                double distance = calculateDistance(v,w);
                 double old_dist = w->getDist();
-                if(old_dist > e->getdistance()) {
-                    w->setDist(e->getdistance());
-                    w->setPath(e);
+                if(old_dist > distance) {
+                    w->setDist(distance);
+                    w->setPath(new Edge(v, w, distance));
                     if(old_dist == DBL_MAX) {
                         q.insert(w);
                     }else {
@@ -65,7 +65,7 @@ vector<Edge*> prim(DataManager aux) {
     return mst;
 }
 
-// Function to perform a preorder traversal of the MST
+
 void preorderTraversal(vector<Edge*> mst, Vertex* v, vector<Vertex*>& path) {
     v->setVisited(true);
     path.push_back(v);
@@ -78,7 +78,6 @@ void preorderTraversal(vector<Edge*> mst, Vertex* v, vector<Vertex*>& path) {
     }
 }
 
-// Function to implement the Triangular Approximation Heuristic
 double tspTriangular(DataManager aux, vector<Vertex*>& path) {
     double finalDistance = 0;
     vector<Edge*> mst = prim(aux);
@@ -89,4 +88,12 @@ double tspTriangular(DataManager aux, vector<Vertex*>& path) {
     }
 
     return finalDistance;
+}
+void printTSPResultTriangular(const vector<Vertex*>& path, double finalDistance) {
+    cout << "Path: "<<endl;
+    for (size_t i = 0; i < path.size(); ++i) {
+        cout << path[i]->getInfo()<<" ";
+    }
+    cout << endl;
+    cout << "Total Distance: " << finalDistance << endl;
 }
