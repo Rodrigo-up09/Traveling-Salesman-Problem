@@ -69,7 +69,7 @@ vector<vector<Vertex*>> sortClustersByCentroidDistance(vector<vector<Vertex*>>& 
  * @complexity The time complexity is O(n), where n is the number of vertices in the graph.
  */
 vector<int> cluster_graph(DataManager aux, int k) {
-    vector<Vertex *> vertexes = aux.getG().getVertexSet();
+    auto vertexes = aux.getG().getVertexSet();
     vector<int> closures = {};
     for (size_t i = 0; i < vertexes.size(); i = i+k) {
         closures.push_back(i);
@@ -149,8 +149,9 @@ pair<double,vector<pair<int, Vertex *>>> joinSets(pair<double,vector<pair<int, V
         if (toy) {
             Edge * connection;
             for (auto i : single1->getAdj()) {
-                if (i->getDest()->getInfo() == single2->getInfo()) {
-                    connection = i;
+                Edge* edge=i.second;
+                if (edge->getDest()->getInfo() == single2->getInfo()) {
+                    connection = edge;
                 }
             }
             distance = set1.first + set2.first + connection->getdistance();
@@ -162,7 +163,7 @@ pair<double,vector<pair<int, Vertex *>>> joinSets(pair<double,vector<pair<int, V
         joinedPath.insert(joinedPath.end(), set1.second.begin(), set1.second.end());
         joinedPath.insert(joinedPath.end(), set2.second.begin(), set2.second.end());
         return {distance, joinedPath};
-    } 
+    }
 }
 
 /**
@@ -182,8 +183,9 @@ vector<vector<double>> getDistances(vector<pair<int, Vertex *>> vertices, bool t
             if (col.first != row.first) {
                 if (toy) {
                     for (auto y: col.second->getAdj()) {
-                        if (y->getDest()->getInfo() == row.second->getInfo()) {
-                            distances[col.first][row.first] = y->getdistance();
+                        Edge* edge=y.second;
+                        if (edge->getDest()->getInfo() == row.second->getInfo()) {
+                            distances[col.first][row.first] = edge->getdistance();
                             break;
                         }
                     }
@@ -212,7 +214,7 @@ vector<vector<double>> getDistances(vector<pair<int, Vertex *>> vertices, bool t
  * @complexity The time complexity is O(n^2 * 2^n), where n is the number of vertices in the graph.
  */
 double OtherHeuristic(DataManager aux, int k, bool toy) {
-   vector<Vertex *> vertices = aux.getG().getVertexSet();
+   auto vertices = aux.getG().getVertexSet();
    vector<pair<int,Vertex *>> workingVertices = {};
    pair<int,vector<pair<int, Vertex *>>> finalPath;
    finalPath.first = 0;
@@ -224,7 +226,7 @@ double OtherHeuristic(DataManager aux, int k, bool toy) {
             if (y + w > vertices.size() - 1) {
                 break;
             }
-            workingVertices.push_back({i, vertices[y + w]});
+            workingVertices.push_back({i, vertices[to_string(y + w)]});
             i++;
         }
         vector<vector<double>> distances = getDistances(workingVertices, toy);
@@ -233,8 +235,9 @@ double OtherHeuristic(DataManager aux, int k, bool toy) {
     if (toy) {
         int x;
         for (auto y: finalPath.second.back().second->getAdj()) {
-            if (y->getDest()->getInfo() == finalPath.second[0].second->getInfo()) {
-                x = y->getdistance();
+            Edge* edge=y.second;
+            if (edge->getDest()->getInfo() == finalPath.second[0].second->getInfo()) {
+                x = edge->getdistance();
             }
         }
         finalPath.first += x;
@@ -261,8 +264,9 @@ double OtherHeuristic(DataManager aux, int k, bool toy) {
  * If the 'toy' flag is set to true, the function uses toy distances; otherwise, it uses real distances.
  * @complexity The time complexity is O(n^2 * 2^n), where n is the number of vertices in the graph.
  */
+
 pair<int, vector<Vertex*>> OtherHeuristic2(DataManager aux, int k, bool toy) {
-    vector<Vertex *> vertices = aux.getG().getVertexSet();
+    auto vertices = aux.getG().getVertexSet();
     vector<vector<Vertex*>> divisions;
     pair<int,vector<Vertex *>> finalPath;
     finalPath.first = 0;
@@ -274,7 +278,7 @@ pair<int, vector<Vertex*>> OtherHeuristic2(DataManager aux, int k, bool toy) {
             if (y + w > vertices.size() - 1) {
                 break;
             }
-            workingVertices.push_back( vertices[y + w]);
+            workingVertices.push_back( vertices[to_string(y + w)]);
         }
         vector<Vertex*> path1;
         if (toy) {
@@ -288,8 +292,10 @@ pair<int, vector<Vertex*>> OtherHeuristic2(DataManager aux, int k, bool toy) {
     if (toy) {
         int x;
         for (auto y: finalPath.second.back()->getAdj()) {
-            if (y->getDest()->getInfo() == finalPath.second[0]->getInfo()) {
-                x = y->getdistance();
+            Edge* edge=y.second;
+
+            if (edge->getDest()->getInfo() == finalPath.second[0]->getInfo()) {
+                x = edge->getdistance();
             }
         }
         finalPath.first += x;
@@ -363,12 +369,16 @@ vector<Edge*> adaptedPrim(vector<Vertex*> vertices) {
         }
         v->setVisited(true);
         for(auto e : v->getAdj()) {
-            auto w = e->getDest();
+
+
+            auto w = e.second->getDest();
+            Edge* edge=e.second;
+
             if(!w->isVisited()){
                 double old_dist = w->getDist();
-                if(old_dist > e->getdistance()) {
-                    w->setDist(e->getdistance());
-                    w->setPath(e);
+                if(old_dist > edge->getdistance()) {
+                    w->setDist(edge->getdistance());
+                    w->setPath(edge);
                     if(old_dist == DBL_MAX) {
                         q.insert(w);
                     }else {
@@ -407,8 +417,10 @@ pair<double,vector< Vertex*>> joinSets2(pair<double,vector< Vertex*>> set1, pair
         if (toy) {
             Edge * connection;
             for (auto i : single1->getAdj()) {
-                if (i->getDest()->getInfo() == single2->getInfo()) {
-                    connection = i;
+                Edge* edge=i.second;
+
+                if (edge->getDest()->getInfo() == single2->getInfo()) {
+                    connection = edge;
                 }
             }
             distance = set1.first + set2.first + connection->getdistance();

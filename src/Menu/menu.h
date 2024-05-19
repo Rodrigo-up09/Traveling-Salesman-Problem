@@ -46,3 +46,8 @@ void displayReal(DataManager dataManager,const string& origin);
 void displayMultiple(DataManager dataManager, bool shipping);
 
 void displayOtherHeuristic(DataManager dataManager, bool shipping, int k);
+
+
+
+void displayReal2(DataManager dataManager,const string& origin);
+

@@ -11,7 +11,7 @@ DataManager::DataManager() {
     for (int i = 0; i < 10000; i++) {
         distMatrix[i] = (double *)malloc(10000 * sizeof(double));
 
-        // Set each element to zero
+
         for (int j = 0; j < 10000; j++) {
             distMatrix[i][j] = INF;
         }
@@ -93,45 +93,36 @@ bool DataManager::readSmall(int type) {
             getline(info, value, ',');
             values.push_back(value);
         }
-        string code = values[0];
+        string originCode = values[0];
         string destCode = values[1];
-        double destancia = stod(values[2]);
+        double distance = stod(values[2]);
 
-        if (tourism) {
-            string labelOrigem = values[3];
-            string labelDest = values[4];
-            vertexOrigem = new Vertex(code, labelOrigem);
-            vertexDest = new Vertex(destCode, labelDest);
-        } else {
-            vertexOrigem = new Vertex(code);
-            vertexDest= new Vertex(destCode);
-        }
-        distMatrix[stoi(code)][stoi(destCode)]=destancia;
-        distMatrix[stoi(destCode)][stoi(code)]=destancia;
+        string originLabel = (type == 2) ? values[3] : "";
+        string destLabel = (type == 2) ? values[4] : "";
 
-        Vertex *vertexFoundDest = g.findVertex(vertexDest->getInfo());
-        Vertex *vertexFoundOrig = g.findVertex(vertexOrigem->getInfo());
-        if (vertexFoundDest == nullptr) {
-            g.addVertex(vertexDest);
-            destInGraph = false;
+        Vertex* vertexFoundOrig = g.findVertex(originCode);
+        Vertex* vertexFoundDest = g.findVertex(destCode);
+
+        if (!vertexFoundOrig) {
+            vertexFoundOrig = new Vertex(originCode, originLabel);
+            g.addVertex(vertexFoundOrig);
         }
 
-        if (vertexFoundOrig == nullptr) {
-            vertexOrigem->addEdge(vertexDest, destancia);
-            vertexDest->addEdge(vertexOrigem,destancia);
-            g.addVertex(vertexOrigem);
-        } else {
-            if (destInGraph) {
-                vertexFoundOrig->addEdge(vertexFoundDest, destancia);
-                vertexFoundDest->addEdge(vertexOrigem,destancia);
-            } else {
-                vertexFoundOrig->addEdge(vertexDest, destancia);
-                vertexDest->addEdge(vertexOrigem,destancia);
-            }
+        if (!vertexFoundDest) {
+            vertexFoundDest = new Vertex(destCode, destLabel);
+            g.addVertex(vertexFoundDest);
         }
+
+        // Add edge between vertices (assuming undirected graph)
+        distMatrix[stoi(destCode)][stoi(originCode)]=distance;
+        distMatrix[stoi(originCode)][stoi(destCode)]=distance;
+        vertexFoundOrig->addEdge(vertexFoundDest, distance);
+        vertexFoundDest->addEdge(vertexFoundOrig, distance);
     }
     return shipping;
 }
+
+
 
 /**
     * @brief Reads a mid-sized graph from a file.
@@ -231,6 +222,9 @@ void DataManager::readReal(int type) {
         case 2:
             file.open("../data/Real-world Graphs/graph2/nodes.csv");
             break;
+        case 3:
+            file.open("../data/Real-world Graphs/graph3/nodes.csv");
+            break;
     }
     if(!file.is_open()) {
         cout << "Erro ao abrir o ficheiro" << endl;
@@ -262,6 +256,9 @@ void DataManager::readReal(int type) {
             break;
         case 2:
             readEdges("../data/Real-world Graphs/graph2/edges.csv",true);
+            break;
+        case 3:
+            readEdges("../data/Real-world Graphs/graph3/edges.csv",true);
             break;
     }
 }
@@ -344,10 +341,10 @@ void DataManager::setDistMatrix(double **&distMatrix) {
     */
 void DataManager::printGraph(const Graph &g) {
     for (const auto& vertex : g.getVertexSet()) {
-        std::cout << "Vertex: " << vertex->getInfo() << std::endl;
+        std::cout << "Vertex: " << vertex.second->getInfo() << std::endl;
         std::cout << "Adjacent vertices: ";
-        for (const auto& edge : vertex->getAdj()) {
-            std::cout << edge->getDest()->getInfo() << " (distance: " << edge->getdistance() << ") ";
+        for (const auto& edge : vertex.second->getAdj()) {
+            std::cout << edge.second->getDest()->getInfo() << " (distance: " << edge.second->getdistance() << ") ";
         }
         std::cout << std::endl;
     }

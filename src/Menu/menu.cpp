@@ -1,29 +1,6 @@
 #include "menu.h"
 
 
-/*
- *   DataManager dataManagerB;
-    DataManager dataManagerT;
-    DataManager dataManagerH;
-    DataManager dataManagerR;
-    dataManager.copy(dataManagerB);
-    dataManager.copy(dataManagerT);
-    dataManager.copy(dataManagerH);
-    dataManager.copy(dataManagerR);
- *
- *
- *
- *
- *
- *
- *
- *
- *
- *
- *
- *
- * */
-
 void displayMenu() {
     int dataSet, type;
 
@@ -70,10 +47,11 @@ void displayMenu() {
             cout << "Select Real Dataset Type:" << endl;
             cout << "1 - Graph 1" << endl;
             cout << "2 - Graph 2" << endl;
+            cout << "3 - Graph 3" << endl;
             cout << "Enter your choice: ";
             cin >> type;
 
-            if (cin.fail() || type < 1 || type > 2) {
+            if (cin.fail() || type < 1 || type > 3) {
                 cin.clear();
                 cin.ignore(numeric_limits<streamsize>::max(), '\n');
                 cout << "Invalid choice. Please try again." << endl;
@@ -173,10 +151,11 @@ void displayMultiple(DataManager dataManager, bool shipping) {
         cout << "0 - Compare Light Algorithms (use small)" << endl;
         cout << "1 - Compare Mid Algorithms (use mid Graph, Backtrack is not called)" << endl;
         cout << "2 - Compare Heavy Algorithms (Backtrack and Other Heuristic are not called)" << endl;
+        cout << "3 - Compare 2 Real Word Graph Algoritm" << endl;
         cout << "Enter your choice: ";
         cin >> algorithm;
 
-        if (cin.fail() || algorithm < 0 || algorithm > 2) {
+        if (cin.fail() || algorithm < 0 || algorithm > 3) {
             cin.clear();
             cin.ignore(numeric_limits<streamsize>::max(), '\n');
             cout << "Invalid choice. Please try again." << endl;
@@ -185,11 +164,12 @@ void displayMultiple(DataManager dataManager, bool shipping) {
         cout << "Choose size of Cluster: ";
         cin >> k;
 
-        DataManager dataManagerB, dataManagerT, dataManagerH, dataManagerR;
+        DataManager dataManagerB, dataManagerT, dataManagerH, dataManagerR,dataManagerR1;
         dataManager.copy(dataManagerB);
         dataManager.copy(dataManagerT);
         dataManager.copy(dataManagerH);
         dataManager.copy(dataManagerR);
+        dataManager.copy(dataManagerR1);
 
         switch (algorithm) {
             case 0:
@@ -208,16 +188,23 @@ void displayMultiple(DataManager dataManager, bool shipping) {
                 displayOtherHeuristic(dataManager, shipping, k);
                 displayReal(dataManagerR, "0");
                 break;
+
+            case 3:
+                displayReal(dataManagerR, "0");
+                displayReal2(dataManagerR, "0");
+
         }
         break;
     }
 }
+
 
 /**
  * @brief Displays the results of the Backtrack algorithm.
  * @param dataManager The DataManager instance containing the graph and other related data.
  * @details This function runs the Backtrack algorithm on the provided data and displays the results.
  */
+
 void displayBackTrac(DataManager dataManager){
     cout<<"---------------------------------------------------------"<<endl;
     cout<<"BackTrack"<<endl;
@@ -265,7 +252,7 @@ void displayOtherHeuristic(DataManager dataManager, bool shipping, int k){
 
 void displayReal(DataManager dataManager,const string& origin){
     cout<<"---------------------------------------------------------"<<endl;
-    cout<<"Real "<<endl;
+    cout<<"Real greedy nearest neighbor "<<endl;
     auto start = std::chrono::high_resolution_clock::now();
     auto resullt= greedyTSP3(dataManager.getG(),origin,dataManager.getDistMatrix());
     auto end = std::chrono::high_resolution_clock::now();
@@ -274,4 +261,17 @@ void displayReal(DataManager dataManager,const string& origin){
     std::cout << "The function took " << duration.count() << " seconds to execute." << std::endl;
 
 }
+void displayReal2(DataManager dataManager,const string& origin){
+    cout<<"---------------------------------------------------------"<<endl;
+    cout<<"Real nearest neighbor  "<<endl;
+    auto start = std::chrono::high_resolution_clock::now();
+    auto resullt= nearestNeighborTSP(dataManager.getG(),origin);
+    auto end = std::chrono::high_resolution_clock::now();
+    std::chrono::duration<double> duration = end - start;
+    printTour(resullt.first,resullt.second);
+    std::cout << "The function took " << duration.count() << " seconds to execute." << std::endl;
+    
+}
+
+
 //TODO DISPLay other

@@ -1,5 +1,7 @@
 #include <queue>
 #include "TSPInTheRealWorld.h"
+#include <utility>
+
 
 //greedy algorithm that search for the nearest neighbor with less distance
 //works for complete graphs
@@ -8,19 +10,21 @@
 /**
  * @brief Finds the nearest unvisited neighbor of a given vertex.
  * @param vertex The vertex for which the nearest neighbor is to be found.
- * @param unvisited A vector of vertices that have not been visited yet.
+ * @param unvisited A map of vertices that have not been visited yet.
  * @return A pointer to the nearest unvisited neighbor. If no unvisited neighbor is found, returns nullptr.
- * @details This function iterates over the vector of unvisited vertices and for each unvisited vertex,
+ * @details This function iterates over the map of unvisited vertices and for each unvisited vertex,
  * it checks if there is an edge from the given vertex to the unvisited vertex. If such an edge exists,
  * it compares the distance of this edge with the minimum distance found so far. If the distance is less
  * than the minimum distance, it updates the minimum distance and sets the nearest neighbor to the current unvisited vertex.
  */
-Vertex* findNearestNeighbor(Vertex* vertex, const vector<Vertex*>& unvisited) {
+Vertex* findNearestNeighbor(Vertex* vertex, unordered_map<string, Vertex*>& unvisited) {
     double minDistance = numeric_limits<double>::max();
     Vertex* nearestNeighbor = nullptr;
 
-    for (Vertex* neighbor : unvisited) {
-        for (Edge* edge : vertex->getAdj()) {
+    for (const auto& pair : unvisited) {
+        Vertex* neighbor = pair.second;
+        for (const auto& i : vertex->getAdj()) {
+            Edge* edge = i.second;
             if (edge->getDest() == neighbor && edge->getdistance() < minDistance) {
                 minDistance = edge->getdistance();
                 nearestNeighbor = neighbor;
@@ -44,7 +48,7 @@ Vertex* findNearestNeighbor(Vertex* vertex, const vector<Vertex*>& unvisited) {
  */
 pair<vector<Vertex*>, double> nearestNeighborTSP(Graph graph, const string& origin) {
     vector<Vertex*> tour;
-    vector<Vertex*> unvisited = graph.getVertexSet();
+    auto unvisited = graph.getVertexSet();
 
     double totalDistance = 0.0;
 
@@ -56,8 +60,7 @@ pair<vector<Vertex*>, double> nearestNeighborTSP(Graph graph, const string& orig
 
     tour.push_back(currentVertex);
     currentVertex->setVisited(true);
-    unvisited.erase(remove(unvisited.begin(), unvisited.end(), currentVertex), unvisited.end());
-
+    unvisited.erase(origin);
 
     while (!unvisited.empty()) {
 
@@ -71,7 +74,8 @@ pair<vector<Vertex*>, double> nearestNeighborTSP(Graph graph, const string& orig
 
 
         double distanceToNeighbor = 0.0;
-        for (Edge* edge : currentVertex->getAdj()) {
+        for (auto i : currentVertex->getAdj()) {
+            Edge* edge = i.second;
             if (edge->getDest() == nearestNeighbor) {
                 distanceToNeighbor = edge->getdistance();
                 break;
@@ -82,15 +86,19 @@ pair<vector<Vertex*>, double> nearestNeighborTSP(Graph graph, const string& orig
         tour.push_back(nearestNeighbor);
         nearestNeighbor->setVisited(true);
         currentVertex = nearestNeighbor;
-        unvisited.erase(remove(unvisited.begin(), unvisited.end(), nearestNeighbor), unvisited.end()); // Remove nearest neighbor from unvisited list
+        unvisited.erase(nearestNeighbor->getInfo()); // Remove nearest neighbor from unvisited map
     }
-
+    if((tour.size())!=(graph.getVertexSet().size())){
+        cerr << "No path exists that returns to the origin and visits all nodes." << endl;
+        return make_pair(vector<Vertex*>(), -1.0);
+    }
 
     tour.push_back(graph.findVertex(origin));
 
 
     double distanceToOrigin = 0.0;
-    for (Edge* edge : currentVertex->getAdj()) {
+    for (auto i: currentVertex->getAdj()) {
+        Edge* edge = i.second;
         if (edge->getDest() == graph.findVertex(origin)) {
             distanceToOrigin = edge->getdistance();
             break;
@@ -102,11 +110,6 @@ pair<vector<Vertex*>, double> nearestNeighborTSP(Graph graph, const string& orig
 
     return make_pair(tour, totalDistance);
 }
-
-//Greedy heuristic
-//Algoritm that is better than the nn, but still with not the best preformance.
-//This algoritm iterate throw all the vertex, and check the shortest edge.Always cheking it the smallest edge have an Indegree of 1,if it have a Indegree>1,can go to that edge.
-//At the end it goes to the init vertice,its a better aproximation than the nn algoritm
 
 /**
  * @brief Constructs the tour from the origin vertex.
@@ -132,62 +135,6 @@ void GetTour(Vertex* origin, vector<Vertex*>& tour) {
     }
 }
 
-/**
- * @brief Executes the Greedy algorithm for the Traveling Salesman Problem (TSP).
- * @param graph The graph on which the TSP is to be solved.
- * @param origin The starting vertex for the TSP.
- * @return A pair consisting of a vector of vertices representing the path of the tour and the total distance of the tour.
- * @details This function implements the Greedy heuristic for the TSP. It starts at the given origin vertex and,
- * at each step, it selects the unvisited vertex that is closest to the current vertex. This process is repeated until all vertices have been visited,
- * at which point the path returns to the origin vertex. The function returns the path of the tour as a vector of vertices and the total distance of the tour.
- * Note that this heuristic does not always produce the optimal solution, but it is efficient and the solution is often good enough for practical purposes.
- * @complexity O(n^2), where n is the number of vertices in the graph.
- */
-pair<vector<Vertex*>, double> greedyTSP(Graph graph, const string& origin) {
-
-    vector<Vertex *> tour;
-    Vertex* lastVertex = nullptr;
-    double totalDistance = 0.0;
-    Vertex *currentVertex = graph.findVertex(origin);
-    if (currentVertex == nullptr) {
-        cerr << "Origin vertex not found in the graph." << endl;
-        return make_pair(tour, totalDistance);
-    }
-    for(auto vertex:graph.getVertexSet()){
-
-        if(vertex!=currentVertex){
-           lastVertex=vertex;
-        }
-        double smallestDist=numeric_limits<double>::max();
-        Edge* smallEdgge=nullptr;
-        for(Edge*  edge:vertex->getAdj()){
-            bool degree=edge->getDest()->getPath()== nullptr;
-            if(edge->getdistance()<smallestDist && (degree)){
-                smallestDist=edge->getdistance();
-                smallEdgge=edge;
-            }
-        }
-        totalDistance+=smallEdgge->getdistance();
-        if(smallEdgge!= nullptr) {
-            vertex->setPath(smallEdgge);
-        }
-    }
-    if (lastVertex != nullptr) {
-        Edge* edgeToOrigin = graph.getEdgeP(lastVertex,currentVertex);
-        if (edgeToOrigin != nullptr) {
-            totalDistance += edgeToOrigin->getdistance();
-            lastVertex->setPath(edgeToOrigin);
-
-        }
-        if(edgeToOrigin!= nullptr){
-            cerr<<"Graph is not conected";
-
-        }
-    }
-    GetTour(currentVertex,tour);
-    return make_pair(tour,totalDistance);
-
-}//not tested
 
 /**
  * @brief Prints the tour path and total distance of the Traveling Salesman Problem (TSP).
@@ -198,6 +145,7 @@ pair<vector<Vertex*>, double> greedyTSP(Graph graph, const string& origin) {
  * This function is typically used for debugging and results presentation.
  * @complexity O(n), where n is the number of vertices in the tour.
  */
+
 void printTour(const vector<Vertex*>& tour, double totalDistance) {
     cout << "Path: "<<endl;
     for (Vertex* vertex : tour) {
@@ -220,73 +168,80 @@ void printTour(const vector<Vertex*>& tour, double totalDistance) {
  * The function uses a priority queue to select the next vertex to visit, which improves the efficiency of the algorithm.
  * @complexity O(n^2 log n), where n is the number of vertices in the graph.
  */
-pair<vector<Vertex*>, double> greedyTSP3(Graph graph, const string& origin, double** distMatrix ) {
-    vector<Vertex *> tour;
+
+pair<vector<Vertex*>, double> greedyTSP3(Graph graph, const string& origin, double** distMatrix) {
+    vector<Vertex*> tour;
+
     double totalDistance = 0.0;
-    Vertex *currentVertex = graph.findVertex(origin);
-    Vertex *first = currentVertex;
-    Vertex *lastAddedVertex = nullptr; // Store the last added vertex
+    Vertex* currentVertex = graph.findVertex(origin);
+    Vertex* first = currentVertex;
 
     if (currentVertex == nullptr) {
         cerr << "Origin vertex not found in the graph." << endl;
         return make_pair(vector<Vertex*>(), -1.0);
     }
+    graph.setAllNonVisited();  // Assuming this sets all vertices as not visited
     first->setVisited(true);
-    tour.push_back(first);
-    graph.setAllNonVisited();
+    currentVertex->setVisited(true);
+    tour.push_back( currentVertex);
+
+      // Mark the origin as visited
 
     auto compareEdges = [](const Edge* a, const Edge* b) {
-        return a->getdistance() > b->getdistance(); // Use > for min-heap
+        return a->getdistance() > b->getdistance();  // Use > for min-heap
     };
 
-    //Decltype,used to declare the custom operator
     priority_queue<Edge*, vector<Edge*>, decltype(compareEdges)> pq(compareEdges);
 
     for (auto edge : currentVertex->getAdj()) {
-        pq.push(edge);
+        pq.push(edge.second);
     }
 
-    currentVertex->setVisited(true); // Mark the current vertex as visited
+    Vertex* lastAddedVertex = nullptr;  // Store the last added vertex
 
     while (!pq.empty()) {
         Edge* minEdge = pq.top();
         pq.pop();
-        Vertex *nextVertex = minEdge->getDest();
+        Vertex* nextVertex = minEdge->getDest();
 
         if (!nextVertex->isVisited()) {
             nextVertex->setVisited(true);
-            if(nextVertex->getInfo()==origin){
-                cerr<<"not conected Graph";
-                return make_pair(vector<Vertex*>(), -1.0);
-            }
             tour.push_back(nextVertex);
             lastAddedVertex = nextVertex;
 
             totalDistance += minEdge->getdistance();
 
+            // Efficiently clear the priority queue
+            while (!pq.empty()){
+                pq.pop();
+            }
 
-            for (auto nextEdge : nextVertex->getAdj()) {
-                if(!nextEdge->getDest()->isVisited()) {
+            for (auto h : nextVertex->getAdj()) {
+                Edge* nextEdge=h.second;
+                if (!nextEdge->getDest()->isVisited()) {
                     pq.push(nextEdge);
                 }
             }
+
         }
     }
-
 
     if (lastAddedVertex != nullptr) {
         int a = stoi(origin);
         int b = stoi(lastAddedVertex->getInfo());
         double value = distMatrix[a][b];
-        if(value==INF ||value==0){
-            cerr<<"not conected Graph";
+        if (value == INF || value == 0) {
+            cerr << "No path exists that returns to the origin and visits all nodes." << endl;
             return make_pair(vector<Vertex*>(), -1.0);
-
         }
         totalDistance += value;
     }
+    if((tour.size())!=(graph.getVertexSet().size())){
+        cerr << "No path exists that returns to the origin and visits all nodes." << endl;
+        return make_pair(vector<Vertex*>(), -1.0);
+    }
 
-    tour.push_back(first);
+    tour.push_back(first);  // Complete the cycle by returning to the start vertex
 
     return make_pair(tour, totalDistance);
 }
