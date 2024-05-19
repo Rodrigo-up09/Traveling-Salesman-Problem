@@ -213,9 +213,11 @@ double OtherHeuristic2(DataManager aux, int k, bool toy) {
         vector<Vertex*> path1;
         sortClustersByCentroidDistance(divisions);
         finalPath.first = adaptedTspTriangular(divisions[0], path1);
-        finalPath.second = divisions[0];
+        finalPath.second = path1;
         for (auto i = 1; i < divisions.size(); i++) {
-            finalPath = joinClustersWithPaths(finalPath, {adaptedTspTriangular(divisions[i], path1), divisions[i]});
+            path1 = {};
+            double dis = adaptedTspTriangular(divisions[i], path1);
+            finalPath = joinClustersWithPaths(finalPath, {dis, path1});
         }
     }
     return finalPath.first;
